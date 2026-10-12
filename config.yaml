@@ -1,9 +1,9 @@
 site_name: Modal News
 tagline: Notícias de logística, transporte e supply chain
 # Endereço público (sem barra final). Para o domínio próprio: https://modalnews.com.br
-base_url: https://tpb-ux.github.io/modalnews
+base_url: https://modalnews.com.br
 # Domínio próprio: preencha com modalnews.com.br para gerar public/CNAME
-cname: ""
+cname: modalnews.com.br
 language: pt-BR
 publisher_logo: /static/logo.png
 editorias:
