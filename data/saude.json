@@ -2,7 +2,7 @@
  "formato": "saude-portal/1",
  "portal": "Modal News",
  "url": "https://modalnews.com.br",
- "gerado_em": "2026-10-12T07:56:54+00:00",
+ "gerado_em": "2026-10-12T09:16:58+00:00",
  "materias": {
   "total": 29,
   "ultimas_24h": 0,
@@ -13,7 +13,7 @@
    "url": "https://modalnews.com.br/comercio-exterior/2026-10-09-superar-o-protecionismo-para-voltar-a-crescer/",
    "fonte": "Comex do Brasil",
    "publicada_em": "2026-10-09T17:42:57-03:00",
-   "idade_horas": 59.2
+   "idade_horas": 60.6
   }
  },
  "feeds": {
@@ -102,6 +102,6 @@
  "site": {
   "paginas_indexaveis": 1375,
   "links_internos_quebrados": 0,
-  "build": "38220562447"
+  "build": "local"
  }
 }
