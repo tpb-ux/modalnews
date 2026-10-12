@@ -8,6 +8,8 @@ import markdown, yaml
 ROOT = Path(__file__).parent
 CFG = yaml.safe_load((ROOT / "config.yaml").read_text(encoding="utf-8"))
 OUT, BASE = ROOT / "public", CFG["base_url"].rstrip("/")
+from urllib.parse import urlparse
+PREFIX = urlparse(BASE).path.rstrip("/")
 EDS = {e["slug"]: e["nome"] for e in CFG["editorias"]}
 E = html.escape
 
@@ -58,13 +60,14 @@ def card(p, cls="", h="h3"):
 
 def write(path, txt):
     f = OUT / path.lstrip("/"); f = f / "index.html" if path.endswith("/") else f
+    txt = re.sub(r'(href|src)="/(?!/)', lambda m: f'{m.group(1)}="{PREFIX}/', txt)
     f.parent.mkdir(parents=True, exist_ok=True); f.write_text(txt, encoding="utf-8")
 
 def main():
     posts = load()
     if OUT.exists(): shutil.rmtree(OUT)
     shutil.copytree(ROOT / "static", OUT / "static")
-    if (OUT / "static" / "CNAME").exists(): shutil.move(OUT / "static" / "CNAME", OUT / "CNAME")
+    if CFG.get("cname"): (OUT / "CNAME").write_text(CFG["cname"].strip() + "\n")
     dest = [p for p in posts if p.get("destaque")] or posts[:1]
     main_p = dest[0]; side = [p for p in posts if p is not main_p][:2]
     body = f'<div class="hero">{card(main_p,"main","h2")}<div class="side">{"".join(card(p) for p in side)}</div></div>'
