@@ -38,14 +38,16 @@ def load():
 
 def fmt(d): return d.strftime("%d/%m/%Y %H:%M")
 
-def page(title, desc, path, body, og_img=None, og_type="website", jsonld=None):
+def page(title, desc, path, body, og_img=None, og_type="website", jsonld=None, robots=None):
     canon = BASE + path
     img = og_img or BASE + "/static/og-default.png"
     nav = "".join(f'<a href="/{s}/">{E(n)}</a>' for s, n in EDS.items())
     ld = f'<script type="application/ld+json">{json.dumps(jsonld, ensure_ascii=False)}</script>' if jsonld else ""
+    ld += f'<script type="application/ld+json">{json.dumps(SITE_LD, ensure_ascii=False)}</script>'
+    rb = f'<meta name="robots" content="{robots}">' if robots else ""
     return f"""<!doctype html><html lang="pt-BR"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>{E(title)}</title><meta name="description" content="{E(desc)}">
+<title>{E(title)}</title>{rb}<meta name="description" content="{E(desc)}">
 <link rel="canonical" href="{canon}"><link rel="stylesheet" href="/static/style.css">
 <link rel="alternate" type="application/rss+xml" title="{E(CFG['site_name'])}" href="/rss.xml">
 <meta property="og:site_name" content="{E(CFG['site_name'])}"><meta property="og:locale" content="pt_BR">
@@ -53,10 +55,20 @@ def page(title, desc, path, body, og_img=None, og_type="website", jsonld=None):
 <meta property="og:description" content="{E(desc)}"><meta property="og:url" content="{canon}">
 <meta property="og:image" content="{E(img)}"><meta name="twitter:card" content="summary_large_image">{ld}
 </head><body><header class="top"><div class="wrap hrow"><a class="logo" href="/"><img src="/static/logo.svg" alt="{E(CFG['site_name'])}" width="220" height="44"></a>
-<div class="tag">{E(CFG['tagline'])}</div></div></header><nav class="ed"><div class="wrap"><a class="pill" href="/">Início</a>{nav}<a href="/glossario/">Glossário</a></div></nav>
+<div class="tag">{E(CFG['tagline'])}</div></div></header><nav class="ed"><div class="wrap"><a class="pill" href="/">Início</a>{nav}<a href="/glossario/">Glossário</a><a href="/diesel/">Diesel</a></div></nav>
 <main class="wrap">{body}</main><footer><div class="wrap fgrid"><div><img src="/static/logo.svg" alt="" width="180" height="36" class="flogo"><p>{E(CFG['tagline'])}</p></div>
-<div><h4>Editorias</h4>{nav}</div><div><h4>Assine</h4><a href="/glossario/">Glossário de Logística</a><a href="/rss.xml">Feed RSS</a><a href="/sitemap.xml">Mapa do site</a></div></div>
+<div><h4>Editorias</h4>{nav}</div><div><h4>Referência</h4><a href="/glossario/">Glossário de Logística</a><a href="/siglas/">Siglas</a><a href="/diesel/">Preço do diesel</a><a href="/calculadoras/cubagem/">Calculadora de cubagem</a><a href="/calculadoras/custo-diesel-viagem/">Custo de diesel</a><a href="/links-uteis/">Links úteis</a></div>
+<div><h4>Institucional</h4><a href="/sobre/">Sobre</a><a href="/politica-editorial/">Política editorial</a><a href="/metodologia/">Metodologia</a><a href="/correcoes/">Correções</a><a href="/privacidade/">Privacidade</a><a href="/rss.xml">Feed RSS</a></div></div>
 <div class="wrap fbot">© {dt.date.today().year} {E(CFG['site_name'])} · Todos os direitos reservados</div></footer></body></html>"""
+
+SITE_LD = {"@context": "https://schema.org", "@graph": [
+    {"@type": "NewsMediaOrganization", "@id": BASE + "/#org", "name": CFG["site_name"], "url": BASE + "/", "logo": {"@type": "ImageObject", "url": BASE + CFG["publisher_logo"]},
+     "publishingPrinciples": BASE + "/politica-editorial/", "correctionsPolicy": BASE + "/correcoes/", "actionableFeedbackPolicy": BASE + "/correcoes/",
+     **({"sameAs": CFG["redes"]} if CFG.get("redes") else {}), **({"taxID": CFG["cnpj"]} if CFG.get("cnpj") else {})},
+    {"@type": "WebSite", "@id": BASE + "/#site", "name": CFG["site_name"], "url": BASE + "/", "inLanguage": "pt-BR", "publisher": {"@id": BASE + "/#org"}}]}
+
+def itemlist(ps):
+    return {"@context": "https://schema.org", "@type": "ItemList", "itemListElement": [{"@type": "ListItem", "position": i + 1, "url": BASE + p["url"], "name": p["titulo"]} for i, p in enumerate(ps[:20])]}
 
 def img(p, cls="", sizes="(max-width: 760px) 100vw, 300px", priority=False):
     src = p["imagem"]; w, h = p.get("imagem_w", 1200), p.get("imagem_h", 630)
@@ -102,16 +114,17 @@ def main():
     for s, n in EDS.items():
         ps = [p for p in posts if p["editoria"] == s][:4]
         if ps: body += f'<section class="blk">{sec("As últimas em", n, f"/{s}/")}<div class="grid">{"".join(card(p) for p in ps)}</div></section>'
-    org = {"@type": "NewsMediaOrganization", "name": CFG["site_name"], "url": BASE}
-    write("/", page(f"{CFG['site_name']} — {CFG['tagline']}", CFG["tagline"], "/", body,
-                    jsonld={"@context": "https://schema.org", **org}))
+    org = {"@type": "NewsMediaOrganization", "@id": BASE + "/#org", "name": CFG["site_name"], "url": BASE}
+    body += '<section class="blk refbox"><h2 class="st"><span>Referência</span><strong>Ferramentas e dados</strong></h2><div class="chips"><a class="chip" href="/glossario/">Glossário de Logística</a><a class="chip" href="/siglas/">Siglas</a><a class="chip" href="/diesel/">Preço do diesel por cidade</a><a class="chip" href="/calculadoras/cubagem/">Calculadora de cubagem</a><a class="chip" href="/calculadoras/custo-diesel-viagem/">Custo de diesel por viagem</a></div></section>'
+    write("/", page(f"{CFG['site_name']}: notícias de logística, transporte e supply chain", CFG["tagline"] + ". Glossário, preço do diesel por cidade (ANP) e calculadoras.", "/", body,
+                    jsonld=itemlist(posts)))
     for s, n in EDS.items():
         ps = [p for p in posts if p["editoria"] == s]
         inner = "".join(card(p) for p in ps) or "<p>Nenhuma matéria ainda.</p>"
         write(f"/{s}/", page(f"{n} — {CFG['site_name']}", f"Notícias de {n} no {CFG['site_name']}", f"/{s}/",
-                             f'<section class="blk">{sec("Editoria", n)}<div class="grid">{inner}</div></section>'))
+                             f'<section class="blk">{sec("Editoria", n)}<div class="grid">{inner}</div></section>', jsonld=itemlist(ps)))
     import glossario
-    gl_urls, interlink = glossario.build(sys.modules["__main__"] if "__main__" in sys.modules and hasattr(sys.modules["__main__"], "page") else sys.modules[__name__], posts)
+    gl_urls, interlink, gl_lastmod, terms = glossario.build(sys.modules["__main__"] if "__main__" in sys.modules and hasattr(sys.modules["__main__"], "page") else sys.modules[__name__], posts)
     for p in posts:
         if p.get("html"):  # links para o glossário no texto da matéria (fora do link da fonte)
             head, sep, tail = p["html"].partition("<p><strong>")
@@ -127,23 +140,32 @@ def main():
 {(' · Fonte: ' + E(p['fonte'])) if p.get('fonte') else ''}</p>{'' if p.get('gerado_por') else '<p><strong>' + E(p.get('resumo','')) + '</strong></p>'}
 <figure class="cover">{img(p, "cover", "(max-width: 800px) 100vw, 760px", True)}{f'<figcaption>Imagem: {E(p["imagem_credito"])}</figcaption>' if p.get("imagem_credito") else ''}</figure>{p['html']}</article>"""
         write(p["url"], page(f"{p['titulo']} — {CFG['site_name']}", p.get("resumo", ""), p["url"], b,
-                             BASE + p["imagem"], "article", ld))
-    now = dt.datetime.now(dt.timezone.utc)
-    urls = ["/"] + [f"/{s}/" for s in EDS] + [p["url"] for p in posts] + gl_urls
-    imgs = {p["url"]: p for p in posts}
-    def sm(u):
-        p = imgs.get(u)
-        im = f"<image:image><image:loc>{BASE}{p['imagem']}</image:loc></image:image>" if p else ""
-        return f"<url><loc>{BASE}{u}</loc>{im}</url>"
-    (OUT / "sitemap.xml").write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">'
-        + "".join(sm(u) for u in urls) + "</urlset>", encoding="utf-8")
-    recent = [p for p in posts if now - p["data"] < dt.timedelta(days=2)] or posts[:1]
-    (OUT / "news-sitemap.xml").write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">'
-        + "".join(f"<url><loc>{BASE}{p['url']}</loc><news:news><news:publication><news:name>{E(CFG['site_name'])}</news:name><news:language>pt</news:language></news:publication><news:publication_date>{p['data'].isoformat()}</news:publication_date><news:title>{E(p['titulo'])}</news:title></news:news></url>" for p in recent)
-        + "</urlset>", encoding="utf-8")
+                             BASE + p["imagem"], "article", ld, robots="noindex,follow" if p.get("gerado_por") else None))
+    import paginas
+    ds_urls, ds_lastmod = paginas.diesel(sys.modules[__name__])
+    calc_urls = paginas.calculadoras(sys.modules[__name__])
+    conf_urls = paginas.confianca(sys.modules[__name__], len(terms))
+    sig_urls = paginas.siglas(sys.modules[__name__], terms)
+    own = [p for p in posts if not p.get("gerado_por")]
+    today = dt.date.today().isoformat()
+    def smfile(name, urls, lastmod={}, images=None):
+        rows = "".join(f"<url><loc>{BASE}{u}</loc>" + (f"<lastmod>{lastmod[u]}</lastmod>" if u in lastmod else "")
+                       + (f"<image:image><image:loc>{BASE}{images[u]}</image:loc></image:image>" if images and u in images else "") + "</url>" for u in urls)
+        (OUT / name).write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">' + rows + "</urlset>", encoding="utf-8")
+        return name
+    latest = max([p["data"] for p in posts], default=dt.datetime.now(dt.timezone.utc)).date().isoformat()
+    files = [smfile("sitemap-paginas.xml", ["/"] + [f"/{s}/" for s in EDS] + conf_urls + calc_urls + sig_urls, {"/": latest, **{f"/{s}/": latest for s in EDS}}),
+             smfile("sitemap-glossario.xml", gl_urls, gl_lastmod), smfile("sitemap-diesel.xml", ds_urls, ds_lastmod)]
+    if own: files.append(smfile("sitemap-artigos.xml", [p["url"] for p in own], {p["url"]: p["data"].date().isoformat() for p in own}, {p["url"]: p["imagem"] for p in own}))
+    (OUT / "sitemap.xml").write_text('<?xml version="1.0" encoding="UTF-8"?>\n<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
+        + "".join(f"<sitemap><loc>{BASE}/{f}</loc></sitemap>" for f in files) + "</sitemapindex>", encoding="utf-8")
     items = "".join(f"<item><title>{E(p['titulo'])}</title><link>{BASE}{p['url']}</link><guid>{BASE}{p['url']}</guid><pubDate>{format_datetime(p['data'])}</pubDate><category>{E(EDS[p['editoria']])}</category><description>{E(p.get('resumo',''))}</description></item>" for p in posts[:30])
     (OUT / "rss.xml").write_text(f'<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0"><channel><title>{E(CFG["site_name"])}</title><link>{BASE}/</link><description>{E(CFG["tagline"])}</description><language>pt-br</language>{items}</channel></rss>', encoding="utf-8")
-    (OUT / "robots.txt").write_text(f"User-agent: *\nAllow: /\nSitemap: {BASE}/sitemap.xml\nSitemap: {BASE}/news-sitemap.xml\n")
+    (OUT / "robots.txt").write_text(f"User-agent: *\nAllow: /\nDisallow: /saude.json\nDisallow: /*?utm_\n\nSitemap: {BASE}/sitemap.xml\n")
+    col = json.loads((ROOT / "data" / "saude_coleta.json").read_text()) if (ROOT / "data" / "saude_coleta.json").exists() else {}
+    paginas.extras(sys.modules[__name__], {"build": dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds"), "ultima_coleta": col.get("hora"), "feeds_com_erro": col.get("erros", []),
+        "materias": len(posts), "termos": len(terms), "paginas_indexaveis": sum(len(x) for x in (gl_urls, ds_urls, calc_urls, conf_urls, sig_urls)) + 1 + len(EDS),
+        "diesel_semana": max(ds_lastmod.values(), default=None)})
     print(f"OK: {len(posts)} matérias -> {OUT}")
 
 if __name__ == "__main__": main()

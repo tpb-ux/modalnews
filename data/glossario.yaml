@@ -44,7 +44,7 @@
     - "Packing é a etapa de embalagem dos pedidos depois da separação. Inclui conferência dos itens, escolha da caixa, proteção, fechamento, pesagem e etiquetagem para o transporte."
     - "Um packing bem dimensionado reduz avarias e o custo de frete, porque evita caixas grandes demais que aumentam o peso cubado."
   ex: "Na bancada de packing, o operador confere o pedido com o leitor de código de barras e o sistema sugere a menor caixa capaz de acomodar os produtos."
-  rel: [Picking, Peso cubado, Expedição]
+  rel: [Picking, Peso cubado, Expedição, Fulfillment]
 - t: Last mile
   n: Última milha
   ed: transporte
@@ -83,7 +83,7 @@
     - "O MDF-e é o documento eletrônico que reúne todos os documentos fiscais (CT-e ou NF-e) transportados em um mesmo veículo em uma viagem. Funciona como um resumo da carga."
     - "Ele é obrigatório no transporte interestadual e em diversos casos intermunicipais, e deve ser encerrado ao final da viagem. Facilita a fiscalização nos postos, que consulta um único documento."
   ex: "Um caminhão que leva cargas de dez clientes para três estados viaja com um único MDF-e que relaciona os dez CT-e."
-  rel: [CT-e, Frete]
+  rel: [CT-e, Frete, RNTRC]
 - t: RNTRC
   n: Registro Nacional de Transportadores Rodoviários de Cargas
   ed: transporte
@@ -185,7 +185,7 @@
     - "O modal dutoviário transporta produtos por tubulações, como oleodutos, gasodutos e minerodutos. Funciona de forma contínua e com custo operacional baixo depois de construído."
     - "Exige investimento inicial alto e serve a poucos produtos, geralmente líquidos, gases ou minérios em polpa."
   ex: "Gás natural percorre milhares de quilômetros por gasoduto até as distribuidoras das capitais."
-  rel: [Modal ferroviário, Multimodal]
+  rel: [Modal ferroviário, Multimodal, Modal aquaviário]
 - t: Multimodal
   n: Transporte multimodal
   ed: transporte
@@ -303,7 +303,7 @@
     - "Taxa de vacância é o percentual de área disponível para locação em relação ao estoque total de imóveis de uma região. É o principal termômetro do mercado de galpões."
     - "Vacância baixa indica demanda aquecida e tende a elevar os preços de aluguel; vacância alta favorece os inquilinos na negociação."
   ex: "Com o crescimento do e-commerce, a vacância de galpões na Grande São Paulo caiu e os aluguéis subiram."
-  rel: [Condomínio logístico, Galpão classe AAA]
+  rel: [Condomínio logístico, Galpão classe AAA, Centro de distribuição]
 - t: Doca
   ed: armazenagem
   d:
@@ -399,7 +399,7 @@
     - "Lote econômico é a quantidade de compra que minimiza a soma dos custos de fazer pedidos e de manter estoque."
     - "Comprar pouco aumenta o número de pedidos e fretes; comprar muito eleva o custo de armazenagem e capital parado. O modelo encontra o equilíbrio."
   ex: "Uma empresa descobre que comprar 4 vezes por ano, em vez de todo mês, reduz o custo total de um insumo."
-  rel: [Ponto de pedido, Giro de estoque]
+  rel: [Ponto de pedido, Giro de estoque, Estoque de segurança]
 - t: Giro de estoque
   ed: supply-chain
   d:
@@ -427,7 +427,7 @@
   d:
     - "OTIF mede o percentual de pedidos entregues no prazo e completos, com todos os itens e quantidades corretos."
     - "É um dos indicadores mais usados para avaliar fornecedores e operadores logísticos, porque combina pontualidade e integridade."
-  ex: "De 1.000 entregas, 940 chegaram no prazo e 910 no prazo e completas: o OTIF é de 91%."
+  ex: "De 1.000 entregas, 940 chegaram no prazo e 910 no prazo e completas: o OTIF é de 91%. As 30 entregas pontuais, mas incompletas, contam como falha."
   rel: [Nível de serviço, Lead time, Ruptura]
 - t: Nível de serviço
   ed: supply-chain
@@ -481,7 +481,7 @@
     - "Kanban é um sistema visual de sinalização que autoriza a produção ou o abastecimento somente quando há consumo, usando cartões, caixas ou sinais eletrônicos."
     - "É uma das ferramentas do just in time e evita produzir além do necessário."
   ex: "Quando uma caixa de parafusos esvazia na linha, o cartão kanban volta ao almoxarifado e dispara a reposição."
-  rel: [Just in time, Milk run]
+  rel: [Just in time, Milk run, Lead time]
 - t: Efeito chicote
   n: Bullwhip effect
   ed: supply-chain
@@ -562,7 +562,7 @@
     - "Palete PBR é o padrão brasileiro de palete de madeira, com medidas de 1,00 m x 1,20 m, desenvolvido para padronizar a movimentação de cargas no varejo e na indústria."
     - "A padronização facilita a troca de paletes entre empresas e a ocupação eficiente de caminhões e porta-paletes."
   ex: "Uma carreta comum transporta 28 paletes PBR."
-  rel: [Paletização, Porta-palete]
+  rel: [Paletização, Porta-palete, Doca]
 - t: Paletização
   ed: armazenagem
   d:
@@ -616,7 +616,7 @@
     - "AGV é um veículo autoguiado que transporta materiais seguindo caminhos predefinidos, por fitas, ímãs ou referências fixas."
     - "Comum em fábricas e armazéns, reduz deslocamentos manuais e acidentes em fluxos repetitivos."
   ex: "AGVs levam paletes da linha de produção até a área de expedição sem operadores."
-  rel: [AMR, Automação de armazém]
+  rel: [AMR, Automação de armazém, WMS]
 - t: AMR
   n: Autonomous Mobile Robot
   ed: tecnologia
@@ -639,7 +639,7 @@
     - "Gêmeo digital é uma réplica virtual de uma operação física, alimentada por dados reais, que permite simular cenários antes de implementá-los."
     - "Na logística, é usado para testar layouts de armazéns, mudanças de rede de CDs e efeitos de picos de demanda."
   ex: "Antes de abrir um novo CD, a empresa simula no gêmeo digital o fluxo da Black Friday para dimensionar docas e equipes."
-  rel: [Torre de controle, Automação de armazém]
+  rel: [Torre de controle, Automação de armazém, Centro de distribuição]
 - t: Incoterms
   ed: comercio-exterior
   d:
@@ -745,7 +745,7 @@
     - "Ex-tarifário é a redução temporária do imposto de importação para bens de capital e de informática sem produção nacional equivalente."
     - "Estimula a modernização da indústria e da infraestrutura, incluindo equipamentos de movimentação e automação logística."
   ex: "Uma empresa importa um sistema de transelevadores com alíquota reduzida graças a um ex-tarifário."
-  rel: [NCM, Drawback]
+  rel: [NCM, Drawback, Despacho aduaneiro]
 - t: OEA
   n: Operador Econômico Autorizado
   ed: comercio-exterior
@@ -753,7 +753,7 @@
     - "OEA é a certificação concedida pela Receita Federal a empresas da cadeia de comércio exterior que comprovam segurança e conformidade."
     - "Empresas certificadas têm menos fiscalização, prioridade na liberação e reconhecimento em acordos com outros países."
   ex: "Um importador OEA tem a maior parte de suas declarações parametrizadas em canal verde."
-  rel: [Canais de parametrização, Despacho aduaneiro]
+  rel: [Canais de parametrização, Despacho aduaneiro, Siscomex]
 - t: Porto seco
   ed: comercio-exterior
   d:
@@ -782,7 +782,7 @@
     - "Free time é o período sem cobrança que o armador concede para uso do contêiner após a descarga ou antes do embarque."
     - "Negociar um free time maior é estratégico para importadores que dependem de despachos mais demorados."
   ex: "O importador negocia 21 dias de free time em vez dos 7 dias padrão."
-  rel: [Demurrage, Armador]
+  rel: [Demurrage, Armador, TEU]
 - t: Armador
   ed: comercio-exterior
   d:
@@ -828,7 +828,7 @@
     - "Nearshoring é a transferência de produção ou de fornecedores para países mais próximos do mercado consumidor, reduzindo distâncias e riscos logísticos."
     - "Ganhou força após as crises nas cadeias globais e pode beneficiar o Brasil e outros países da América Latina como fornecedores dos Estados Unidos."
   ex: "Uma fabricante americana passa a comprar componentes no México em vez da Ásia, reduzindo o transit time de semanas para dias."
-  rel: [Supply chain, Lead time]
+  rel: [Supply chain, Lead time, Custo logístico]
 - t: Custo logístico
   ed: mercado
   d:

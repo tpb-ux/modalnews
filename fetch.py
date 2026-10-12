@@ -153,15 +153,15 @@ def main():
     if a.revisar: return revisar(cfg, a.remover)
     limit = a.max or cfg.get("max_por_execucao", 12); per = cfg.get("max_por_feed", 3)
     cutoff = dt.datetime.now(dt.timezone.utc) - dt.timedelta(days=cfg.get("max_idade_dias", 3))
-    CONTENT.mkdir(exist_ok=True); links, titles = existing(); new = 0
+    CONTENT.mkdir(exist_ok=True); links, titles = existing(); new = 0; erros = []
     for fd in cfg["feeds"]:
         if new >= limit: break
         try:
             raw = urllib.request.urlopen(urllib.request.Request(fd["url"], headers={"User-Agent": UA}), timeout=20).read()
             d = feedparser.parse(raw)
         except Exception as ex:
-            print(f"! {fd['nome']}: erro {ex}"); continue
-        if not d.entries: print(f"! {fd['nome']}: sem itens"); continue
+            print(f"! {fd['nome']}: erro {ex}"); erros.append({"feed": fd["nome"], "url": fd["url"], "erro": str(ex)[:120]}); continue
+        if not d.entries: print(f"! {fd['nome']}: sem itens"); erros.append({"feed": fd["nome"], "url": fd["url"], "erro": "sem itens"}); continue
         got = 0
         for e in d.entries:
             if got >= fd.get("max", per) or new >= limit: break
@@ -197,5 +197,8 @@ def main():
             if not a.dry_run: fn.write_text(body, encoding="utf-8")
             links.add(link); titles.add(norm(title)); got += 1; new += 1
     print(f"{new} matéria(s) nova(s).")
+    if not a.dry_run:
+        import json
+        (ROOT / "data" / "saude_coleta.json").write_text(json.dumps({"hora": dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds"), "novas": new, "erros": erros}, ensure_ascii=False, indent=1), encoding="utf-8")
 
 if __name__ == "__main__": main()

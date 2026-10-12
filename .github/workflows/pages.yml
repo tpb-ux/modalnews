@@ -16,6 +16,9 @@ jobs:
       - name: Coletar notícias (fetch.py)
         if: github.event_name != 'push'
         run: python fetch.py || echo "fetch falhou; seguindo com o conteúdo existente"
+      - name: Atualizar preços do diesel (ANP, semanal)
+        if: github.event_name != 'push'
+        run: python tools/anp_diesel.py || echo "ANP indisponível; mantendo dados anteriores"
       - name: Commitar conteúdo novo
         if: github.event_name != 'push'
         run: |

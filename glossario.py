@@ -41,19 +41,27 @@ def build(B, posts):
     by = {t["t"]: t for t in terms}
     terms.sort(key=lambda t: B.slugify(t["t"]))
     # termos linkáveis (evita siglas de 2 letras e palavras muito genéricas)
-    linkable = sorted([t for t in terms if len(t["t"]) >= 3], key=lambda t: -len(t["t"]))
-    pats = {t["slug"]: re.compile(r"(?<![\w>/-])(" + re.escape(t["t"]) + r")(?![\w-])", re.I) for t in linkable}
+    # formas linkáveis: termo + aliases (nome por extenso). Termo mais longo vence; siglas curtas só em MAIÚSCULAS exatas.
+    forms = []
+    for t in terms:
+        names = [t["t"]] + [a for a in ([t["n"]] if t.get("n") else []) + t.get("aliases", []) if len(a) >= 5 and "(" not in a]
+        for nm in names:
+            if len(nm) < 3: continue
+            sigla = nm.replace("-", "").replace("&", "").isupper() and len(nm) <= 5
+            forms.append((t, nm, re.compile(r"(?<![\w>/-])(" + re.escape(nm) + r")(?![\w-])", 0 if sigla else re.I)))
+    forms.sort(key=lambda x: -len(x[1]))
+    linkable = forms
 
     def interlink(html, skip=None, budget=6, prefix_target=""):
-        """Linka a 1ª menção de outros termos do glossário dentro de HTML simples (só fora de tags/links)."""
+        """Linka a 1ª menção de termos do glossário (e aliases) fora de tags/links. Um link por termo, sem autolink."""
         done = set(); n = 0
-        for t in linkable:
+        for t, nm, pat in linkable:
             if n >= budget: break
             if t["slug"] == skip or t["slug"] in done: continue
-            parts = re.split(r"(<a\b.*?</a>|<[^>]+>)", html, flags=re.S)
+            parts = re.split(r"(<a\b.*?</a>|<h[1-6].*?</h[1-6]>|<[^>]+>)", html, flags=re.S)
             for i, part in enumerate(parts):
                 if part.startswith("<"): continue
-                m = pats[t["slug"]].search(part)
+                m = pat.search(part)
                 if m:
                     link = f'<a class="gl-link" href="{G}{t["slug"]}/" title="O que é {E(t["t"])}?">{m.group(1)}</a>'
                     parts[i] = part[:m.start()] + link + part[m.end():]
@@ -63,9 +71,7 @@ def build(B, posts):
     def related_posts(t, k=3):
         keys = [t["t"].lower()] + ([t["n"].lower()] if t.get("n") and len(t["n"]) > 3 else [])
         keys = [x for x in keys if len(x) >= 4]
-        hits = [p for p in posts if any(x in (p["titulo"] + " " + p.get("resumo", "")).lower() for x in keys)]
-        if len(hits) < k:
-            hits += [p for p in posts if p["editoria"] == t.get("ed") and p not in hits][: k - len(hits)]
+        hits = [p for p in posts if any(re.search(r"(?<!\w)" + re.escape(x) + r"(?!\w)", (p["titulo"] + " " + p.get("resumo", "")).lower()) for x in keys)]
         return hits[:k]
 
     def faqs(t):
@@ -90,13 +96,15 @@ def build(B, posts):
                 " ".join(f"{r['t']}: {lower_first(sentences(r['d'][0])[0])}" for r in rel[:3]), rest)))
         return out
 
-    urls = []
+    urls, gate_log = [], []
+    TEMAS = {"transporte": "Transporte e frete", "armazenagem": "Operação e armazenagem", "supply-chain": "Supply chain e planejamento",
+             "comercio-exterior": "Comércio exterior e Incoterms", "tecnologia": "Tecnologia e sistemas", "mercado": "Mercado e custos"}
     for t in terms:
         T, url, ed = t["t"], f"{G}{t['slug']}/", t.get("ed", "mercado")
         rel = [by[r] for r in t.get("rel", []) if r in by]
         snippet = fit(t["d"][0], t["d"][1] if len(t["d"]) > 1 else "", 30, 60)
         fq = [(x["q"], x["a"]) for x in manual[t["slug"]]] if t["slug"] in manual else faqs(t)
-        rp = related_posts(t)
+        rp = related_posts(t, 5)
         im = imgs.get(t["slug"]) or {"arquivo": f"static/img/editoria/{ed}.webp", "largura": 1200, "altura": 630, "proprio": True,
                                       "titulo_original": f"ilustração da editoria {EDS.get(ed, ed)}", "busca": ""}
         rf = refs.get(t["slug"], [])
@@ -106,8 +114,8 @@ def build(B, posts):
         toc = [("definicao", f"O que significa {T}"), ("como-funciona", f"Como funciona {T}"), ("exemplo", f"Exemplo prático de {T}"),
                ("faq", f"Perguntas frequentes sobre {T}")] + ([("noticias", "Notícias relacionadas")] if rp else []) + \
               ([("relacionados", "Termos relacionados")] if rel else []) + ([("referencias", "Referências")] if rf else [])
-        defs = interlink("".join(f"<p>{E(x)}</p>" for x in t["d"][:1]), t["slug"], 3)
-        how = interlink("".join(f"<p>{E(x)}</p>" for x in t["d"][1:]), t["slug"], 3)
+        defs_how = interlink("".join(f"<p>{E(x)}</p>" for x in t["d"][:1]) + "<!--split-->" + "".join(f"<p>{E(x)}</p>" for x in t["d"][1:]), t["slug"], 8)
+        defs, how = defs_how.split("<!--split-->")
         fig = ""
         if im:
             src = "/" + im["arquivo"]; th = src[:-5] + "-480.webp"
@@ -136,6 +144,12 @@ def build(B, posts):
 {f'<h2 id="relacionados">Termos relacionados</h2><div class="chips">{rel_html}</div>' if rel else ''}
 {f'<h2 id="referencias">Referências</h2><ul class="refs">{rf_html}</ul>' if rf else ''}
 <p class="more-ed">Acompanhe as notícias de <a href="/{ed}/">{E(EDS.get(ed, ed))}</a> no {E(CFG['site_name'])} ou volte ao <a href="{G}">Glossário de Logística</a>.</p></article>"""
+        body_words = words(" ".join(t["d"]) + " " + t["ex"] + " " + " ".join(a for _, a in fq))
+        falhas = [m for ok_, m in [(body_words >= 300, f"corpo {body_words} palavras < 300"), (len(rel) >= 3, f"{len(rel)} relacionados < 3"),
+                                   (len(fq) >= 2, "FAQ < 2"), (len(rf) >= 1, "sem fonte")] if not ok_]
+        if falhas: gate_log.append(f"{t['slug']}: " + "; ".join(falhas))
+        tema = TEMAS.get(ed, ed)
+        b = b.replace(f'<a href="{G}">Glossário</a> › {E(T)}</nav>', f'<a href="{G}">Glossário</a> › <a href="{G}tema/{ed}/">{E(tema)}</a> › {E(T)}</nav>', 1)
         page_url = BASE + url
         ld = {"@context": "https://schema.org", "@graph": [
             {"@type": "WebPage", "@id": page_url, "url": page_url, "name": title, "description": desc, "inLanguage": "pt-BR",
@@ -145,9 +159,11 @@ def build(B, posts):
              "inDefinedTermSet": {"@type": "DefinedTermSet", "name": f"Glossário de Logística — {CFG['site_name']}", "url": BASE + G}},
             {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in fq]},
             {"@type": "BreadcrumbList", "@id": page_url + "#breadcrumb", "itemListElement": [
-                {"@type": "ListItem", "position": i + 1, "name": n, "item": BASE + u} for i, (n, u) in enumerate([("Início", "/"), ("Glossário", G), (T, url)])]}]}
-        B.write(url, B.page(f"{title} | {CFG['site_name']}", desc, url, b, BASE + "/" + im["arquivo"] if im else None, "article", ld))
-        urls.append(url)
+                {"@type": "ListItem", "position": i + 1, "name": n, "item": BASE + u} for i, (n, u) in enumerate([("Início", "/"), ("Glossário", G), (tema, f"{G}tema/{ed}/"), (T, url)])]}]}
+        ld["@graph"][1]["@id"] = page_url + "#termo"; ld["@graph"][1]["dateModified"] = upd
+        ld["@graph"][1]["inDefinedTermSet"]["@id"] = BASE + G + "#set"
+        B.write(url, B.page(f"{title} | {CFG['site_name']}", desc, url, b, BASE + "/" + im["arquivo"] if im else None, "article", ld, robots="noindex,follow" if falhas else None))
+        if not falhas: urls.append(url)
 
     # ---------- índice A-Z ----------
     groups = {}
@@ -171,7 +187,7 @@ def build(B, posts):
     page_url = BASE + G
     ld = {"@context": "https://schema.org", "@graph": [
         {"@type": "CollectionPage", "@id": page_url, "url": page_url, "name": f"Glossário de Logística: {n} termos explicados", "inLanguage": "pt-BR", "dateModified": upd},
-        {"@type": "DefinedTermSet", "name": f"Glossário de Logística — {CFG['site_name']}", "url": page_url,
+        {"@type": "DefinedTermSet", "@id": page_url + "#set", "name": f"Glossário de Logística — {CFG['site_name']}", "url": page_url,
          "hasDefinedTerm": [{"@type": "DefinedTerm", "name": t["t"], "url": f"{BASE}{G}{t['slug']}/"} for t in terms]},
         {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in ifaq]},
         {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Início", "item": BASE + "/"},
@@ -183,8 +199,27 @@ def build(B, posts):
 <nav class="toc"><strong>Nesta página</strong><ol><li><a href="#az">Termos de A a Z</a></li><li><a href="#editorias">Termos por área</a></li><li><a href="#faq">Perguntas frequentes</a></li></ol></nav>
 <h2 id="az">Termos de logística de A a Z</h2><nav class="letters">{letters}</nav>{lists}
 <h2 id="editorias">Termos por área da logística</h2><ul class="by-ed">{ed_html}</ul>
+<p>Veja por tema: {" · ".join(f'<a href="{G}tema/{e}/">{E(nm)}</a>' for e, nm in TEMAS.items())}. Por letra: {" ".join(f'<a href="{G}letra/{k.lower()}/">{k}</a>' for k in groups)}. Consulte também a <a href="/siglas/">lista de siglas</a>.</p>
 <h2 id="faq">Perguntas frequentes sobre o glossário</h2>{ifaq_html}</article>"""
     B.write(G, B.page(f"Glossário de Logística: {n} termos explicados | {CFG['site_name']}",
                       f"Glossário de logística de A a Z com {n} termos: cross docking, WMS, TMS, Incoterms, FOB, CIF, CT-e, MDF-e, last mile e mais, com exemplos e FAQ.", G, body, jsonld=ld))
+    extra = []
+    for k, v in groups.items():
+        u = f"{G}letra/{k.lower()}/"; idx = len(v) >= 5
+        lst = "".join(f'<li><a href="{G}{t["slug"]}/"><strong>{E(t["t"])}</strong></a> — {E(fit(t["d"][0], "", 5, 22))}</li>' for t in v)
+        bb = f'<article class="post">{B.paginas_crumbs([("Início", "/"), ("Glossário", G), (f"Letra {k}", u)]) if hasattr(B, "paginas_crumbs") else ""}<h1>Termos de logística com a letra {k}</h1><p class="snippet">{len(v)} termos do Glossário de Logística começando com {k}, cada um com definição curta e link para a explicação completa.</p><nav class="letters">{letters}</nav><ul class="deflist">{lst}</ul></article>'
+        B.write(u, B.page(f"Glossário de logística — letra {k} | {CFG['site_name']}", f"Termos de logística com a letra {k}: " + ", ".join(t["t"] for t in v[:8]) + "."[:155], u, bb, robots=None if idx else "noindex,follow"))
+        if idx: extra.append(u)
+    for ed, nome in TEMAS.items():
+        v = by_ed.get(ed, []); u = f"{G}tema/{ed}/"; idx = len(v) >= 6
+        lst = "".join(f'<li><a href="{G}{t["slug"]}/"><strong>{E(t["t"])}</strong></a> — {E(fit(t["d"][0], "", 5, 22))}</li>' for t in sorted(v, key=lambda t: t["slug"]))
+        bb = f'<article class="post"><h1>{E(nome)}: termos e conceitos</h1><p class="snippet">{len(v)} termos de {E(nome.lower())} explicados no Glossário de Logística do {E(CFG["site_name"])}, com definição, exemplo prático, perguntas frequentes e fontes. Acompanhe também as <a href="/{ed}/">notícias de {E(EDS[ed])}</a>.</p><ul class="deflist">{lst}</ul></article>'
+        ldt = {"@context": "https://schema.org", "@graph": [{"@type": "DefinedTermSet", "name": f"{nome} — Glossário de Logística", "url": BASE + u, "hasDefinedTerm": [{"@type": "DefinedTerm", "name": t["t"], "url": f"{BASE}{G}{t['slug']}/"} for t in v]},
+               {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Início", "item": BASE + "/"}, {"@type": "ListItem", "position": 2, "name": "Glossário", "item": BASE + G}, {"@type": "ListItem", "position": 3, "name": nome, "item": BASE + u}]}]}
+        B.write(u, B.page(f"{nome}: glossário de termos | {CFG['site_name']}", f"{len(v)} termos de {nome.lower()}: " + ", ".join(t["t"] for t in v[:6]) + ". Definições, exemplos e FAQ."[:155], u, bb, jsonld=ldt, robots=None if idx else "noindex,follow"))
+        if idx: extra.append(u)
+    (root / "data" / "glossario_qualidade.log").write_text("\n".join(gate_log) + "\n", encoding="utf-8")
+    print(f"Glossário: barreiras de qualidade — {len(gate_log)} verbete(s) em noindex (ver data/glossario_qualidade.log)")
     print(f"Glossário: {n} termos, {sum(1 for t in terms if t['slug'] in imgs)} com foto livre (demais com ilustração própria), {sum(1 for t in terms if t['slug'] in refs)} com referências, {sum(1 for t in terms if t['slug'] in manual)} com FAQ manual")
-    return [G] + urls, interlink
+    allu = [G] + urls + extra
+    return allu, interlink, {u: upd for u in allu}, terms
