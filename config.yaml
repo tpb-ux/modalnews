@@ -22,6 +22,8 @@ empresa:
   cnpj: 53.816.326/0001-58
   endereco: {logradouro: "Av. Pacaembu, 1088", bairro: Pacaembu, cidade: São Paulo, uf: SP, cep: 01234-000}
   email: ""        # placeholder: preencher quando o usuário enviar (fica oculto enquanto vazio)
+  formulario_url: ""   # opcional: link de formulário externo (oculto enquanto vazio)
+  encarregado_lgpd: "" # opcional: nome do encarregado (DPO)
   redes: []        # placeholder: URLs das redes sociais (ficam ocultas enquanto vazias)
 # Verificação de buscadores: cole só o valor do content da meta tag
 verificacao:

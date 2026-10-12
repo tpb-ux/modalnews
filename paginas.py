@@ -227,6 +227,44 @@ LINKS = [
  ("Ferramentas do Modal News", [("Calculadora de cubagem", "/calculadoras/cubagem/"), ("Calculadora de custo de diesel", "/calculadoras/custo-diesel-viagem/"), ("Preço do diesel por cidade", "/diesel/"), ("Glossário de Logística", "/glossario/"), ("Siglas da logística", "/siglas/")]),
 ]
 
+FAQ_INST = {
+ "/sobre/": [("O Modal News é gratuito?", "Sim. Todo o conteúdo, inclusive glossário, páginas de dados e calculadoras, é de acesso livre e não exige cadastro."),
+   ("O Modal News usa inteligência artificial para escrever notícias?", "Não. As notícias são resumos curtos extraídos dos feeds públicos das fontes, sempre com link para o original; as páginas de dados são geradas a partir de bases oficiais."),
+   ("De onde vêm as notícias?", "De feeds RSS públicos de portais especializados em logística e transporte, listados no repositório do site. Só entram notícias com imagem própria da fonte."),
+   ("Com que frequência o site é atualizado?", "As notícias são coletadas a cada 3 horas; dados como preço do diesel e tarifas de pedágio são atualizados quando os órgãos oficiais publicam novas versões."),
+   ("Quem mantém o Modal News?", "A empresa indicada no expediente, que também traz CNPJ e endereço. O código que gera o site é aberto.")],
+ "/politica-editorial/": [("O Modal News reescreve notícias de outros sites?", "Não. Publicamos o título original, um resumo curto do próprio feed e o link para a fonte."),
+   ("Por que as páginas de notícias não aparecem no Google?", "Porque o conteúdo pertence à fonte original. Essas páginas levam noindex; o que indexamos é o conteúdo próprio do portal."),
+   ("Como as notícias são escolhidas?", "Por fontes pré-selecionadas do setor e filtros automáticos de relevância, de palavras bloqueadas e de fontes bloqueadas."),
+   ("Uma notícia fora do tema pode ser removida?", "Sim. Itens fora do tema são removidos, ficam registrados e não voltam a ser coletados."),
+   ("As imagens das notícias são creditadas?", "Sim. Cada imagem traz o nome da fonte e a matéria tem link para o original. Titulares podem pedir remoção pela política descrita nos termos de uso.")],
+ "/metodologia/": [("De onde vêm os preços do diesel?", "Do Levantamento de Preços de Combustíveis da ANP, publicado semanalmente."),
+   ("Como são calculadas as distâncias entre cidades?", "Pelo roteador OSRM com dados do OpenStreetMap, entre os centros dos municípios, guardadas em cache."),
+   ("De onde vêm as tarifas de pedágio e o frete mínimo?", "Dos dados abertos e das resoluções da ANTT, com o ato normativo indicado em cada página."),
+   ("O Modal News faz estimativas próprias de preço?", "Não. Mostramos os números publicados pelas fontes; cálculos derivados, como custo de diesel de uma viagem, são indicados como estimativa e mostram a fórmula."),
+   ("Onde vejo o código que gera os dados?", "No repositório público do site, indicado nesta página.")],
+ "/correcoes/": [("Como peço uma correção?", "Pelos canais da página de contato ou abrindo um pedido no repositório público, informando página, trecho e a fonte que comprova a correção."),
+   ("Em quanto tempo a correção é feita?", "Erros factuais são corrigidos assim que confirmados."),
+   ("As correções ficam registradas?", "Sim, no histórico público de commits do repositório, com data e descrição."),
+   ("E se o erro estiver numa notícia de outro portal?", "O erro deve ser comunicado à fonte original; podemos remover a notícia do Modal News."),
+   ("Posso sugerir um termo novo para o glossário?", "Sim, pelos mesmos canais usados para correções.")],
+ "/privacidade/": [("O Modal News usa cookies?", "Não usamos cookies próprios, ferramentas de audiência nem anúncios."),
+   ("O site coleta meus dados pessoais?", "Não. Não há cadastro nem formulários próprios; a hospedagem (GitHub Pages) pode registrar dados técnicos de acesso para segurança."),
+   ("Os valores digitados nas calculadoras são enviados a algum servidor?", "Não. Os cálculos são feitos no seu navegador."),
+   ("Quem é o controlador para fins da LGPD?", "A empresa indicada nesta página e no expediente, com CNPJ e endereço."),
+   ("Como exerço meus direitos de titular?", "Pelo canal indicado nesta página. Para assuntos com dados pessoais, não use o canal público de issues.")],
+ "/contato/": [("Como falo com o Modal News?", "Pelos canais listados nesta página."),
+   ("Como peço a remoção de uma imagem ou notícia?", "Envie a URL da página, o conteúdo e a comprovação de titularidade; a remoção ocorre em até 2 dias úteis, conforme os termos de uso."),
+   ("Onde peço correção de um dado?", "Pelos mesmos canais; veja também a política de correções."),
+   ("Posso enviar dados pessoais pelo canal público de issues?", "Não. O repositório é público; para assuntos de privacidade use a correspondência ou o e-mail, quando disponível."),
+   ("Onde estão CNPJ e endereço da empresa responsável?", "Nesta página e no expediente.")],
+ "/termos/": [("Posso reproduzir o conteúdo do Modal News?", "Textos próprios podem ser citados com link para a página de origem. Notícias de terceiros pertencem às fontes."),
+   ("Como funciona a remoção de conteúdo a pedido do titular?", "O titular envia URL, conteúdo e comprovação pelos canais de contato; removemos em até 2 dias úteis e bloqueamos nova coleta."),
+   ("Os dados das páginas são oficiais?", "Vêm de fontes oficiais indicadas em cada página, mas podem ter defasagem; confira sempre a fonte."),
+   ("As calculadoras substituem tabelas oficiais?", "Não. Os resultados são estimativas."),
+   ("Os termos podem mudar?", "Sim, e as mudanças ficam no histórico público do repositório.")],
+}
+
 def confianca(B, terms_count):
     E, BASE, CFG = B.E, B.BASE, B.CFG; urls = []
     repo = CFG.get("repo_url", "https://github.com/tpb-ux/modalnews")
@@ -239,7 +277,7 @@ def confianca(B, terms_count):
 <li><strong>Calculadoras:</strong> cubagem e custo de diesel por viagem.</li></ul>
 <h2>Como o portal é feito</h2><p>O site é estático, gerado por código aberto e publicado automaticamente. Não usamos inteligência artificial para escrever ou reescrever notícias. Veja a <a href="/politica-editorial/">política editorial</a> e a <a href="/metodologia/">metodologia de dados</a>.</p>"""),
      "/politica-editorial/": ("Política editorial", "Como o Modal News escolhe fontes, usa RSS, atribui créditos e separa notícia de referência.", """
-<h2>Notícias de outras fontes</h2><p>As notícias da home e das editorias vêm de feeds RSS públicos de portais do setor e de buscas no Google Notícias. Para cada item publicamos apenas o título original, um resumo curto do próprio feed e o link "Leia na íntegra" para a fonte. Não reescrevemos nem reproduzimos o texto completo de terceiros.</p>
+<h2>Notícias de outras fontes</h2><p>As notícias da home e das editorias vêm de feeds RSS públicos de portais especializados do setor. Só publicamos notícias que tenham imagem própria da fonte. Para cada item publicamos apenas o título original, um resumo curto do próprio feed e o link "Leia na íntegra" para a fonte. Não reescrevemos nem reproduzimos o texto completo de terceiros.</p>
 <p>As páginas individuais dessas notícias não são indexadas pelos buscadores (noindex), porque o conteúdo pertence à fonte original.</p>
 <h2>Seleção e filtros</h2><p>Mantemos uma lista de fontes do setor e aplicamos filtros automáticos de relevância, bloqueio de fontes e de palavras (política, crimes, promoções e assuntos fora da logística). Itens removidos ficam registrados para não voltarem.</p>
 <h2>Conteúdo próprio</h2><p>O glossário, as calculadoras e as páginas de dados são produzidos pelo Modal News. Textos de referência não trazem opinião. Dados numéricos sempre indicam fonte e data.</p>
@@ -259,11 +297,36 @@ def confianca(B, terms_count):
 <h2>Hospedagem</h2><p>O site é hospedado no GitHub Pages. Como qualquer servidor web, o provedor de hospedagem pode registrar dados técnicos de acesso, como endereço IP, para segurança e operação, conforme a <a href="https://docs.github.com/pt/site-policy/privacy-policies/github-general-privacy-statement" target="_blank" rel="noopener">declaração de privacidade do GitHub</a>.</p>
 <h2>Links externos</h2><p>Ao clicar em links para fontes de notícias e órgãos públicos, você passa a seguir as políticas desses sites.</p>
 <h2>Calculadoras</h2><p>Os cálculos são feitos no seu navegador. Os valores digitados não são enviados a nenhum servidor.</p>
-<h2>Seus direitos (LGPD)</h2><p>Como não coletamos dados pessoais, não há dados seus armazenados pelo Modal News. Dúvidas podem ser enviadas pelo canal indicado na <a href="/correcoes/">política de correções</a>.</p>"""),
+<h2>Seus direitos (LGPD)</h2><p>Como não coletamos dados pessoais, não há dados seus armazenados pelo Modal News. Ainda assim, você pode exercer os direitos previstos no art. 18 da Lei 13.709/2018 (confirmação de tratamento, acesso, correção, eliminação e informação sobre compartilhamento).</p>
+<h2>Controlador e canal do titular</h2><p>Controlador: <strong>{EMP_RS}</strong>, CNPJ {EMP_CNPJ}, {EMP_END}. {CANAL_LGPD} Respondemos em até 15 dias, conforme o art. 19 da LGPD. Veja também a página de <a href="/contato/">contato</a>.</p>"""),
+     "/contato/": ("Contato", "Como falar com o Modal News: correções, remoção de conteúdo e imagens, privacidade (LGPD) e sugestões de pauta.", """
+<p>O Modal News é mantido por <strong>{EMP_RS}</strong>, CNPJ {EMP_CNPJ}, {EMP_END}.</p>
+<h2>Canais</h2><ul>{CANAIS}</ul>
+<h2>Assuntos</h2><ul><li><strong>Correção de conteúdo:</strong> informe a página e o trecho; veja a <a href="/correcoes/">política de correções</a>.</li>
+<li><strong>Remoção de notícia ou imagem:</strong> veja a <a href="/termos/#remocao">política de remoção</a> nos termos de uso.</li>
+<li><strong>Privacidade e LGPD:</strong> veja a <a href="/privacidade/">política de privacidade</a>.</li>
+<li><strong>Dados do expediente:</strong> veja o <a href="/expediente/">expediente</a>.</li></ul>"""),
+     "/termos/": ("Termos de uso", "Regras de uso do Modal News: conteúdo de terceiros, imagens, dados públicos, calculadoras e política de remoção de conteúdo.", """
+<h2>Aceitação</h2><p>Ao usar o Modal News você concorda com estes termos. O portal é gratuito, não exige cadastro e é mantido por <strong>{EMP_RS}</strong>, CNPJ {EMP_CNPJ}.</p>
+<h2>Notícias de terceiros</h2><p>As notícias da home e das editorias são resumos curtos de feeds RSS públicos, sempre com o nome da fonte e o link "Leia na íntegra". Os direitos sobre o texto original pertencem aos respectivos veículos. As páginas individuais dessas notícias não são indexadas pelos buscadores.</p>
+<h2>Imagens</h2><p>Imagens de notícias são as divulgadas pela própria fonte no feed ou na página da matéria, exibidas com crédito à fonte e link para o original. Fotos do glossário vêm de bancos com licença livre, com autor e licença na legenda.</p>
+<h2 id="remocao">Política de remoção de conteúdo e imagens</h2><p>Se você é titular de direitos de um texto ou imagem exibido aqui e não autoriza o uso, envie o pedido por um dos canais da página de <a href="/contato/">contato</a> informando: a URL da página no Modal News, o conteúdo em questão e a comprovação de titularidade. Removemos o conteúdo em até 2 dias úteis após o recebimento, e o item fica registrado para não voltar a ser coletado.</p>
+<h2>Dados públicos e calculadoras</h2><p>Preços, distâncias, tarifas e pisos de frete vêm de fontes oficiais indicadas em cada página (ANP, ANTT, IBGE, ANAC, ANTAQ, OpenStreetMap/OSRM) e podem conter defasagem. Os resultados das calculadoras são estimativas e não substituem contratos, tabelas e documentos oficiais. Veja a <a href="/metodologia/">metodologia</a>.</p>
+<h2>Reprodução</h2><p>Textos próprios (glossário, guias e páginas de dados) podem ser citados com link para a página de origem.</p>
+<h2>Alterações</h2><p>Estes termos podem ser atualizados; as mudanças ficam registradas no histórico público do repositório do site.</p>"""),
     }
+    emp = CFG.get("empresa") or {}; en = emp.get("endereco") or {}
+    email = (emp.get("email") or "").strip(); form = (emp.get("formulario_url") or "").strip(); dpo = (emp.get("encarregado_lgpd") or "").strip()
+    canais = ([f'<li>E-mail: <a href="mailto:{E(email)}">{E(email)}</a></li>'] if email else []) + ([f'<li><a href="{E(form)}" target="_blank" rel="noopener">Formulário de contato</a></li>'] if form else []) \
+        + [f'<li>Pedidos públicos (correções e remoções): <a href="{repo}/issues" target="_blank" rel="noopener">{repo}/issues</a></li>'] \
+        + [f'<li>Correspondência: {E(emp.get("razao_social", ""))}, {E(en.get("logradouro", ""))}, {E(en.get("bairro", ""))}, {E(en.get("cidade", ""))}-{E(en.get("uf", ""))}, CEP {E(en.get("cep", ""))}</li>']
+    canal = (f"Encarregado: {E(dpo)}. " if dpo else "") + (f'Pedidos do titular: <a href="mailto:{E(email)}">{E(email)}</a>.' if email else "Pedidos do titular podem ser enviados por correspondência ao endereço acima ou pelos canais da página de contato; para dados pessoais, não use o canal público de issues.")
+    rep = {"{EMP_RS}": E(emp.get("razao_social", "")), "{EMP_CNPJ}": E(emp.get("cnpj", "")), "{EMP_END}": E(f'{en.get("logradouro", "")}, {en.get("bairro", "")}, {en.get("cidade", "")}-{en.get("uf", "")}, CEP {en.get("cep", "")}'), "{CANAIS}": "".join(canais), "{CANAL_LGPD}": canal}
     for url, (h1, desc, html) in pages.items():
-        body = f'<article class="post">{crumbs_html(E, [("Início", "/"), (h1, url)])}<h1>{E(h1)}</h1>{html}</article>'
-        B.write(url, B.page(f"{h1} | {CFG['site_name']}", desc, url, body, jsonld={"@context": "https://schema.org", "@graph": [{"@type": "WebPage", "name": h1, "url": BASE + url}, crumbs_ld(BASE, [("Início", "/"), (h1, url)])]}))
+        for k, v in rep.items(): html = html.replace(k, v)
+        fq = FAQ_INST.get(url, [])
+        body = f'<article class="post">{crumbs_html(E, [("Início", "/"), (h1, url)])}<h1>{E(h1)}</h1>{html}{faq_block(E, fq) if fq else ""}</article>'
+        B.write(url, B.page(f"{h1} | {CFG['site_name']}", desc, url, body, jsonld={"@context": "https://schema.org", "@graph": [{"@type": "ContactPage" if url == "/contato/" else "WebPage", "name": h1, "url": BASE + url}, crumbs_ld(BASE, [("Início", "/"), (h1, url)])] + ([faq_ld(fq)] if fq else [])}))
         urls.append(url)
     # links úteis
     url = "/links-uteis/"
