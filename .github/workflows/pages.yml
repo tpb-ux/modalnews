@@ -62,10 +62,11 @@ jobs:
       - run: git pull --ff-only || true
       - run: python build.py > /dev/null
       - name: Notificar IndexNow (só URLs novas/alteradas)
-        run: python indexnow.py ping
+        run: sleep 60 && python indexnow.py ping
       - name: Guardar hashes enviados
         run: |
           git config user.name "modalnews-bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          [ -f data/indexnow_hashes.json ] || exit 0
           git add data/indexnow_hashes.json
           git diff --cached --quiet || (git commit -m "IndexNow: hashes [skip ci]" && git push)
