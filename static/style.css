@@ -33,7 +33,7 @@ article.post blockquote{border-left:4px solid var(--a);margin:0;padding:8px 14px
 footer{background:var(--d);color:#c9cbd0;margin-top:48px;font-size:.88rem}
 .fgrid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:24px;padding:36px 16px}.fgrid .fh{color:#fff;text-transform:uppercase;font-size:.8rem;margin:0 0 10px;border-bottom:2px solid var(--a);display:inline-block;padding-bottom:4px}
 .fgrid a{display:block;padding:3px 0}.fgrid a:hover{color:var(--a)}.flogo{background:#fff;padding:8px 10px;border-radius:6px;height:auto}
-.fbot{border-top:1px solid #444a55;padding:14px 16px;font-size:.78rem;color:#96989D}
+.fbot{border-top:1px solid #444a55;padding:14px 16px;font-size:.78rem;color:#B4B6BB}
 @media(max-width:860px){.hero{grid-template-columns:1fr}.hero-main h2{font-size:1.4rem}.fgrid{grid-template-columns:1fr}.tag{display:none}article.post h1{font-size:1.6rem}}
 .crumbs{font-size:.8rem;color:var(--m);margin-bottom:10px}.crumbs a:hover{color:var(--a)}
 .exbox{background:#fdf0eb;border-left:4px solid var(--a);padding:12px 16px;border-radius:4px;margin:20px 0}.exbox p{margin:6px 0 0}
@@ -79,3 +79,6 @@ nav.ed a{scroll-snap-align:start;flex:0 0 auto}nav.ed .dd,nav.ed a[href="/glossa
 .relbox ul{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:4px 16px}.relbox a{font-weight:600;font-size:.92rem}
 .toc li{padding:3px 0}.toc a{display:inline-block;min-height:24px}
 .tblw{overflow-x:auto}.upd{font-size:.85rem;color:var(--m)}
+.kick{color:#A83212}
+.post p a,.post li a,.src a,.snippet a{text-decoration:underline;text-underline-offset:2px}
+.post .chips a,.relbox a,.post .crumbs a,.toc a{text-decoration:none}
