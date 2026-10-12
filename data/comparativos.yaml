@@ -1,0 +1,398 @@
+- slug: fob-vs-cif
+  a: fob
+  b: cif
+  na: FOB
+  nb: CIF
+  intro: FOB e CIF são Incoterms de transporte marítimo que definem até onde o vendedor paga e responde pela mercadoria. Em FOB, o risco passa ao comprador quando a carga está a bordo do navio no porto de embarque e o frete internacional é do comprador. Em CIF, o vendedor também contrata e paga o frete e um seguro mínimo até o porto de destino, mas o risco continua passando ao comprador no embarque.
+  tabela:
+  - - Quem contrata o frete principal
+    - Comprador
+    - Vendedor
+  - - Seguro internacional
+    - Não incluído (comprador decide)
+    - Vendedor contrata cobertura mínima (cláusula C) em favor do comprador
+  - - Transferência de risco
+    - Carga a bordo no porto de embarque
+    - Carga a bordo no porto de embarque (igual ao FOB)
+  - - Modal
+    - Somente marítimo e hidroviário
+    - Somente marítimo e hidroviário
+  - - Base de cálculo dos tributos de importação no Brasil
+    - Valor aduaneiro inclui frete e seguro somados ao FOB
+    - Valor aduaneiro já parte de frete e seguro embutidos
+  - - Controle da logística
+    - Maior para o comprador
+    - Maior para o vendedor
+  quando_a: Use FOB quando o comprador tem contrato de frete melhor, volume com armadores ou agente de carga próprio, e quer controlar prazo e escolha do navio.
+  quando_b: Use CIF quando o comprador prefere receber cotação com frete e seguro incluídos, comum em compras pontuais ou de menor volume, aceitando menos controle sobre o transporte.
+  faq:
+  - - Em CIF o vendedor responde por avarias durante a viagem?
+    - Não. Em CIF o risco passa ao comprador quando a carga é colocada a bordo no porto de embarque. O vendedor paga frete e seguro, mas eventual sinistro no trajeto é reclamado pelo comprador junto à seguradora indicada na apólice.
+  - - FOB pode ser usado para transporte aéreo ou rodoviário?
+    - Pela regra oficial dos Incoterms 2020, FOB e CIF são exclusivos para transporte marítimo e hidroviário interior. Para outros modais, os equivalentes recomendados são FCA (no lugar de FOB) e CIP (no lugar de CIF).
+  - - O que é mais barato, FOB ou CIF?
+    - Depende de quem consegue frete e seguro mais baratos. Em CIF o vendedor embute esses custos no preço, às vezes com margem; em FOB o comprador paga diretamente e pode negociar. Compare o custo total desembarcado, não apenas o preço da mercadoria.
+  fontes:
+  - - Incoterms 2020 - ICC
+    - https://iccwbo.org/business-solutions/incoterms-rules/
+  - - Receita Federal - valor aduaneiro
+    - https://www.gov.br/receitafederal/pt-br/assuntos/aduana-e-comercio-exterior/manuais/despacho-de-importacao/topicos-1/despacho-de-importacao/valoracao-aduaneira
+  exemplo: Um importador de Manaus compra componentes da China. Em FOB Xangai, ele contrata o agente de carga e o seguro e paga o frete até Santos; em CIF Santos, o fornecedor chinês embute frete e seguro no preço. Nos dois casos, se o contêiner cair no mar após o embarque, quem aciona o seguro é o importador.
+- slug: wms-vs-tms
+  a: wms
+  b: tms
+  na: WMS
+  nb: TMS
+  intro: 'WMS e TMS são sistemas de gestão logística que atuam em etapas diferentes. O WMS controla o que acontece dentro do armazém: recebimento, endereçamento, estoque, separação e expedição. O TMS cuida do que acontece fora dele: planejamento de cargas, contratação de transportadoras, roteirização, rastreamento e auditoria de frete.'
+  tabela:
+  - - Escopo
+    - Operações internas do armazém
+    - Transporte entre origem e destino
+  - - Unidade de controle
+    - Posição, SKU, lote, palete
+    - Carga, viagem, rota, entrega
+  - - Principais funções
+    - Recebimento, putaway, picking, inventário, expedição
+    - Cotação, roteirização, rastreio, conferência de fatura de frete
+  - - Indicadores típicos
+    - Acuracidade de estoque, produtividade de separação
+    - Custo por entrega, OTIF, ocupação do veículo
+  - - Documentos fiscais ligados
+    - Nota fiscal de entrada e saída
+    - CT-e, MDF-e
+  quando_a: 'Priorize o WMS quando os problemas estão no armazém: erros de separação, estoque que não bate, baixa produtividade ou muitos SKUs.'
+  quando_b: 'Priorize o TMS quando o maior custo e as falhas estão no transporte: frete caro, entregas atrasadas, falta de visibilidade ou muitas transportadoras.'
+  faq:
+  - - WMS e TMS podem ser integrados?
+    - Sim, e é o cenário mais comum em operações maiores. O WMS informa o que foi separado e expedido; o TMS usa esses dados para montar cargas e rotas. Muitos ERPs e fornecedores oferecem os dois módulos ou integração por API e EDI.
+  - - Uma transportadora precisa de WMS?
+    - Só se tiver armazenagem ou cross docking relevantes. Para a operação de transporte em si, o sistema central é o TMS, que gera viagens, emite ou integra CT-e e MDF-e e controla frota e custos.
+  - - Qual implementar primeiro?
+    - Comece pelo gargalo que mais pesa no custo e no nível de serviço. Em e-commerce com muitos itens, geralmente o WMS; em indústria com distribuição pulverizada, geralmente o TMS.
+  fontes: []
+  exemplo: Um atacadista de alimentos em Goiânia usa o WMS para receber caminhões de fornecedores, endereçar paletes e separar pedidos por rota. Quando a separação termina, o TMS monta as cargas por cidade, escolhe a transportadora de menor custo para cada região, emite os documentos de transporte e acompanha as entregas até o canhoto digitalizado.
+- slug: modal-vs-multimodal-vs-intermodal
+  a: multimodal
+  b: intermodal
+  na: Multimodal
+  nb: Intermodal
+  intro: Transporte multimodal e intermodal usam dois ou mais modais numa mesma movimentação, mas diferem na forma de contratação. No multimodal há um único contrato e um único responsável do início ao fim, o Operador de Transporte Multimodal (OTM), com um só documento. No intermodal cada trecho tem seu contrato, transportador e documento próprios.
+  tabela:
+  - - Contratos
+    - Um único contrato
+    - Um contrato por trecho
+  - - Responsável
+    - Operador de Transporte Multimodal (OTM)
+    - Cada transportador no seu trecho
+  - - Documento
+    - Conhecimento de transporte multimodal único
+    - Um conhecimento (CT-e) por trecho
+  - - Base legal no Brasil
+    - Lei 9.611/1998
+    - Regras de cada modal
+  - - Gestão do embarcador
+    - Menor, o OTM coordena
+    - Maior, o embarcador coordena trocas
+  quando_a: Escolha o multimodal quando quer um único interlocutor e responsabilidade única sobre a carga em toda a rota.
+  quando_b: Escolha o intermodal quando quer negociar cada trecho separadamente ou quando não há OTM habilitado atendendo a rota.
+  faq:
+  - - O que é OTM?
+    - É o Operador de Transporte Multimodal, pessoa jurídica habilitada pela ANTT que assume a responsabilidade pela carga do recebimento até a entrega, mesmo subcontratando trechos, conforme a Lei 9.611/1998.
+  - - Qual a diferença entre modal e multimodal?
+    - Modal é cada meio de transporte (rodoviário, ferroviário, aquaviário, aéreo, dutoviário). Multimodal é a combinação de mais de um deles sob um único contrato.
+  - - Exemplo de intermodal no Brasil?
+    - Grãos levados de caminhão até um terminal ferroviário em Mato Grosso, seguindo de trem até o porto e depois de navio, com contratos separados com a transportadora, a ferrovia e o armador.
+  fontes:
+  - - Lei 9.611/1998
+    - https://www.planalto.gov.br/ccivil_03/leis/l9611.htm
+  exemplo: 'Uma trading que leva soja de Sorriso (MT) ao porto de Santos pode contratar um OTM, que organiza caminhão até Rondonópolis, ferrovia até Santos e o embarque, respondendo por toda a rota em um contrato. Se preferir, a própria trading contrata separadamente a transportadora rodoviária, a ferrovia e o terminal portuário: aí a operação é intermodal, com um contrato e um documento por trecho e com o risco das trocas de modal sob gestão do embarcador. A escolha costuma considerar custo total, prazo e quanto a empresa quer coordenar internamente.'
+- slug: cross-docking-vs-armazenagem
+  a: cross-docking
+  b: armazem-geral
+  na: Cross docking
+  nb: Armazenagem tradicional
+  intro: Cross docking e armazenagem tradicional são estratégias opostas para a passagem da mercadoria pelo centro de distribuição. No cross docking a carga chega, é separada por destino e sai em poucas horas, sem ir para o estoque. Na armazenagem tradicional a carga é guardada em posições e só é separada quando surge o pedido.
+  tabela:
+  - - Tempo no CD
+    - Horas (normalmente menos de 24h)
+    - Dias a meses
+  - - Estoque
+    - Praticamente nenhum
+    - Estoque de segurança e de giro
+  - - Exigência de sincronismo
+    - 'Alta: chegada e saída coordenadas'
+    - 'Baixa: o estoque absorve variações'
+  - - Custo de estrutura
+    - Menos posições, mais docas
+    - Mais posições, porta-paletes
+  - - Indicado para
+    - Perecíveis, alto giro, pedidos pré-definidos
+    - Demanda incerta, sazonalidade, mix amplo
+  quando_a: Use cross docking quando a demanda é previsível, os fornecedores são confiáveis nas janelas de entrega e o produto tem alto giro ou validade curta.
+  quando_b: Use armazenagem quando é preciso proteger o atendimento contra variações de demanda e prazos de fornecedores, ou comprar em lotes maiores.
+  faq:
+  - - Cross docking elimina o estoque?
+    - Elimina a armazenagem no CD, mas o estoque continua existindo em algum ponto da cadeia, normalmente no fornecedor ou na loja. Por isso exige planejamento integrado.
+  - - Dá para usar os dois no mesmo CD?
+    - Sim. É comum separar docas e áreas para fluxo de cross docking (itens de alto giro) e manter armazenagem para o restante do mix.
+  - - Qual sistema apoia o cross docking?
+    - Um WMS com função de cross docking, integrado a avisos de recebimento (ASN) e ao TMS para programar as saídas.
+  fontes: []
+  exemplo: 'Uma rede de supermercados recebe hortifrútis de produtores à noite, separa por loja em poucas horas e despacha antes do amanhecer: cross docking. Os itens de mercearia seca, comprados em grandes lotes com desconto, ficam semanas armazenados em porta-paletes no mesmo CD e só são separados conforme os pedidos das lojas.'
+- slug: ct-e-vs-mdf-e
+  a: ct-e
+  b: mdf-e
+  na: CT-e
+  nb: MDF-e
+  intro: CT-e e MDF-e são documentos fiscais eletrônicos do transporte de cargas, mas cumprem papéis diferentes. O CT-e (Conhecimento de Transporte Eletrônico, modelo 57) documenta cada prestação de serviço de transporte e serve de base para o ICMS do frete. O MDF-e (Manifesto Eletrônico de Documentos Fiscais, modelo 58) agrupa todos os documentos da carga transportada num veículo durante a viagem.
+  tabela:
+  - - Modelo fiscal
+    - '57'
+    - '58'
+  - - O que documenta
+    - A prestação do serviço de transporte (frete)
+    - A viagem do veículo com as cargas
+  - - Quantidade
+    - Um por prestação
+    - Um por veículo/viagem, reunindo vários CT-e ou NF-e
+  - - Quem emite
+    - Transportador prestador do serviço
+    - Transportador ou emitente de NF-e que transporta carga própria
+  - - Encerramento
+    - Não se encerra; pode ser cancelado ou substituído
+    - Deve ser encerrado ao fim da viagem
+  - - Tributo
+    - Base do ICMS sobre o frete
+    - Não gera tributo; é controle fiscal
+  quando_a: O CT-e é emitido sempre que há prestação de serviço de transporte de carga com valor de frete.
+  quando_b: O MDF-e é emitido para a viagem quando a carga é interestadual ou, em operações intermunicipais, quando há mais de um conhecimento ou nota fiscal, conforme a legislação.
+  faq:
+  - - Posso rodar só com CT-e, sem MDF-e?
+    - Em regra não. O MDF-e é obrigatório no transporte interestadual e nos casos previstos no Ajuste SINIEF 21/10; o DAMDFE deve acompanhar o veículo junto com os documentos da carga.
+  - - Quem transporta carga própria emite CT-e?
+    - Não, porque não há prestação de serviço a terceiros. Nesse caso a mercadoria segue com a NF-e e, quando exigido, o próprio emitente da NF-e emite o MDF-e.
+  - - O que acontece se não encerrar o MDF-e?
+    - Fica pendente no sistema e impede a emissão de novo MDF-e para a mesma UF de carregamento e descarregamento com o mesmo veículo, além de poder gerar autuação.
+  fontes:
+  - - Portal CT-e (SEFAZ)
+    - https://www.cte.fazenda.gov.br/portal/
+  - - Portal MDF-e (SEFAZ)
+    - https://dfe-portal.svrs.rs.gov.br/Mdfe
+  exemplo: Uma transportadora de Curitiba coleta cargas de três clientes e emite três CT-e, um por prestação de serviço. Antes de seguir para São Paulo no mesmo caminhão, emite um único MDF-e reunindo os três CT-e, imprime o DAMDFE para acompanhar o veículo e, ao concluir as entregas, encerra o manifesto.
+- slug: fifo-vs-fefo
+  a: fifo
+  b: fefo
+  na: FIFO
+  nb: FEFO
+  intro: FIFO e FEFO são regras de saída de estoque. FIFO (first in, first out) expede primeiro o que entrou primeiro. FEFO (first expired, first out) expede primeiro o que vence primeiro, mesmo que tenha chegado depois. Em produtos sem validade os dois coincidem na prática; em perecíveis e medicamentos o FEFO evita perdas.
+  tabela:
+  - - Critério de saída
+    - Data de entrada
+    - Data de validade
+  - - Dado necessário no estoque
+    - Data de recebimento
+    - Lote e validade
+  - - Setores típicos
+    - Bens duráveis, peças, embalagens
+    - Alimentos, farmacêutico, cosméticos
+  - - Risco que evita
+    - Obsolescência e envelhecimento
+    - Vencimento e descarte
+  quando_a: Use FIFO quando o produto não tem validade ou a validade é muito longa em relação ao giro.
+  quando_b: Use FEFO sempre que houver validade relevante, especialmente quando lotes podem chegar fora de ordem cronológica.
+  faq:
+  - - O WMS faz FEFO automaticamente?
+    - Sim, desde que lote e validade sejam registrados no recebimento. O sistema sugere ao separador a posição com o lote de vencimento mais próximo.
+  - - FIFO é o mesmo que PEPS?
+    - Sim. PEPS (primeiro que entra, primeiro que sai) é a tradução de FIFO usada em contabilidade e gestão de estoques no Brasil.
+  - - FEFO é exigido por norma?
+    - Em medicamentos, as boas práticas de distribuição e armazenagem da Anvisa exigem controle de lote e validade, o que na prática leva ao uso de FEFO.
+  fontes: []
+  exemplo: Um distribuidor de laticínios recebe na segunda-feira um lote de iogurte que vence em 20 dias e, na terça, um lote do mesmo produto que vence em 12 dias, porque o fornecedor enviou estoque mais antigo. Pelo FIFO sairia primeiro o lote de segunda; pelo FEFO sai primeiro o de terça, que vence antes, evitando que ele expire no armazém. Para que isso funcione, o recebimento precisa registrar lote e validade de cada palete, e o WMS deve indicar ao separador a posição correta. Em peças metálicas ou embalagens sem validade, a diferença praticamente desaparece e o FIFO costuma bastar para evitar itens parados por muito tempo.
+- slug: 3pl-vs-4pl
+  a: 3pl
+  b: 4pl
+  na: 3PL
+  nb: 4PL
+  intro: 3PL e 4PL são níveis de terceirização logística. O 3PL (third-party logistics) executa serviços físicos para o cliente, como armazenagem, transporte e separação, normalmente com ativos próprios. O 4PL (fourth-party logistics) gerencia a cadeia como um todo, coordenando vários 3PLs e transportadoras, muitas vezes sem ativos físicos.
+  tabela:
+  - - Papel
+    - Executa operações
+    - Integra e gerencia a cadeia
+  - - Ativos
+    - Armazéns, frota, equipamentos
+    - Normalmente sem ativos; foco em gestão e TI
+  - - Relação com fornecedores
+    - É um dos fornecedores
+    - Contrata e coordena vários fornecedores
+  - - Indicadores
+    - Produtividade, acuracidade, prazo
+    - Custo total, nível de serviço da cadeia
+  quando_a: Contrate um 3PL quando precisa terceirizar a execução de armazenagem ou transporte com qualidade e escala.
+  quando_b: Considere um 4PL quando a cadeia já tem muitos operadores e o problema é coordenação, visibilidade e otimização global.
+  faq:
+  - - Operador logístico é 3PL?
+    - 'Na maioria dos casos sim: o operador logístico brasileiro presta serviços integrados de armazenagem, transporte e gestão de estoques, o que corresponde ao conceito de 3PL.'
+  - - Um 4PL pode ter armazém?
+    - 'Pode, mas a definição de 4PL destaca a neutralidade: o papel principal é escolher e gerir parceiros, não operar ativos próprios.'
+  - - Existe 5PL?
+    - O termo é usado por algumas empresas para quem agrega demanda de vários clientes e plataformas digitais, mas não tem definição padronizada.
+  fontes: []
+  exemplo: 'Uma indústria de cosméticos contrata um operador logístico em Cajamar (SP) para armazenar, separar pedidos de e-commerce e expedir: é um 3PL, responsável pela operação física com seu galpão, equipe e sistemas. Ao expandir para o Nordeste com outro armazém e várias transportadoras regionais, a empresa contrata uma consultoria com torre de controle para escolher parceiros, consolidar indicadores e negociar fretes: esse papel de integrador é o de 4PL. O 4PL não substitui o 3PL; ele coordena os 3PLs e transportadoras para que a cadeia funcione como um todo, com foco em custo total e nível de serviço.'
+- slug: carga-fracionada-vs-lotacao
+  a: carga-fracionada
+  b: carga-lotacao
+  na: Carga fracionada
+  nb: Carga lotação
+  intro: Carga fracionada e carga lotação são formas de contratar o transporte rodoviário. Na fracionada várias remessas de clientes diferentes dividem o mesmo veículo e passam por terminais de consolidação. Na lotação o veículo inteiro é dedicado a um único embarcador, indo direto da origem ao destino.
+  tabela:
+  - - Ocupação do veículo
+    - Compartilhada
+    - Exclusiva
+  - - Formação do preço
+    - Peso ou peso cubado, valor da mercadoria, taxas
+    - Por viagem ou por km
+  - - Frete mínimo ANTT
+    - Não se aplica diretamente
+    - Aplica-se o piso da Lei 13.703/2018
+  - - Prazo
+    - Maior (passa por terminais)
+    - Menor (rota direta)
+  - - Manuseio
+    - Mais transbordos
+    - Mínimo
+  quando_a: Use carga fracionada para volumes pequenos e médios que não ocupam um veículo, especialmente em distribuição pulverizada.
+  quando_b: Use lotação quando o volume ocupa boa parte do veículo, a carga é sensível a manuseio ou o prazo é crítico.
+  faq:
+  - - O piso de frete da ANTT vale para carga fracionada?
+    - As tabelas da ANTT são aplicadas por viagem com veículo carregado (lotação). A resolução da ANTT trata de forma específica casos de carga fracionada; na prática o piso é referência sobretudo para contratação de lotação.
+  - - Como é cobrada a carga fracionada?
+    - Normalmente pelo maior entre peso real e peso cubado, mais um percentual sobre o valor da mercadoria (ad valorem e GRIS) e taxas como despacho e pedágio.
+  - - Quando a lotação fica mais barata?
+    - 'Quando o volume se aproxima da capacidade do veículo: o preço por quilo da lotação cai, enquanto o da fracionada é proporcional ao peso.'
+  fontes:
+  - - Lei 13.703/2018
+    - https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13703.htm
+  exemplo: 'Uma loja de autopeças de Belo Horizonte que envia três caixas para Vitória usa carga fracionada: a transportadora coleta, consolida no terminal com cargas de outros clientes e entrega em alguns dias. Já um fabricante de cerâmica que expede 25 toneladas de pisos para Salvador contrata uma carreta inteira em lotação, que sai do pátio da fábrica direto para o cliente, sem transbordo. Nesse caso, o valor pago ao transportador autônomo ou à empresa não pode ficar abaixo do piso da ANTT para a distância e o número de eixos. Para volumes intermediários, vale cotar as duas modalidades e comparar o custo total, incluindo prazo e risco de avarias.'
+- slug: first-mile-vs-last-mile
+  a: first-mile
+  b: last-mile
+  na: First mile
+  nb: Last mile
+  intro: First mile e last mile são as pontas da cadeia de entrega. A first mile é a coleta da mercadoria no fornecedor ou vendedor até o primeiro centro de triagem ou CD. A last mile é a entrega final, do último ponto de distribuição até o cliente. Entre elas fica a middle mile, o transporte de transferência entre centros.
+  tabela:
+  - - Etapa
+    - Coleta na origem
+    - Entrega ao destinatário
+  - - Volume por parada
+    - Médio a alto
+    - Baixo (um pedido)
+  - - Veículos típicos
+    - Vans, caminhões leves
+    - Motos, vans, bicicletas, a pé
+  - - Desafio principal
+    - Consolidar coletas de muitos vendedores
+    - Custo por entrega e tentativas falhas
+  quando_a: A first mile pesa mais em marketplaces com muitos vendedores pequenos e em coleta de devoluções.
+  quando_b: A last mile pesa mais no e-commerce B2C, onde costuma ser a etapa mais cara por pedido.
+  faq:
+  - - Por que a last mile é tão cara?
+    - Porque cada parada entrega poucos volumes, o trânsito urbano reduz a produtividade e entregas falhas exigem nova tentativa.
+  - - O que é middle mile?
+    - É o transporte entre centros de distribuição ou de triagem, normalmente em lotação e com maior volume por viagem.
+  - - Como reduzir o custo da last mile?
+    - Com roteirização, janelas de entrega, pontos de retirada, dark stores próximas ao cliente e consolidação de pedidos.
+  fontes: []
+  exemplo: 'Em um marketplace, a first mile é a coleta diária dos pacotes nos milhares de vendedores, com vans que passam por vários endereços ou com postos de entrega onde o vendedor deixa as encomendas. Esses volumes seguem em caminhões maiores (middle mile) até centros de triagem em outras regiões. A last mile começa no centro de entrega mais próximo do cliente, de onde motoristas de vans e motos fazem dezenas de paradas por rota. Cada etapa tem indicadores próprios: taxa de coleta no prazo na first mile e taxa de sucesso na primeira tentativa na last mile.'
+- slug: just-in-time-vs-estoque-de-seguranca
+  a: just-in-time
+  b: estoque-de-seguranca
+  na: Just in time
+  nb: Estoque de segurança
+  intro: Just in time e estoque de segurança representam filosofias diferentes de lidar com incerteza. O just in time busca receber insumos exatamente quando serão usados, reduzindo estoques ao mínimo. O estoque de segurança mantém uma quantidade extra para absorver atrasos de fornecedores e picos de demanda.
+  tabela:
+  - - Objetivo
+    - Eliminar estoque e desperdício
+    - Evitar ruptura
+  - - Capital parado
+    - Baixo
+    - Maior
+  - - Dependência de fornecedores
+    - Muito alta
+    - Menor
+  - - Risco principal
+    - Parada por falta de insumo
+    - Custo de manter e obsolescência
+  quando_a: Funciona melhor com fornecedores próximos e confiáveis, demanda estável e transporte previsível.
+  quando_b: É indicado quando lead times são longos ou variáveis, como em importações e rotas sujeitas a interrupções.
+  faq:
+  - - Dá para combinar os dois?
+    - Sim. Muitas empresas usam just in time para itens com fornecimento estável e mantêm estoque de segurança para itens críticos ou importados.
+  - - Como se calcula o estoque de segurança?
+    - Uma fórmula comum é Z × desvio-padrão da demanda × raiz do lead time, em que Z depende do nível de serviço desejado.
+  - - O just in time exige kanban?
+    - Não obrigatoriamente, mas o kanban é a ferramenta clássica de puxar a produção no sistema Toyota, de onde vem o just in time.
+  fontes: []
+  exemplo: Montadoras instaladas no Brasil adotam o just in time com fornecedores de bancos e peças volumosas instalados perto da fábrica, que entregam várias vezes por dia na sequência da linha de montagem. Já componentes eletrônicos importados da Ásia, com semanas de transporte marítimo e risco de atraso nos portos, costumam ter estoque de segurança dimensionado para cobrir a variação do lead time. A mesma empresa, portanto, usa as duas abordagens conforme o risco de cada item. A decisão considera o custo de uma parada de linha, o custo de manter estoque e a confiabilidade do fornecedor e da rota.
+- slug: exw-vs-fca
+  a: exw
+  b: fca
+  na: EXW
+  nb: FCA
+  intro: EXW e FCA são Incoterms em que o comprador assume o transporte principal. Em EXW o vendedor apenas disponibiliza a mercadoria em seu estabelecimento, sem carregar nem desembaraçar para exportação. Em FCA o vendedor entrega ao transportador indicado pelo comprador e faz o desembaraço de exportação.
+  tabela:
+  - - Desembaraço de exportação
+    - Comprador
+    - Vendedor
+  - - Carregamento no local do vendedor
+    - Não incluído
+    - Incluído quando a entrega é no estabelecimento do vendedor
+  - - Modal
+    - Qualquer
+    - Qualquer
+  - - Obrigação do vendedor
+    - Mínima entre os Incoterms
+    - Baixa
+  quando_a: EXW serve mais ao mercado interno ou quando o comprador tem estrutura no país de origem para cuidar da exportação.
+  quando_b: FCA é a escolha usual quando o comprador quer controlar o frete internacional mas não pode cuidar do desembaraço de exportação no Brasil.
+  faq:
+  - - Comprador estrangeiro pode exportar do Brasil em EXW?
+    - 'Na prática é difícil: o exportador perante a Receita precisa estar habilitado no Brasil. Por isso FCA é recomendado em vendas de exportação.'
+  - - FCA serve para contêiner?
+    - Sim, e é o Incoterm recomendado pela ICC em vez de FOB para carga conteinerizada entregue em terminal.
+  - - Quem paga o THC de embarque em FCA?
+    - Depende do local de entrega combinado; se a entrega é no terminal, as despesas até lá são do vendedor.
+  fontes:
+  - - Incoterms 2020 - ICC
+    - https://iccwbo.org/business-solutions/incoterms-rules/
+  exemplo: Um fabricante de máquinas de Caxias do Sul vende para um cliente no Chile. Em EXW, o cliente chileno teria de mandar buscar a máquina na fábrica, carregá-la e cuidar do registro de exportação no Brasil, o que exige representação local. Em FCA Caxias do Sul, o fabricante carrega a máquina no caminhão contratado pelo comprador e providencia a DU-E e o desembaraço de exportação, enquanto o comprador paga e organiza o frete até o Chile. Por isso, em vendas de exportação feitas por empresas brasileiras, o FCA tende a ser a opção mais prática e segura para ambas as partes.
+- slug: picking-vs-packing
+  a: picking
+  b: packing
+  na: Picking
+  nb: Packing
+  intro: Picking e packing são etapas consecutivas da expedição. Picking é a separação dos itens do pedido nas posições de estoque. Packing é a conferência, embalagem, pesagem e etiquetagem do pedido separado, deixando-o pronto para o transporte.
+  tabela:
+  - - Etapa
+    - Separação
+    - Embalagem e conferência
+  - - Local
+    - Áreas de armazenagem
+    - Estações de packing
+  - - Erros típicos
+    - Item ou quantidade errados
+    - Embalagem inadequada, etiqueta trocada
+  - - Indicador
+    - Linhas separadas por hora
+    - Pedidos embalados por hora
+  quando_a: Otimizar o picking (endereçamento, slotting, ondas) traz mais ganho quando o tempo de deslocamento domina a operação.
+  quando_b: Otimizar o packing traz ganho quando há muitas avarias, cubagem ruim das caixas ou gargalo na conferência.
+  faq:
+  - - O picking representa quanto do custo do armazém?
+    - É frequentemente citado como a atividade mais intensiva em mão de obra do armazém, por causa do deslocamento dos separadores.
+  - - O que é picking por onda?
+    - É separar pedidos em lotes programados (ondas), agrupando por rota, transportadora ou horário de coleta.
+  - - Packing influencia o frete?
+    - Sim. Caixas maiores que o necessário aumentam o peso cubado e o frete, além de exigir mais material de proteção.
+  fontes: []
+  exemplo: 'Num centro de distribuição de e-commerce, o separador recebe no coletor a lista de itens de uma onda de pedidos, percorre os corredores e coloca os produtos em caixas plásticas: esse é o picking. As caixas seguem pela esteira até as estações de packing, onde outro operador confere cada item pelo código de barras, escolhe a embalagem de tamanho adequado, preenche com proteção, pesa, fecha e cola a etiqueta da transportadora. Erros no picking geram pedidos com item trocado; erros no packing geram avarias, frete mais caro por cubagem e pacotes enviados para o endereço errado. Medir os dois separadamente ajuda a encontrar o gargalo real da expedição.'
