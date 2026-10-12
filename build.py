@@ -200,7 +200,7 @@ def main():
                     jsonld=itemlist(posts)))
     for s, n in EDS.items():
         ps = [p for p in posts if p["editoria"] == s]
-        inner = "".join(card(p) for p in ps) or "<p>Nenhuma matéria ainda.</p>"
+        inner = "".join(card(p, h="h2") for p in ps) or "<p>Nenhuma matéria ainda.</p>"
         fts = sorted({p.get("fonte", "") for p in ps if p.get("fonte")})
         dsc = f"Notícias de {n.lower()} na logística: resumos de {', '.join(fts[:3]) if fts else 'portais do setor'} com link para a fonte, atualizados a cada 3 horas."
         write(f"/{s}/", page(f"Notícias de {n} na logística | {CFG['site_name']}", dsc[:160], f"/{s}/",
