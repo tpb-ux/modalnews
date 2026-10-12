@@ -78,3 +78,4 @@ nav.ed a{scroll-snap-align:start;flex:0 0 auto}nav.ed .dd,nav.ed a[href="/glossa
 .relbox{margin:28px 0 8px;padding:14px 18px;border:1px solid var(--b);border-radius:6px;background:#fafbfc}.relbox h2{font-size:1.05rem;margin:0 0 8px}
 .relbox ul{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:4px 16px}.relbox a{font-weight:600;font-size:.92rem}
 .toc li{padding:3px 0}.toc a{display:inline-block;min-height:24px}
+.tblw{overflow-x:auto}.upd{font-size:.85rem;color:var(--m)}

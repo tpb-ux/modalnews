@@ -33,7 +33,7 @@ def build(B, posts):
     cities = {}
     for k, v in cur["municipios"].items():
         nome, uf = k.split("|"); m = ibge.get(f"{norm(nome)}|{uf}"); disp = m["nome"] if m else nome.title()
-        cities[f"{norm(disp)}|{uf}"] = {"nome": disp, "uf": uf, "url": f"/diesel/{B.slugify(disp)}-{uf.lower()}/", "s10": (v.get("s10") or {}).get("media"), "postos": (v.get("s10") or v.get("s500"))["postos"]}
+        cities[f"{norm(disp)}|{uf}"] = {"nome": disp, "uf": uf, "url": f"/diesel/{B.slugify(disp)}-{uf.lower()}/", "s10": (v.get("s10") or {}).get("media"), "postos": (v.get("s10") or v.get("s500"))["postos"], "ibge": bool(m)}
     rod = json.loads((ROOT / "data" / "rodovias.json").read_text(encoding="utf-8"))["rodovias"]
     portos = yaml.safe_load((ROOT / "data" / "portos.yaml").read_text(encoding="utf-8"))["portos"]
     pidx = {p["slug"]: p for p in portos}
@@ -125,6 +125,7 @@ def build(B, posts):
         if rds: fq.append((f"Quais rodovias federais têm pedágio em {UFN[uf]}?", f"Segundo o cadastro de praças de pedágio da ANTT, as rodovias federais concedidas com praças em {UFN[uf]} são: {', '.join(rds)}, com {npr} praças ativas no estado."))
         if pts: fq.append((f"Quais são os portos públicos de {UFN[uf]}?", f"O Modal News acompanha em {UFN[uf]}: {', '.join(p['nome'] for p in pts)}, com dados oficiais da ANTAQ e do Ministério de Portos e Aeroportos."))
         blocks = f"<h2>Diesel em {UFN[uf]}</h2><p><a href='/diesel/estado/{uf.lower()}/'>Preços do diesel em {UFN[uf]} por cidade</a>.</p><div class='chips small'>" + "".join(f'<a class="chip" href="{c["url"]}">{E(c["nome"])}</a>' for c in cs) + "</div>"
+        blocks += f"<h2>Logística por cidade</h2><div class='chips small'>" + "".join(f'<a class="chip" href="{c["url"].replace("/diesel/", "/logistica/")}">{E(c["nome"])}</a>' for c in [c for c in cs if c["ibge"]][:40]) + "</div>"
         if rds: blocks += f"<h2>Rodovias federais concedidas</h2><div class='chips'>" + "".join(f'<a class="chip" href="/rodovias/{b.lower()}/">{b}</a>' for b in rds) + "</div>"
         if pts: blocks += f"<h2>Portos</h2><div class='chips'>" + "".join(f'<a class="chip" href="/portos/{p["slug"]}/">{E(p["nome"])}</a>' for p in pts) + "</div>"
         if news: blocks += "<h2>Notícias</h2><ul class='rel-news'>" + "".join(f'<li><a href="{p["url"]}">{E(p["titulo"])}</a></li>' for p in news) + "</ul>"

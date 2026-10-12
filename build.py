@@ -47,7 +47,7 @@ def page(title, desc, path, body, og_img=None, og_type="website", jsonld=None, r
     nav = "".join(f'<a href="/{s}/">{E(n)}</a>' for s, n in EDS.items())
     nav_ed = "".join(f'<a class="{"on" if path.startswith(f"/{s}/") else ""}" href="/{s}/">{E(n)}</a>' for s, n in EDS.items())
     ref_links = "".join(f'<a href="{u}">{n}</a>' for u, n in [("/diesel/", "Preço do diesel"), ("/frete-minimo/", "Frete mínimo"), ("/portos/", "Portos"), ("/rodovias/", "Rodovias"),
-                        ("/guias/", "Guias"), ("/estados/", "Logística por estado"), ("/calculadoras/cubagem/", "Calculadora de cubagem"), ("/calculadoras/custo-diesel-viagem/", "Custo de diesel"), ("/siglas/", "Siglas")])
+                        ("/guias/", "Guias"), ("/estados/", "Logística por estado"), ("/logistica/", "Logística por cidade"), ("/calculadoras/cubagem/", "Calculadora de cubagem"), ("/calculadoras/custo-diesel-viagem/", "Custo de diesel"), ("/siglas/", "Siglas")])
     ld = f'<script type="application/ld+json">{json.dumps(jsonld, ensure_ascii=False)}</script>' if jsonld else ""
     ld += f'<script type="application/ld+json">{json.dumps(SITE_LD, ensure_ascii=False)}</script>'
     rb = f'<meta name="robots" content="{robots}">' if robots else ""
@@ -73,7 +73,7 @@ document.addEventListener('keydown',function(e){{if(e.key==='Escape'&&!d.hidden)
 var a=document.querySelector('nav.ed a.on,nav.ed a.pill');if(a&&a.scrollIntoView&&innerWidth<860)a.scrollIntoView({{inline:'center',block:'nearest'}});
 document.addEventListener('click',function(e){{var x=document.querySelector('details.dd[open]');if(x&&!x.contains(e.target))x.open=false}})}})();</script>
 <main class="wrap">{body}</main><footer><div class="wrap fgrid"><div><img src="/static/logo.svg" alt="" width="180" height="36" class="flogo"><p>{E(CFG['tagline'])}</p></div>
-<div><p class="fh">Editorias</p>{nav}</div><div><p class="fh">Referência</p><a href="/glossario/">Glossário de Logística</a><a href="/siglas/">Siglas</a><a href="/diesel/">Preço do diesel</a><a href="/frete-minimo/">Frete mínimo ANTT</a><a href="/portos/">Portos</a><a href="/rodovias/">Rodovias</a><a href="/estados/">Logística por estado</a><a href="/guias/">Guias práticos</a><a href="/calculadoras/cubagem/">Calculadora de cubagem</a><a href="/calculadoras/custo-diesel-viagem/">Custo de diesel</a><a href="/links-uteis/">Links úteis</a></div>
+<div><p class="fh">Editorias</p>{nav}</div><div><p class="fh">Referência</p><a href="/glossario/">Glossário de Logística</a><a href="/siglas/">Siglas</a><a href="/diesel/">Preço do diesel</a><a href="/frete-minimo/">Frete mínimo ANTT</a><a href="/portos/">Portos</a><a href="/rodovias/">Rodovias</a><a href="/estados/">Logística por estado</a><a href="/logistica/">Logística por cidade</a><a href="/guias/">Guias práticos</a><a href="/calculadoras/cubagem/">Calculadora de cubagem</a><a href="/calculadoras/custo-diesel-viagem/">Custo de diesel</a><a href="/links-uteis/">Links úteis</a></div>
 <div><p class="fh">Institucional</p><a href="/sobre/">Sobre</a><a href="/politica-editorial/">Política editorial</a><a href="/metodologia/">Metodologia</a><a href="/correcoes/">Correções</a><a href="/privacidade/">Privacidade</a><a href="/rss.xml">Feed RSS</a></div></div>
 <div class="wrap fbot">© {dt.date.today().year} {E(CFG['site_name'])} · Todos os direitos reservados</div></footer></body></html>"""
 
@@ -125,6 +125,8 @@ def main():
     recent48 = lambda p: (dt.datetime.now(dt.timezone.utc) - p["data"]) < dt.timedelta(hours=48)
     import relacionados
     hub_urls = relacionados.build(sys.modules[__name__], posts)
+    import paginas3
+    hub_urls += paginas3.build(sys.modules[__name__])
     pri = CFG.get("destaque_prioritario")
     dest = ([p for p in posts if p.get("destaque")] or [p for p in posts if own(p) and pri and p.get("fonte") == pri and recent48(p)][:1]
             or [p for p in posts if own(p)][:1] or posts[:1])
