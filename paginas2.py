@@ -28,6 +28,18 @@ def frete_minimo(B):
         fq = [(f"Qual o frete mínimo da ANTT para {carga.lower()}?", f"Pela {ato['nome']}, em vigor desde {vig}, o piso para {carga.lower()} com {e0} eixos (Tabela A) é de {brl(c['ccd'][e0])} por km mais {brl(c['cc'][e0])} de carga e descarga. Em {ex_km} km, o mínimo é {brl(ex_v)}."),
               ("Como calcular o frete mínimo?", "Multiplique a distância em km pelo coeficiente de deslocamento (CCD) do tipo de carga e do número de eixos carregados, e some o coeficiente de carga e descarga (CC). O resultado é o piso por viagem, sem pedágio, que é pago à parte."),
               ("Quando a tabela de frete mínimo muda?", "A ANTT publica novos coeficientes na revisão periódica e sempre que o preço do diesel varia mais de 5% em relação ao valor de referência, como prevê o § 3º do art. 5º da Lei 13.703/2018. Este portal atualiza a página quando sai um novo ato.")]
+        v1000 = 1000 * c["ccd"][e0] + c["cc"][e0]
+        fq.append((f"Quanto é o frete mínimo de {carga.lower()} para 1.000 km?", f"Com {e0} eixos, 1.000 km × {brl(c['ccd'][e0])} + {brl(c['cc'][e0])} = {brl(v1000)}, pela {ato['nome']}. Pedágio é pago à parte, por meio do Vale-Pedágio."))
+        if len(ok) > 1:
+            lo_, hi_ = ok[0], ok[-1]
+            fq.append((f"Quanto o número de eixos muda o frete mínimo de {carga.lower()}?", f"Na Tabela A, o coeficiente por km vai de {brl(c['ccd'][lo_])} com {lo_} eixos a {brl(c['ccd'][hi_])} com {hi_} eixos. Em {ex_km} km, o piso passa de {brl(ex_km * c['ccd'][lo_] + c['cc'][lo_])} para {brl(ex_km * c['ccd'][hi_] + c['cc'][hi_])}."))
+        cgx = T["A"]["cargas"].get("Carga Geral")
+        if cgx and carga != "Carga Geral" and cgx["ccd"].get(e0):
+            vg = ex_km * cgx["ccd"][e0] + cgx["cc"][e0]
+            fq.append((f"O frete mínimo de {carga.lower()} é mais caro que o de carga geral?", f"Em {ex_km} km com {e0} eixos, o piso de {carga.lower()} é {brl(ex_v)}, contra {brl(vg)} da carga geral, diferença de {brl(ex_v - vg)} ({f"{(ex_v / vg - 1) * 100:+.1f}".replace(".", ",")}%)."))
+        elif carga == "Carga Geral":
+            gs = T["A"]["cargas"].get("Granel sólido")
+            if gs and gs["ccd"].get(e0): fq.append(("Carga geral paga mais que granel sólido?", f"Em {ex_km} km com {e0} eixos, carga geral tem piso de {brl(ex_v)} e granel sólido, {brl(ex_km * gs['ccd'][e0] + gs['cc'][e0])}, pela {ato['nome']}."))
         body = f"""<article class="post data">{crumbs_html(E, [("Início", "/"), ("Frete mínimo", "/frete-minimo/"), (carga, u)])}
 <h1>Frete mínimo ANTT para {E(carga.lower())}</h1>
 <p class="snippet">{E(f"O piso mínimo de frete para {carga.lower()} em carga lotação vai de {brl(c['ccd'][ok[0]])}/km ({ok[0]} eixos) a {brl(c['ccd'][ok[-1]])}/km ({ok[-1]} eixos), mais o valor fixo de carga e descarga, segundo a tabela da ANTT em vigor desde {vig}.")}</p>{fonte}
@@ -105,6 +117,12 @@ def portos(B):
             fq.append((f"Quanto o {nome} movimentou em 2026?", p["s1_26"][0] + " Dados do Ministério de Portos e Aeroportos, com base em informações da autoridade portuária."))
         info = [["Localização", f"{E(p['cidade'])} ({p['uf']})"]] + ([["Administração", E(p["autoridade"])]] if p.get("autoridade") else []) + ([["Site oficial", link(p["site"], E(p["site"].split('/')[2]))]] if p.get("site") else [])
         if p.get("autoridade"): fq.append((f"Quem administra o {nome}?", f"O {nome}, em {p['cidade']} ({p['uf']}), é um porto organizado sob administração {'do' if p['autoridade'].startswith(('Complexo','Porto')) else 'da'} {p['autoridade']}. Como porto público, está sob regulação da ANTAQ e da política do Ministério de Portos e Aeroportos."))
+        if p.get("perfil3t"):
+            m0 = p["perfil3t"][0]; fq.append((f"Quais as principais cargas do {nome}?", f"No 3º trimestre de 2025, a mercadoria de maior volume foi {m0[0].lower()}, com {num(m0[1], 2)} milhões de toneladas; também se destacaram " + ", ".join(x[0].lower() for x in p["perfil3t"][1:4]) + " (ANTAQ, Boletim Estatístico Aquaviário)."))
+        if p.get("site"): fq.append((f"Qual o site oficial do {nome}?", f"O site oficial da administração do porto é {p['site']}, onde ficam tabelas tarifárias, regulamentos e avisos de operação."))
+        fq.append((f"O {nome} é público ou privado?", f"É um porto organizado, isto é, um porto público com área delimitada por ato do Poder Executivo (Lei 12.815/2013). Dentro dele operam terminais arrendados; fora da área, terminais de uso privado operam por autorização da ANTAQ."))
+        if len(fq) < 5 and p.get("graos25"): fq.append((f"O {nome} exporta grãos?", f"Sim. No Desempenho Aquaviário 2025 da ANTAQ, o {nome} aparece com {num(p['graos25'], 1)} milhões de toneladas de milho e soja exportadas em 2025."))
+        if len(fq) < 5: fq.append((f"Onde ver as tarifas do {nome}?", "Pela Resolução Normativa ANTAQ nº 61/2021, cada autoridade portuária deve publicar no próprio site as tabelas tarifárias vigentes e anteriores."))
         keys = [short.lower(), nome.lower()]
         rel = [x for x in news_all if any(k in (x["titulo"] + " " + x.get("resumo", "")).lower() for k in keys)][:5]
         rel_html = ("<h2>Notícias sobre o " + E(nome) + "</h2><ul class='rel-news'>" + "".join(f'<li><a href="{x["url"]}">{E(x["titulo"])}</a></li>' for x in rel) + "</ul>") if rel else ""
@@ -168,6 +186,11 @@ def rodovias(B):
         fq = [(f"Quantos pedágios tem a {br}?", f"Segundo o cadastro de praças de pedágio da ANTT, a {br} tem {len(P)} praças ativas em trechos federais concedidos, nos estados de {', '.join(UFN[x] for x in r['ufs'])}. Trechos administrados por estados ou pelo DNIT não entram nesta contagem."),
               (f"Quais concessionárias administram a {br}?", f"Nos trechos federais concedidos, a {br} é operada por: {', '.join(c.title() for c in r['concessionarias'])}, conforme dados abertos da ANTT. Cada concessionária responde por um trecho definido em contrato.")]
         if months: fq.append((f"Quantos caminhões passam pela {br}?", f"De {per}, as praças de pedágio federais da {br} registraram {num(com)} passagens de veículos comerciais (caminhões e ônibus), segundo a ANTT. A praça com maior volume comercial foi {top['nome']} ({top['uf']}). Cada passagem é contada uma vez por praça."))
+        if months:
+            mc = max(months, key=lambda m: tot(m, "Comercial"))
+            fq.append((f"Qual a participação dos caminhões no tráfego da {br}?", f"De {per}, veículos comerciais foram {num(share, 1)}% das passagens nas praças federais da {br} ({num(com)} de {num(allv)}), segundo a ANTT."))
+            fq.append((f"Em que mês a {br} teve mais tráfego de caminhões?", f"No período com dados, o maior volume comercial foi em {MES[int(mc[:2])]}/{mc[3:]}, com {num(tot(mc, 'Comercial'))} passagens de veículos comerciais nas praças federais (ANTT)."))
+        fq.append((f"Em quais municípios ficam as praças de pedágio da {br}?", f"Pelo cadastro da ANTT: " + "; ".join(f"{p['nome']} em {p['municipio']} ({p['uf']}), km {num(p['km'], 1).replace(',0', '')}" for p in P[:8]) + ("." if len(P) <= 8 else f" e mais {len(P) - 8}.")))
         rel = [x for x in news_all if re.search(rf"\b{br}\b|\bBR {br[3:]}\b", x["titulo"] + " " + x.get("resumo", ""), re.I)][:5]
         body = f"""<article class="post data">{crumbs_html(E, [("Início", "/"), ("Rodovias", "/rodovias/"), (br, u)])}
 <h1>{br}: pedágios, concessionárias e tráfego de caminhões</h1><p class="snippet">{E(lead)}</p>

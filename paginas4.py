@@ -15,6 +15,10 @@ def build(B):
     for c in C:
         u = f"/comparativos/{c['slug']}/"; na, nb = c["na"], c["nb"]
         fq = [tuple(x) for x in c["faq"]] + [(f"Qual a diferença entre {na} e {nb}?", c["intro"])]
+        if c.get("quando_a"): fq.append((f"Quando usar {na}?", c["quando_a"]))
+        if c.get("quando_b"): fq.append((f"Quando usar {nb}?", c["quando_b"]))
+        if len(fq) < 5 and first(c["a"]): fq.append((f"O que é {na}?", first(c["a"])))
+        if len(fq) < 5 and first(c["b"]): fq.append((f"O que é {nb}?", first(c["b"])))
         tb = "".join(f"<tr><th scope='row'>{E(r[0])}</th><td>{E(r[1])}</td><td>{E(r[2])}</td></tr>" for r in c["tabela"])
         defs = f"<h2>O que é {E(na)}</h2><p>{E(first(c['a']))} <a href='/glossario/{c['a']}/'>Definição completa de {E(na)}</a>.</p><h2>O que é {E(nb)}</h2><p>{E(first(c['b']))} <a href='/glossario/{c['b']}/'>Definição completa de {E(nb)}</a>.</p>"
         fontes = ("<h2>Fontes</h2><ul>" + "".join(f'<li><a href="{E(l)}" rel="noopener" target="_blank">{E(n)}</a></li>' for n, l in c["fontes"]) + "</ul>") if c.get("fontes") else ""

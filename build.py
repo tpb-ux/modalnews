@@ -41,7 +41,23 @@ def fmt(d): return d.strftime("%d/%m/%Y %H:%M")
 import hashlib
 CSSV = hashlib.md5((ROOT / "static" / "style.css").read_bytes()).hexdigest()[:10]
 
+HUB_FAQ = {}  # path -> [(pergunta, resposta)]: FAQ injetado em páginas de índice/hub que não têm FAQ próprio
+
+def _inject_faq(path, body, jsonld):
+    fq = HUB_FAQ.get(path)
+    if not fq or (jsonld and '"FAQPage"' in json.dumps(jsonld)): return body, jsonld
+    from paginas import faq_block, faq_ld
+    blk = f'<section class="faq-hub"><h2>Perguntas frequentes</h2>{faq_block(E, fq)}</section>'
+    i = body.rfind("</article>")
+    body = body[:i] + blk + body[i:] if i >= 0 else body + f'<div class="post">{blk}</div>'
+    if not jsonld: jsonld = {"@context": "https://schema.org", "@graph": [faq_ld(fq)]}
+    elif "@graph" in jsonld: jsonld = {**jsonld, "@graph": jsonld["@graph"] + [faq_ld(fq)]}
+    else:
+        j = {k: v for k, v in jsonld.items() if k != "@context"}; jsonld = {"@context": "https://schema.org", "@graph": [j, faq_ld(fq)]}
+    return body, jsonld
+
 def page(title, desc, path, body, og_img=None, og_type="website", jsonld=None, robots=None):
+    body, jsonld = _inject_faq(path, body, jsonld)
     canon = BASE + path
     img = og_img or BASE + "/static/og-default.png"
     nav = "".join(f'<a href="/{s}/">{E(n)}</a>' for s, n in EDS.items())
@@ -130,6 +146,7 @@ def main():
     if CFG.get("cname"): (OUT / "CNAME").write_text(CFG["cname"].strip() + "\n")
     own = lambda p: not p["imagem"].startswith("/static/img/editoria/")
     recent48 = lambda p: (dt.datetime.now(dt.timezone.utc) - p["data"]) < dt.timedelta(hours=48)
+    import faq_hubs; faq_hubs.build(sys.modules[__name__], posts)
     import relacionados
     hub_urls = relacionados.build(sys.modules[__name__], posts)
     import paginas3

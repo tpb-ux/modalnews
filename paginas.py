@@ -85,12 +85,33 @@ def diesel(B):
             fq.append((f"Qual a diferença de preço entre diesel S10 e S500 em {nome}?", f"Na semana de {per}, o S10 custou em média {brl(s10['media'])} e o S500, {brl(s5['media'])} por litro em {label}. O S10 tem menor teor de enxofre e é exigido por caminhões fabricados a partir de 2012 com motores Euro 5 ou mais recentes."))
         if pv.get("s10") and s10:
             fq.append((f"O preço do diesel subiu em {nome} nesta semana?", f"O diesel S10 em {label} passou de {brl(pv['s10']['media'])} para {brl(s10['media'])} por litro entre a semana anterior e a semana de {per}, variação de {pct(s10['media'], pv['s10']['media'])}, segundo a ANP."))
+        # --- dados próprios da cidade: ranking no estado/Brasil, tendência de 8 semanas, custo de tanque
+        mk = "s10" if s10 else "s500"
+        pares_uf = sorted([x for x in cities.values() if x["uf"] == uf and x["d"].get(mk)], key=lambda x: x["d"][mk]["media"])
+        pares_br = sorted([x for x in cities.values() if x["d"].get(mk)], key=lambda x: x["d"][mk]["media"])
+        pos_uf = next(i for i, x in enumerate(pares_uf) if x is c) + 1; pos_br = next(i for i, x in enumerate(pares_br) if x is c) + 1
+        serie = [(w, ((db["semanas"][w]["municipios"].get(k) or {}).get(mk) or {}).get("media")) for w in weeks]; serie = [(w, v) for w, v in serie if v]
+        brm = (BRv.get(mk) or {}).get("media"); stm = (st.get(mk) or {}).get("media")
+        fq.append((f"Em que posição {nome} está no ranking do diesel {main_n} de {UFN[uf]}?", f"Na semana de {per}, {label} teve o {pos_uf}º menor preço médio do diesel {main_n} entre as {len(pares_uf)} cidades de {UFN[uf]} pesquisadas pela ANP, e o {pos_br}º menor entre as {len(pares_br)} cidades do país com esse produto na pesquisa."))
+        if brm: fq.append((f"O diesel em {nome} está acima da média do Brasil?", f"Na semana de {per}, o diesel {main_n} em {label} custou {brl(main_v['media'])}, {'acima' if main_v['media'] > brm else 'abaixo' if main_v['media'] < brm else 'igual'} da média nacional de {brl(brm)} por litro ({pct(main_v['media'], brm)}), segundo a ANP."))
+        fq.append((f"Quanto custa encher um tanque de 300 litros de diesel em {nome}?", f"Pelo preço médio do diesel {main_n} da semana de {per} ({brl(main_v['media'])}/l), 300 litros custam cerca de {brl(main_v['media'] * 300)}; no posto mais barato pesquisado ({brl(main_v['min'])}/l) seriam {brl(main_v['min'] * 300)}. Estimativa a partir dos preços da ANP."))
+        if len(serie) >= 2:
+            hi = max(serie, key=lambda x: x[1]); lo = min(serie, key=lambda x: x[1])
+            fq.append((f"Como o preço do diesel variou em {nome} nas últimas semanas?", f"Nas {len(serie)} semanas com dados da ANP para {label}, o diesel {main_n} teve média mais alta de {brl(hi[1])} (semana encerrada em {dbr(hi[0])}) e mais baixa de {brl(lo[1])} (semana encerrada em {dbr(lo[0])}). Na semana de {per}, ficou em {brl(main_v['media'])}."))
+        fq.append((f"Quantos postos a ANP pesquisou em {nome}?", f"Na semana de {per}, a ANP pesquisou {main_v['postos']} posto(s) com diesel {main_n} em {label}. A diferença entre o maior ({brl(main_v['max'])}) e o menor preço ({brl(main_v['min'])}) foi de {brl(main_v['max'] - main_v['min'])} por litro."))
+        rk_html = (f"<h2>{E(nome)} no ranking do diesel {main_n}</h2><ul><li>{pos_uf}º menor preço entre {len(pares_uf)} cidades pesquisadas em {UFN[uf]}" + (f" (média estadual {brl(stm)})" if stm else "") + f"</li><li>{pos_br}º menor preço entre {len(pares_br)} cidades do Brasil" + (f" (média nacional {brl(brm)}, diferença de {pct(main_v['media'], brm)})" if brm else "") + "</li>"
+                   + (f"<li>Faixa nas últimas {len(serie)} semanas: de {brl(min(v for _, v in serie))} a {brl(max(v for _, v in serie))}</li>" if len(serie) >= 2 else "")
+                   + f"<li>Diferença entre o posto mais caro e o mais barato: {brl(main_v['max'] - main_v['min'])} por litro em {main_v['postos']} posto(s)</li></ul>")
+        if len(pares_uf) > 1:
+            vz = [x for x in pares_uf if x is not c]; mais_barata = vz[0]; mais_cara = vz[-1]
+            rk_html += f"<p>Em {UFN[uf]}, a cidade com {main_n} mais barato na semana foi <a href=\"/diesel/{mais_barata['slug']}/\">{E(mais_barata['nome'])}</a> ({brl(mais_barata['d'][mk]['media'])}) e a mais cara, <a href=\"/diesel/{mais_cara['slug']}/\">{E(mais_cara['nome'])}</a> ({brl(mais_cara['d'][mk]['media'])}).</p>"
         uniq = len(rows) * 5 + len(comp) + (1 if pv else 0)
         robots = None if uniq >= 5 else "noindex,follow"
         body = f"""<article class="post data">{crumbs_html(E, [("Início", "/"), ("Diesel", "/diesel/"), (UFN[uf], f"/diesel/estado/{uf.lower()}/"), (label, url)])}
 <h1>Preço do diesel em {E(label)}</h1><p class="snippet">{E(abert + extra)}</p>{aviso}
 <h2>Preço do diesel em {E(nome)} nesta semana</h2>{table(rows, ["Produto", "Média", "Mínimo", "Máximo", "Postos", "Var. semana"])}
 {f'<h2>{E(nome)} comparado ao estado e ao Brasil</h2>' + table(comp, ["Produto", label, UFN[uf], "Brasil"]) if comp else ''}
+{rk_html}
 <h2>Histórico do diesel em {E(nome)}</h2>{hist(lambda w: w["municipios"].get(k))}
 <p>Use os preços para estimar o custo de uma viagem na <a href="/calculadoras/custo-diesel-viagem/">calculadora de custo de diesel</a>. Entenda o <a href="/glossario/frete/">frete</a> e o <a href="/glossario/frete-minimo/">piso mínimo de frete da ANTT</a>, reajustado quando o diesel varia.</p>
 <h2>Perguntas frequentes sobre o diesel em {E(nome)}</h2>{faq_block(E, fq)}
@@ -110,6 +131,12 @@ def diesel(B):
         fq = [(f"Qual o preço médio do diesel em {UFN[uf]}?", f"Na semana de {per}, o diesel S10 custou em média {brl(s10['media'])} por litro em {UFN[uf]}" + (f" e o S500, {brl(s5['media'])}" if s5 else "") + f", segundo a ANP, com {s10['postos']} postos pesquisados para o S10.")] if s10 else []
         if cs: fq.append((f"Onde o diesel S10 está mais barato em {UFN[uf]}?", f"Entre as cidades pesquisadas pela ANP na semana de {per}, o menor preço médio do S10 em {UFN[uf]} foi em {cs[0]['nome']}, com {brl(cs[0]['d']['s10']['media'])} por litro, e o maior em {cs[-1]['nome']}, com {brl(cs[-1]['d']['s10']['media'])}."))
         if s10 and BRv.get("s10"): fq.append((f"O diesel em {UFN[uf]} está acima da média nacional?", f"Na semana de {per}, o S10 em {UFN[uf]} custou {brl(s10['media'])}, contra média nacional de {brl(BRv['s10']['media'])} por litro, diferença de {pct(s10['media'], BRv['s10']['media'])}, conforme a ANP."))
+        if s10:
+            est_rank = sorted([(u2, d2["s10"]["media"]) for u2, d2 in cur["estados"].items() if d2.get("s10")], key=lambda x: x[1]); pe = [u2 for u2, _ in est_rank].index(uf) + 1
+            fq.append((f"Em que posição {UFN[uf]} está no ranking do diesel entre os estados?", f"Na semana de {per}, {UFN[uf]} teve o {pe}º menor preço médio do diesel S10 entre as {len(est_rank)} unidades da federação pesquisadas pela ANP."))
+            if pv.get("s10"): fq.append((f"O diesel subiu em {UFN[uf]} nesta semana?", f"O S10 passou de {brl(pv['s10']['media'])} para {brl(s10['media'])} por litro em {UFN[uf]} entre a semana anterior e a de {per} ({pct(s10['media'], pv['s10']['media'])}), segundo a ANP."))
+            fq.append((f"Quantas cidades de {UFN[uf]} têm preço do diesel pesquisado pela ANP?", f"Na semana de {per}, a ANP pesquisou o diesel S10 em {len(cs)} cidade(s) de {UFN[uf]}, somando {s10['postos']} postos. As cidades fora da amostra não têm preço oficial naquela semana."))
+            fq.append((f"Quanto custa encher um tanque de 300 litros em {UFN[uf]}?", f"Pela média estadual do S10 na semana de {per} ({brl(s10['media'])}/l), 300 litros custam cerca de {brl(s10['media'] * 300)}. Estimativa a partir dos preços da ANP."))
         body = f"""<article class="post data">{crumbs_html(E, [("Início", "/"), ("Diesel", "/diesel/"), (UFN[uf], url)])}
 <h1>Preço do diesel em {UFN[uf]} ({uf})</h1>
 <p class="snippet">{E(f"Na semana de {per}, o diesel S10 custou em média {brl((s10 or {}).get('media'))} por litro em {UFN[uf]}, variação de {pct((s10 or {}).get('media'), (pv.get('s10') or {}).get('media'))} sobre a semana anterior, segundo a ANP.")}</p>{aviso}

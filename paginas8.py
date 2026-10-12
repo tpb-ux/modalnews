@@ -33,14 +33,37 @@ def rotas(B):
               (f"Qual o frete mínimo de {a['nome']} para {b['nome']}?", f"Pela tabela A da ANTT ({ato['nome']}), carga geral em lotação custa no mínimo {brl(f5)} com 5 eixos, {brl(f6)} com 6 eixos e {brl(f7)} com 7 eixos para {num(km_)} km, sem pedágio. Outros tipos de carga têm coeficientes próprios."),
               (f"Quanto se gasta de diesel de {a['nome']} a {b['nome']}?", f"Com consumo de 2,5 km/l, são cerca de {num(litros)} litros; ao preço médio do S10 de {brl(dm)}/l (média de origem e destino na pesquisa ANP de {dbr(cur['ini'])} a {dbr(cur['fim'])}), o custo é de aproximadamente {brl(custo_d)}.")]
         if pr: fq.append((f"Quantos pedágios há de {a['nome']} a {b['nome']}?", f"No traçado calculado há {len(pr)} praça(s) de pedágio em rodovias federais concedidas: {', '.join(p['nome'] + ' (' + p['br'] + ')' for p in pr[:6])}. Rodovias estaduais com pedágio, se houver no caminho, não estão incluídas."))
+        # --- blocos variáveis por dado real: outras cargas (ANTT), diesel origem×destino, sinuosidade, rotas da mesma origem
+        cargas_all = fm["tabelas"]["A"]["cargas"]
+        outras = [(n_, km_ * cargas_all[n_]["ccd"]["5"] + cargas_all[n_]["cc"]["5"]) for n_ in ("Granel sólido", "Granel líquido", "Frigorificada ou Aquecida", "Conteinerizada", "Perigosa (carga geral)") if n_ in cargas_all and "5" in cargas_all[n_]["ccd"]]
+        outras_html = "<h2>Piso ANTT para outros tipos de carga (5 eixos)</h2><div class='tblw'><table class='tbl'><thead><tr><th>Tipo de carga</th><th>Piso para " + num(km_) + " km</th></tr></thead><tbody>" + "".join(f"<tr><td>{E(n_)}</td><td>{brl(v_)}</td></tr>" for n_, v_ in outras) + "</tbody></table></div>" if outras else ""
+        if outras: fq.append((f"Qual o frete mínimo de {a['nome']} para {b['nome']} para outros tipos de carga?", "Com 5 eixos, pela Tabela A da ANTT: " + "; ".join(f"{n_.lower()}, {brl(v_)}" for n_, v_ in outras) + f" para {num(km_)} km, sem pedágio."))
+        sinu = km_ / r["linha_reta"] if r.get("linha_reta") else None
+        if sinu: fq.append((f"Por que a distância por estrada de {a['nome']} a {b['nome']} é maior que em linha reta?", f"O trajeto calculado tem {num(km_)} km, {num((sinu - 1) * 100)}% a mais que os {num(r['linha_reta'])} km em linha reta, porque segue a malha rodoviária, que contorna relevo, rios e áreas urbanas."))
+        dz_html = ""
+        if d1 and d2:
+            mais = a["nome"] if d1 < d2 else b["nome"]
+            fq.append((f"É mais barato abastecer em {a['nome']} ou em {b['nome']}?", f"Na pesquisa da ANP de {dbr(cur['ini'])} a {dbr(cur['fim'])}, o diesel S10 custou em média {brl(d1)} em {a['nome']} e {brl(d2)} em {b['nome']}; abastecer em {mais} custava {brl(abs(d1 - d2))} a menos por litro, ou {brl(abs(d1 - d2) * litros)} no volume estimado da viagem."))
+            dz_html = f"<h2>Diesel na origem e no destino</h2><ul><li>{lk('/diesel/' + sa + '/', E(a['nome']))}: {brl(d1)}/l (S10)</li><li>{E(b['nome'])}: {brl(d2)}/l (S10)</li><li>Média nacional: {brl(br_avg)}/l</li></ul>"
+        elif not (d1 or d2):
+            fq.append((f"Qual preço de diesel foi usado no cálculo de {a['nome']} a {b['nome']}?", f"Nenhuma das duas cidades teve diesel S10 pesquisado pela ANP na semana de {dbr(cur['ini'])} a {dbr(cur['fim'])}; por isso usamos a média nacional de {brl(br_avg)} por litro."))
+        mesma = [x for x in R["rotas"] if x["a"]["nome"] == a["nome"] and x["a"]["uf"] == a["uf"] and x is not r]
+        mo_html = ""
+        if mesma:
+            def _u(x): return f"/rotas/{B.slugify(x['a']['nome'])}-{x['a']['uf'].lower()}-x-{B.slugify(x['b']['nome'])}-{x['b']['uf'].lower()}/"
+            mo_html = f"<h2>Outras rotas saindo de {E(a['nome'])}</h2><ul>" + "".join(f"<li><a href='{_u(x)}'>{E(x['b'].get('porto_nome') or x['b']['nome'])}</a>: {num(x['km'])} km, {len(x['pracas'])} praça(s) federal(is)</li>" for x in sorted(mesma, key=lambda x: x["km"])[:8]) + "</ul>"
+        if pr and known:
+            fq.append((f"Quanto custa o pedágio ida e volta de {a['nome']} a {b['nome']}?", f"Para carreta de 5 eixos, as praças federais com tarifa identificada somam {brl(ped5)} por sentido, cerca de {brl(ped5 * 2)} ida e volta" + ("" if allk else ", sem contar praças cuja tarifa não foi identificada") + ". Pedágios estaduais não estão incluídos."))
         cr = [("Início", "/"), ("Rotas", "/rotas/"), (f"{a['nome']} × {b.get('porto_nome') or b['nome']}", u)]
         body = f"""<article class="post data">{crumbs_html(E, cr)}<h1>Frete {E(a['nome'])} × {E(b.get('porto_nome') or b['nome'])}: distância, pedágios e frete mínimo</h1><p class="snippet">{E(lead)}</p>
 <dl class="deflist"><dt>Distância por estrada*</dt><dd>{num(km_)} km</dd><dt>Tempo estimado*</dt><dd>{hr(r['min'])}</dd><dt>Linha reta</dt><dd>{num(r['linha_reta'])} km</dd>{f"<dt>Principais rodovias</dt><dd>{brs}</dd>" if brs else ''}</dl>
 <p class="src">*{E(R['fonte'])}. Tempo do roteador para automóvel, sem paradas.</p>
 <h2>Frete mínimo ANTT (carga geral, lotação)</h2><div class="tblw"><table class="tbl"><thead><tr><th>Veículo</th><th>Piso para {num(km_)} km</th></tr></thead><tbody><tr><td><a href="/veiculos/carreta-cinco-eixos/">Carreta 5 eixos</a></td><td>{brl(f5)}</td></tr><tr><td><a href="/veiculos/carreta-ls/">Carreta LS 6 eixos</a></td><td>{brl(f6)}</td></tr><tr><td><a href="/veiculos/bitrem/">Bitrem 7 eixos</a></td><td>{brl(f7)}</td></tr></tbody></table></div>
 <p class="src">{E(ato['nome'])}, Tabela A. Cálculo: km × CCD + CC. Outros tipos de carga na <a href="/frete-minimo/">calculadora de frete mínimo</a>.</p>
+{outras_html}
 <h2>Pedágios federais no trajeto</h2>{ped_html}
 <h2>Custo estimado de diesel</h2><p>{num(litros)} litros a 2,5 km/l × {brl(dm)}/l (S10, média de origem e destino, ANP) ≈ <strong>{brl(custo_d)}</strong>. Simule com o seu consumo na <a href="/calculadoras/custo-diesel-viagem/">calculadora de custo de diesel</a>.</p>
+{dz_html}{mo_html}
 <h2>Perguntas frequentes</h2>{faq_block(E, fq)}</article>"""
         has_a = (B.OUT / "logistica" / sa).exists()
         idx = km_ > 0 and has_a

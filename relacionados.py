@@ -112,6 +112,7 @@ def build(B, posts):
         add(p["url"], it[:8])
     # ---------- hubs por estado
     hub_urls = []
+    AER = json.loads((ROOT / "data" / "aeroportos.json").read_text(encoding="utf-8"))["aeroportos"]; UF_INV = {v: k for k, v in UFN.items()}
     for uf in sorted(UFN):
         u = f"/estados/{uf.lower()}/"; cs = sorted(by_uf.get(uf, []), key=lambda c: -c["postos"]); st = cur["estados"].get(uf, {})
         rds = sorted(ROD_UF.get(uf, [])); pts = P_UF.get(uf, [])
@@ -124,7 +125,17 @@ def build(B, posts):
         if s10: fq.append((f"Qual o preço do diesel em {UFN[uf]}?", f"Na semana de {dbr(cur['ini'])} a {dbr(cur['fim'])}, o diesel S10 custou em média {brl(s10)} por litro em {UFN[uf]}, segundo a ANP. Veja os preços por cidade na página de diesel do estado."))
         if rds: fq.append((f"Quais rodovias federais têm pedágio em {UFN[uf]}?", f"Segundo o cadastro de praças de pedágio da ANTT, as rodovias federais concedidas com praças em {UFN[uf]} são: {', '.join(rds)}, com {npr} praças ativas no estado."))
         if pts: fq.append((f"Quais são os portos públicos de {UFN[uf]}?", f"O Modal News acompanha em {UFN[uf]}: {', '.join(p['nome'] for p in pts)}, com dados oficiais da ANTAQ e do Ministério de Portos e Aeroportos."))
-        blocks = f"<h2>Diesel em {UFN[uf]}</h2><p><a href='/diesel/estado/{uf.lower()}/'>Preços do diesel em {UFN[uf]} por cidade</a>.</p><div class='chips small'>" + "".join(f'<a class="chip" href="{c["url"]}">{E(c["nome"])}</a>' for c in cs) + "</div>"
+        cs10 = sorted([c for c in cs if c.get("s10")], key=lambda c: c["s10"])
+        if len(cs10) >= 2: fq.append((f"Qual cidade de {UFN[uf]} tem o diesel mais barato?", f"Na semana de {dbr(cur['ini'])} a {dbr(cur['fim'])}, entre {len(cs10)} cidades pesquisadas pela ANP, o S10 mais barato foi em {cs10[0]['nome']} ({brl(cs10[0]['s10'])}/l) e o mais caro em {cs10[-1]['nome']} ({brl(cs10[-1]['s10'])}/l)."))
+        er = sorted([(u2, (d2.get("s10") or {}).get("media")) for u2, d2 in cur["estados"].items() if (d2.get("s10") or {}).get("media")], key=lambda x: x[1])
+        if s10 and uf in [x for x, _ in er]: fq.append((f"Como está o preço do diesel em {UFN[uf]} em relação a outros estados?", f"Na mesma semana, {UFN[uf]} teve o {[x for x, _ in er].index(uf) + 1}º menor preço médio do S10 entre {len(er)} unidades da federação, segundo a ANP."))
+        aes = sorted([(k_, a_) for k_, a_ in AER.items() if UF_INV.get(a_.get("uf_servido"), a_.get("uf")) == uf and a_["dom"] + a_["int"] >= 1000], key=lambda x: -(x[1]["dom"] + x[1]["int"]))
+        if aes: fq.append((f"Quais aeroportos em {UFN[uf]} movimentam carga?", f"Pela ANAC, {len(aes)} aeroporto(s) de {UFN[uf]} passaram de mil toneladas de carga e correio em 12 meses; o maior é {aes[0][1]['nome_oficial'].title()} ({aes[0][0]}), com {f"{aes[0][1]['dom'] + aes[0][1]['int']:,.0f}".replace(",", ".")} t."))
+        if cs: fq.append((f"Quantas cidades em {UFN[uf]} têm páginas no {B.CFG['site_name']}?", f"{len(cs)} cidades de {UFN[uf]} com preço do diesel pesquisado pela ANP na semana mais recente têm página própria de diesel; as que constam na base do IBGE também têm página de logística com distâncias e polos."))
+        if len(fq) < 5: fq.append((f"Onde calcular o frete mínimo saindo de {UFN[uf]}?", "Na calculadora de frete mínimo do Modal News, com os coeficientes oficiais da ANTT: o piso depende da distância, do tipo de carga e do número de eixos, não do estado."))
+        if aes: blocks_ae = "<h2>Aeroportos de carga</h2><div class='chips'>" + "".join(f'<a class="chip" href="/aeroportos/{k_.lower()}/">{E(a_["nome_oficial"].title())} ({k_})</a>' for k_, a_ in aes) + "</div>"
+        else: blocks_ae = ""
+        blocks = blocks_ae + f"<h2>Diesel em {UFN[uf]}</h2><p><a href='/diesel/estado/{uf.lower()}/'>Preços do diesel em {UFN[uf]} por cidade</a>.</p><div class='chips small'>" + "".join(f'<a class="chip" href="{c["url"]}">{E(c["nome"])}</a>' for c in cs) + "</div>"
         blocks += f"<h2>Logística por cidade</h2><div class='chips small'>" + "".join(f'<a class="chip" href="{c["url"].replace("/diesel/", "/logistica/")}">{E(c["nome"])}</a>' for c in [c for c in cs if c["ibge"]][:40]) + "</div>"
         if rds: blocks += f"<h2>Rodovias federais concedidas</h2><div class='chips'>" + "".join(f'<a class="chip" href="/rodovias/{b.lower()}/">{b}</a>' for b in rds) + "</div>"
         if pts: blocks += f"<h2>Portos</h2><div class='chips'>" + "".join(f'<a class="chip" href="/portos/{p["slug"]}/">{E(p["nome"])}</a>' for p in pts) + "</div>"

@@ -59,6 +59,12 @@ def build(B):
               (f"Quais veículos transportam {c.lower()}?", f"Os mais usados são: {', '.join(x['curto'] for x in vh)}. A escolha depende do volume, da distância, do implemento exigido e dos limites de peso por eixo da Resolução CONTRAN 882/2021."),
               (f"Quais são exemplos de {c.lower()}?", f"Exemplos comuns: {', '.join(x.lower() for x in t['exemplos'])}. A classificação correta do tipo de carga define qual coeficiente da tabela de frete mínimo deve ser aplicado na contratação.")]
         if c.startswith("Perigosa"): fq.append(("Quais as exigências para transportar produto perigoso?", "A regulamentação da ANTT exige, entre outros pontos, motorista com curso de movimentação de produtos perigosos (MOPP), veículo e equipamentos adequados, rótulos de risco e painéis de segurança, documentação com informações de emergência e kit de emergência compatível com o produto."))
+        e5 = "5" if "5" in ok else ok[-1]
+        fq.append((f"Quanto custa o frete mínimo de {c.lower()} em 300 km?", f"Com {e5} eixos, pela tabela da ANTT em vigor desde {vig}: 300 km × {brl(k['ccd'][e5])} + {brl(k['cc'][e5])} = {brl(300 * k['ccd'][e5] + k['cc'][e5])}, sem pedágio."))
+        cgx = TA.get("Carga Geral")
+        if cgx and c != "Carga Geral" and cgx["ccd"].get(e5):
+            vg = 300 * cgx["ccd"][e5] + cgx["cc"][e5]; vc = 300 * k["ccd"][e5] + k["cc"][e5]
+            fq.append((f"{c} paga frete mínimo maior que carga geral?", f"Em 300 km com {e5} eixos, o piso de {c.lower()} é {brl(vc)} e o de carga geral, {brl(vg)}: diferença de {brl(vc - vg)}, pela tabela da ANTT."))
         rows = "".join(f"<tr><td>{e} eixos</td><td>{brl(k['ccd'][e])}/km</td><td>{brl(k['cc'][e])}</td><td>{brl(300 * k['ccd'][e] + k['cc'][e])}</td></tr>" for e in ok)
         cr = [("Início", "/"), ("Tipos de carga", "/tipos-de-carga/"), (c, u)]
         body = f"""<article class="post data">{crumbs_html(E, cr)}<h1>{E(c)}: o que é, exemplos e veículos</h1><p class="snippet">{E(t['texto'].split('. ')[0] + '.')}</p>

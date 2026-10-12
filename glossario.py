@@ -209,17 +209,19 @@ def build(B, posts):
     extra = []
     for k, v in groups.items():
         u = f"{G}letra/{k.lower()}/"; idx = len(v) >= 5
+        B.HUB_FAQ[u] = [(f"O que é {t['t']}?", t["d"][0]) for t in v[:6]]
         lst = "".join(f'<li><a href="{G}{t["slug"]}/"><strong>{E(t["t"])}</strong></a> — {E(fit(t["d"][0], "", 5, 22))}</li>' for t in v)
         bb = f'<article class="post">{B.paginas_crumbs([("Início", "/"), ("Glossário", G), (f"Letra {k}", u)]) if hasattr(B, "paginas_crumbs") else ""}<h1>Termos de logística com a letra {k}</h1><p class="snippet">{len(v)} termos do Glossário de Logística começando com {k}, cada um com definição curta e link para a explicação completa.</p><nav class="letters">{letters}</nav><ul class="deflist">{lst}</ul></article>'
-        B.write(u, B.page(f"Glossário de logística — letra {k} | {CFG['site_name']}", f"Termos de logística com a letra {k}: " + ", ".join(t["t"] for t in v[:8]) + "."[:155], u, bb, robots=None if idx else "noindex,follow"))
+        B.write(u, B.page(f"Glossário de logística — letra {k} | {CFG['site_name']}", f"Termos de logística com a letra {k}: " + (", ".join(t["t"] for t in v[:8]) + ".")[:155], u, bb, robots=None if idx else "noindex,follow"))
         if idx: extra.append(u)
     for ed, nome in TEMAS.items():
         v = by_ed.get(ed, []); u = f"{G}tema/{ed}/"; idx = len(v) >= 6
+        B.HUB_FAQ[u] = [(f"O que é {t['t']}?", t["d"][0]) for t in sorted(v, key=lambda t: t["slug"])[:6]]
         lst = "".join(f'<li><a href="{G}{t["slug"]}/"><strong>{E(t["t"])}</strong></a> — {E(fit(t["d"][0], "", 5, 22))}</li>' for t in sorted(v, key=lambda t: t["slug"]))
         bb = f'<article class="post"><h1>{E(nome)}: termos e conceitos</h1><p class="snippet">{len(v)} termos de {E(nome.lower())} explicados no Glossário de Logística do {E(CFG["site_name"])}, com definição, exemplo prático, perguntas frequentes e fontes. Acompanhe também as <a href="/{ed}/">notícias de {E(EDS[ed])}</a>.</p><ul class="deflist">{lst}</ul></article>'
         ldt = {"@context": "https://schema.org", "@graph": [{"@type": "DefinedTermSet", "name": f"{nome} — Glossário de Logística", "url": BASE + u, "hasDefinedTerm": [{"@type": "DefinedTerm", "name": t["t"], "url": f"{BASE}{G}{t['slug']}/"} for t in v]},
                {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Início", "item": BASE + "/"}, {"@type": "ListItem", "position": 2, "name": "Glossário", "item": BASE + G}, {"@type": "ListItem", "position": 3, "name": nome, "item": BASE + u}]}]}
-        B.write(u, B.page(f"{nome}: glossário de termos | {CFG['site_name']}", f"{len(v)} termos de {nome.lower()}: " + ", ".join(t["t"] for t in v[:6]) + ". Definições, exemplos e FAQ."[:155], u, bb, jsonld=ldt, robots=None if idx else "noindex,follow"))
+        B.write(u, B.page(f"{nome}: glossário de termos | {CFG['site_name']}", f"{len(v)} termos de {nome.lower()}: " + (", ".join(t["t"] for t in v[:6]) + ". Definições, exemplos e FAQ.")[:155], u, bb, jsonld=ldt, robots=None if idx else "noindex,follow"))
         if idx: extra.append(u)
     (root / "data" / "glossario_qualidade.log").write_text("\n".join(gate_log) + "\n", encoding="utf-8")
     print(f"Glossário: barreiras de qualidade — {len(gate_log)} verbete(s) em noindex (ver data/glossario_qualidade.log)")

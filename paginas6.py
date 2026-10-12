@@ -95,6 +95,15 @@ def build(B, posts):
     pmap = {o[0]: o for o in out}
     for n, (slug, u, s, sec, fq, pts, nw) in enumerate(out):
         tit = f"Resumo semanal da logística: {dbr(s['ini'])} a {dbr(s['fim'])}"
+        per_ = f"{dbr(s['ini'])} a {dbr(s['fim'])}"
+        ests = sorted([(u2, d2["s10"]["media"]) for u2, d2 in s.get("estados", {}).items() if d2.get("s10")], key=lambda x: x[1])
+        if len(ests) >= 2: fq.append((f"Qual estado teve o diesel mais barato na semana de {per_}?", f"Segundo a ANP, o S10 mais barato foi em {UFN.get(ests[0][0], ests[0][0])} ({brl(ests[0][1])}/l) e o mais caro em {UFN.get(ests[-1][0], ests[-1][0])} ({brl(ests[-1][1])}/l)."))
+        b500 = (s["brasil"]["BR"].get("s500") or {}).get("media")
+        if b500: fq.append((f"Quanto custou o diesel S500 na semana de {per_}?", f"O diesel S500 (B S500 comum) custou em média {brl(b500)} por litro no Brasil, segundo o levantamento semanal da ANP."))
+        nm = len(s.get("municipios", {}))
+        if nm: fq.append((f"Quantas cidades a ANP pesquisou na semana de {per_}?", f"O levantamento semanal da ANP trouxe preços de diesel para {nm} municípios brasileiros nesta semana."))
+        if len(fq) < 5 and len(ests) >= 2:
+            mid = ests[len(ests) // 2]; fq.append((f"Qual foi o preço mediano do diesel entre os estados na semana de {per_}?", f"Ordenando as {len(ests)} unidades da federação pelo S10, a do meio da lista foi {UFN.get(mid[0], mid[0])}, com {brl(mid[1])}/l (ANP)."))
         nav = "<p class='pager'>" + (f"<a href='{out[n - 1][1]}'>← Semana anterior</a> " if n else "") + (f"<a href='{out[n + 1][1]}'>Semana seguinte →</a>" if n + 1 < len(out) else "") + "</p>"
         cr = [("Início", "/"), ("Resumo semanal", "/resumo-semanal/"), (f"Semana {slug}", u)]
         lead = re.sub(r"<[^>]+>", "", sec[0][1].split("</p>")[0])
