@@ -38,6 +38,9 @@ def load():
 
 def fmt(d): return d.strftime("%d/%m/%Y %H:%M")
 
+import hashlib
+CSSV = hashlib.md5((ROOT / "static" / "style.css").read_bytes()).hexdigest()[:10]
+
 def page(title, desc, path, body, og_img=None, og_type="website", jsonld=None, robots=None):
     canon = BASE + path
     img = og_img or BASE + "/static/og-default.png"
@@ -51,7 +54,7 @@ def page(title, desc, path, body, og_img=None, og_type="website", jsonld=None, r
     return f"""<!doctype html><html lang="pt-BR"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{E(title)}</title>{rb}<meta name="description" content="{E(desc)}">
-<link rel="canonical" href="{canon}"><link rel="stylesheet" href="/static/style.css">
+<link rel="canonical" href="{canon}"><link rel="stylesheet" href="/static/style.css?v={CSSV}">
 <link rel="alternate" type="application/rss+xml" title="{E(CFG['site_name'])}" href="/rss.xml">
 <meta property="og:site_name" content="{E(CFG['site_name'])}"><meta property="og:locale" content="pt_BR">
 <meta property="og:type" content="{og_type}"><meta property="og:title" content="{E(title)}">
@@ -154,6 +157,11 @@ def main():
 <figure class="cover">{img(p, "cover", "(max-width: 800px) 100vw, 760px", True)}{f'<figcaption>Imagem: {E(p["imagem_credito"])}</figcaption>' if p.get("imagem_credito") else ''}</figure>{p['html']}</article>"""
         write(p["url"], page(f"{p['titulo']} — {CFG['site_name']}", p.get("resumo", ""), p["url"], b,
                              BASE + p["imagem"], "article", ld, robots="noindex,follow" if p.get("gerado_por") else None))
+    rd = yaml.safe_load((ROOT / "data" / "redirects.yaml").read_text()) if (ROOT / "data" / "redirects.yaml").exists() else {}
+    live = {p["url"] for p in posts}
+    for old, new in rd.items():
+        if old in live: continue
+        write(old, f'<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="robots" content="noindex"><link rel="canonical" href="{BASE}{new}"><meta http-equiv="refresh" content="0; url={new}"><title>Página movida</title></head><body><p>Esta notícia foi removida. <a href="{new}">Ver a editoria</a>.</p></body></html>')
     import paginas, paginas2
     me = sys.modules[__name__]; me._posts = posts; me._interlink = interlink
     fm_urls, fm_lm = paginas2.frete_minimo(me); pt_urls, pt_lm = paginas2.portos(me)
