@@ -55,7 +55,9 @@ def revisar(cfg, remove=False):
     for f in sorted(CONTENT.glob("*.md")):
         fm = yaml.safe_load(f.read_text(encoding="utf-8").split("---", 2)[1]) or {}
         if fm.get("gerado_por") != "fetch.py": continue
-        why = blocked(cfg, fm.get("fonte", ""), fm.get("link", ""), fm.get("titulo", ""), fm.get("resumo", ""), fm.get("fonte") in trusted)
+        img = str(fm.get("imagem", ""))
+        why = None if img.startswith("/static/img/") and not img.startswith("/static/img/editoria/") and (ROOT / img.lstrip("/")).exists() else "sem foto própria"
+        why = why or blocked(cfg, fm.get("fonte", ""), fm.get("link", ""), fm.get("titulo", ""), fm.get("resumo", ""), fm.get("fonte") in trusted)
         if why:
             n += 1; print(f"- {f.name}: {why}")
             if remove:
@@ -188,7 +190,8 @@ def main():
             fn = CONTENT / f"{when:%Y-%m-%d}-{slugify(title)}.md"
             if fn.exists(): continue
             info = None if a.dry_run else save_image(feed_image(e) or og_image(link), fn.stem)
-            info = info or editoria_image(ed)
+            if not info and not a.dry_run:  # só notícias com foto própria da fonte
+                print(f"  - sem foto: {title[:60]}"); continue
             body = (f"---\ntitulo: {q(title)}\ndata: {when.isoformat()}\neditoria: {ed}\nresumo: {q(resumo)}\n"
                     f"{img_fm(info, src_name)}\nfonte: {q(src_name)}\nlink: {q(link)}\ngerado_por: fetch.py\n---\n"
                     f"{resumo}\n\n**[Leia na íntegra em {src_name} →]({link})**\n\n"

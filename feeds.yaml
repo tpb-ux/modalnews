@@ -3,7 +3,7 @@ max_por_execucao: 20
 max_por_feed: 3
 max_idade_dias: 3
 feeds:
-  - {nome: Logweb, url: "https://www.logweb.com.br/feed/", confiavel: true, max: 5}
+  - {nome: Logweb, url: "https://www.logweb.com.br/feed/", confiavel: true, max: 8}
   - {nome: Comex do Brasil, url: "https://www.comexdobrasil.com/feed/", confiavel: true, editoria: comercio-exterior}
   - {nome: Blog do Caminhoneiro, url: "https://blogdocaminhoneiro.com/feed/", confiavel: true, editoria: transporte}
   - {nome: Portal NTC&Logística, url: "https://portalntc.org.br/feed/", confiavel: true}
@@ -11,13 +11,6 @@ feeds:
   - {nome: Frota&Cia, url: "https://www.frotacia.com.br/feed/", confiavel: true, editoria: transporte}
   - {nome: O Carreteiro, url: "https://www.ocarreteiro.com.br/feed/", confiavel: true, editoria: transporte}
   - {nome: Diário do Transporte, url: "https://www.diariodotransporte.com.br/feed/"}  # cobre muito transporte de passageiros: passa pela nota mínima
-  - {nome: Google Notícias, url: "https://news.google.com/rss/search?q=log%C3%ADstica+when:1d&hl=pt-BR&gl=BR&ceid=BR:pt-419"}
-  - {nome: Google Notícias, url: "https://news.google.com/rss/search?q=%22cadeia+de+suprimentos%22+log%C3%ADstica+when:2d&hl=pt-BR&gl=BR&ceid=BR:pt-419", editoria: supply-chain}
-  - {nome: Google Notícias, url: "https://news.google.com/rss/search?q=frete+OR+transportadora+OR+%22transporte+rodovi%C3%A1rio%22+when:1d&hl=pt-BR&gl=BR&ceid=BR:pt-419", editoria: transporte}
-  - {nome: Google Notícias, url: "https://news.google.com/rss/search?q=%22centro+de+distribui%C3%A7%C3%A3o%22+OR+%22galp%C3%A3o+log%C3%ADstico%22+OR+armazenagem+when:2d&hl=pt-BR&gl=BR&ceid=BR:pt-419", editoria: armazenagem}
-  - {nome: Google Notícias, url: "https://news.google.com/rss/search?q=porto+(exporta%C3%A7%C3%B5es+OR+importa%C3%A7%C3%B5es+OR+cont%C3%AAineres)+when:1d&hl=pt-BR&gl=BR&ceid=BR:pt-419", editoria: comercio-exterior}
-  - {nome: Google Notícias, url: "https://news.google.com/rss/search?q=log%C3%ADstica+(tecnologia+OR+automa%C3%A7%C3%A3o+OR+startup)+when:2d&hl=pt-BR&gl=BR&ceid=BR:pt-419", editoria: tecnologia}
-  - {nome: Google Notícias, url: "https://news.google.com/rss/search?q=%22setor+log%C3%ADstico%22+OR+%22mercado+log%C3%ADstico%22+when:2d&hl=pt-BR&gl=BR&ceid=BR:pt-419", editoria: mercado}
 
 # Filtros de qualidade. Feeds com "confiavel: true" (portais do setor) dispensam a nota mínima,
 # mas continuam sujeitos às listas de bloqueio.
