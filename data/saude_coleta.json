@@ -1,10 +1,10 @@
 {
- "hora": "2026-10-12T03:54:50+00:00",
- "novas": 2,
+ "hora": "2026-10-12T07:33:07+00:00",
+ "novas": 0,
  "erros": [
   {
    "feed": "Portal NTC&Logística",
-   "url": "https://portalntc.org.br/feed/",
+   "url": "https://www.portalntc.org.br/feed/",
    "erro": "sem itens"
   }
  ]
