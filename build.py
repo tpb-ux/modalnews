@@ -251,7 +251,7 @@ def main():
         b = f"""<article class="post"><div class="kick"><a href="/{p['editoria']}/">{E(EDS[p['editoria']])}</a></div>
 <h1>{E(p['titulo'])}</h1><p class="meta">{('Por <a href="/autores/' + p['autor'] + '/">' + E(AUT[p['autor']]['nome']) + '</a> · ') if p.get('autor') in AUT else ''}Publicado em <time datetime="{p['data'].isoformat()}">{fmt(p['data'])}</time>{(' · Atualizado em ' + fmt(p['atualizado'])) if isinstance(p.get('atualizado'), dt.datetime) else ''}
 {(' · Fonte: ' + E(p['fonte'])) if p.get('fonte') else ''}</p>{'' if p.get('gerado_por') else '<p><strong>' + E(p.get('resumo','')) + '</strong></p>'}
-<figure class="cover">{img(p, "cover", "(max-width: 800px) 100vw, 760px", True)}{f'<figcaption>Imagem: {E(p["imagem_credito"])}</figcaption>' if p.get("imagem_credito") else ''}</figure>{p['html']}</article>"""
+<figure class="cover">{img(p, "cover", "(max-width: 800px) 100vw, 760px", True)}{(f'<figcaption>Imagem: <a href="{E(p["link"])}" rel="nofollow noopener" target="_blank">{E(p["imagem_credito"])}</a></figcaption>' if p.get("link") else f'<figcaption>Imagem: {E(p["imagem_credito"])}</figcaption>') if p.get("imagem_credito") else ''}</figure>{p['html']}</article>"""
         write(p["url"], page(f"{p['titulo']} — {CFG['site_name']}", p.get("resumo", ""), p["url"], b,
                              BASE + p["imagem"], "article", ld, robots="noindex,follow" if p.get("gerado_por") else None))
     rd = yaml.safe_load((ROOT / "data" / "redirects.yaml").read_text()) if (ROOT / "data" / "redirects.yaml").exists() else {}
