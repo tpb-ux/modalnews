@@ -1,0 +1,49 @@
+# Tipos de carga da tabela de frete mínimo (Resolução ANTT 5.867/2020, Anexo II; coeficientes da portaria vigente). Texto próprio.
+- carga: Granel sólido
+  texto: "Granel sólido é a carga sem embalagem, transportada solta na carroceria, como grãos, farelos, fertilizantes, minérios, areia e calcário. É medida por peso e carregada por gravidade, esteiras ou pás. No rodoviário usa carrocerias graneleiras, basculantes e graneleiros com lona; é a principal carga dos corredores de exportação agrícola até os portos."
+  exemplos: [Soja e milho, Fertilizantes, Minério e calcário]
+  veiculos: [truck, bitruck, carreta-ls, bitrem, rodotrem]
+- carga: Granel líquido
+  texto: "Granel líquido é o produto líquido transportado sem embalagem em tanques, como óleos vegetais, leite cru, sucos e produtos químicos líquidos. Exige carroceria tanque com compartimentos, válvulas e, conforme o produto, limpeza e certificação específicas."
+  exemplos: [Óleo vegetal, Leite cru, Sucos concentrados]
+  veiculos: [truck, carreta-cinco-eixos, bitrem]
+- carga: Frigorificada ou Aquecida
+  texto: "Carga frigorificada ou aquecida é a que precisa de temperatura controlada durante todo o trajeto, como carnes, laticínios, frutas, vacinas e alguns químicos. É transportada em baús isotérmicos com aparelho de refrigeração, com registro de temperatura. A cadeia do frio não pode ser interrompida entre armazém, transporte e entrega."
+  exemplos: [Carnes e frangos, Laticínios, Medicamentos termolábeis]
+  veiculos: [vuc, tres-quartos, toco, truck, carreta-cinco-eixos]
+- carga: Conteinerizada
+  texto: "Carga conteinerizada é a transportada dentro de contêineres padronizados (20 ou 40 pés), muito comum no fluxo entre portos, terminais e armazéns de importação e exportação. No rodoviário usa porta-contêiner ou semirreboque esqueleto. O contêiner facilita a troca entre modais sem manusear a mercadoria."
+  exemplos: [Importação via porto, Exportação de manufaturados, Cabotagem]
+  veiculos: [carreta-cinco-eixos, carreta-ls, bitrem]
+- carga: Carga Geral
+  texto: "Carga geral é a mercadoria embalada, em caixas, fardos, sacos, paletes ou volumes unitários, que não se enquadra nas categorias de granel, frigorificada, conteinerizada, neogranel ou perigosa. É a categoria mais ampla, abrangendo bens de consumo, eletrônicos, peças, móveis e veículos, transportada em baú, sider ou carroceria aberta."
+  exemplos: [Bens de consumo paletizados, Peças e componentes, Veículos em cegonha]
+  veiculos: [vuc, tres-quartos, toco, truck, bitruck, carreta-cinco-eixos, cegonha]
+- carga: Neogranel
+  texto: "Neogranel é a carga formada por muitas unidades iguais, sem embalagem individual de transporte, movimentadas em grandes lotes homogêneos, como bobinas de aço, vergalhões, tubos, toras, sacaria e veículos em grande quantidade. Fica entre a carga geral e o granel: é contada por unidades, mas embarcada em volume."
+  exemplos: [Bobinas e chapas de aço, Toras de madeira, Sacaria]
+  veiculos: [truck, carreta-cinco-eixos, carreta-ls, bitrem]
+- carga: Perigosa (granel sólido)
+  texto: "Carga perigosa a granel sólido é o produto classificado como perigoso pela regulamentação da ANTT transportado solto, como alguns fertilizantes à base de nitrato de amônio. Além das regras do granel, exige veículo e motorista habilitados para produtos perigosos, rótulos de risco, painel de segurança e ficha de emergência."
+  exemplos: [Nitrato de amônio, Enxofre]
+  veiculos: [truck, carreta-ls, bitrem]
+- carga: Perigosa (granel líquido)
+  texto: "Carga perigosa a granel líquido é o produto perigoso transportado em tanque, como diesel, gasolina, etanol, GLP e ácidos. É uma das operações mais reguladas: exige tanque inspecionado, motorista com curso MOPP, sinalização de risco, kit de emergência e documentação específica, conforme a regulamentação da ANTT."
+  exemplos: [Combustíveis, Ácidos, Solventes]
+  veiculos: [truck, carreta-cinco-eixos, bitrem]
+- carga: Perigosa (frigorificada ou aquecida)
+  texto: "Carga perigosa frigorificada ou aquecida é o produto perigoso que também exige controle de temperatura, como certos peróxidos orgânicos e produtos químicos sensíveis. Soma as exigências da cadeia do frio às do transporte de produtos perigosos."
+  exemplos: [Peróxidos orgânicos, Químicos termossensíveis]
+  veiculos: [truck, carreta-cinco-eixos]
+- carga: Perigosa (conteinerizada)
+  texto: "Carga perigosa conteinerizada é o produto perigoso embarcado em contêiner, situação comum em importação e exportação de químicos. Além da sinalização no veículo, o contêiner deve trazer os rótulos de risco e a documentação deve acompanhar a carga no trecho rodoviário."
+  exemplos: [Químicos importados, Baterias, Tintas e solventes embalados]
+  veiculos: [carreta-cinco-eixos, carreta-ls]
+- carga: Perigosa (carga geral)
+  texto: "Carga perigosa geral é o produto perigoso embalado em volumes, como tambores, bombonas, cilindros e caixas, transportado em baú ou carroceria. Exige embalagens homologadas, rótulos de risco, segregação de produtos incompatíveis e documentação de produtos perigosos."
+  exemplos: [Tambores de solvente, Cilindros de gás, Aerossóis]
+  veiculos: [tres-quartos, toco, truck, carreta-cinco-eixos]
+- carga: Carga Granel Pressurizada
+  texto: "Carga a granel pressurizada é o produto transportado sob pressão em tanques próprios, como gases liquefeitos e alguns pós descarregados por ar comprimido, como cimento a granel em silo pressurizado. O equipamento exige inspeção periódica e operação com procedimentos específicos de carga e descarga."
+  exemplos: [Cimento a granel, Gases liquefeitos, Cal]
+  veiculos: [carreta-cinco-eixos, carreta-ls, bitrem]
