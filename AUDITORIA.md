@@ -70,3 +70,18 @@ Metodologia: rebuild local (`build.py`, 1.512 HTML), varredura com BeautifulSoup
 
 ## Ordem sugerida de correção
 1) Links quebrados com link-check no CI. 2) Confirmar o cron e criar o alerta de matéria parada. 3) Contato, termos e canal LGPD. 4) FAQs ≥5 em diesel, rotas, aeroportos e portos. 5) Diferenciação ou noindex das pSEO quase duplicadas. 6) h1, image no Article e llms.txt. 7) Refatorar em core + nicho e transformar em template.
+
+---
+## Correções aplicadas (12/10/2026)
+| Métrica | Antes | Depois |
+|---|---|---|
+| Links internos quebrados | 313 (16 destinos) | 0 (build falha se houver) |
+| Indexáveis com <5 FAQs | 865 | 0 |
+| Páginas sem h1 | 7 | 0 |
+| Article sem image | 30 | 0 |
+| Títulos >65 / descrições fora de 50–165 | 17 / 7 | 0 / 0 |
+| Indexáveis (sitemap) | 1.377 | 1.375 (+/contato/ e /termos/; 4 pSEO <300 palavras em noindex) |
+| Jaccard médio (máx), mesma amostra | diesel 0,59 (0,79) · rotas 0,66 (0,84) · cidades 0,60 (0,86) · aeroportos 0,68 (0,72) | diesel 0,50 (0,77) · rotas 0,58 (0,80) · cidades 0,59 (0,72) · aeroportos 0,61 (0,70) |
+
+- Workflow: coletores com `continue-on-error` + passo "Alertas" que abre/atualiza/fecha a issue "Alerta automático: coleta do Modal News" (matéria >24 h, feed com erro, passo falho); IndexNow usa a lista do build (artifact) e mescla hashes sobre o main atual; coleta commita com `[skip ci]` e rebase/retry.
+- Pendências: cron agendado ainda sem execução registrada (workflow reativado); feed da NTC devolve vazio a partir dos runners do GitHub (funciona fora deles); e-mail de contato e encarregado LGPD a preencher em `config.yaml`.
