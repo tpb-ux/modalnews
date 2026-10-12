@@ -96,13 +96,23 @@ def build(B):
         fq.append((f"Qual o frete mínimo saindo de {disp}?", f"O piso da ANTT não muda por cidade: é calculado pela distância da viagem, tipo de carga e número de eixos. Para carga geral com 5 eixos, uma viagem de 300 km tem piso de {brl(ex[1][1])}, sem pedágio. Use a calculadora para a sua rota."))
         if pop and pib: fq.append((f"Qual o tamanho da economia de {disp}?", f"Pelo IBGE, {disp} tinha {num(pop)} habitantes no Censo 2022 e PIB de R$ {dec(pib / 1e6, 2)} bilhões em {g['pib_mil_ano']}, o que dá cerca de {brl(pib * 1000 / pop)} por habitante (PIB do ano dividido pela população do Censo)."))
         dp = (1 if any(road) else 0) + (1 if r0 else 0) + (1 if s10 else 0) + (1 if s500 else 0) + (1 if pop else 0) + (1 if pib else 0) + min(len(prox), 4) + (1 if pts and pts[0][0] <= 400 else 0)
-        idx = dp >= 5 and postos >= 3 and len(fq) >= 4
+        idx = dp >= 5 and postos >= 3 and len(fq) >= 5
+        lg = []
+        if pts3 and R(pts3[0][2]):
+            kp = R(pts3[0][2])[0]
+            lg.append(f"{disp} está {'colada a um porto organizado' if kp < 30 else 'próxima de porto, a menos de 150 km' if kp < 150 else 'a média distância do porto mais próximo' if kp < 500 else 'longe dos portos, o que encarece a logística de exportação'} ({pts3[0][1]['nome']}, {num(kp)} km por estrada).")
+        lg.append("Não há praças federais num raio de 100 km, então rotas curtas a partir da cidade tendem a ter pouco pedágio federal." if not prox else f"Com {len(prox)} praça(s) federal(is) em até 100 km, o pedágio pesa nas rotas que saem da cidade" + (f", principalmente pela {brs[0]}." if brs else "."))
+        stx = (cur["estados"].get(uf, {}).get("s10") or {}).get("media")
+        if s10 and stx: lg.append(f"O diesel S10 local está {brl(abs(s10 - stx))} {'acima' if s10 > stx else 'abaixo'} da média de {UFN[uf]} ({brl(stx)}).")
+        if ae2: lg.append(f"O aeroporto de carga mais próximo, {ae2[0][1]}, movimentou {num(ae2[0][2]['dom'] + ae2[0][2]['int'])} t em 12 meses.")
+        if r0 and r0.get("hier"): lg.append(f"Pela REGIC, a cidade é {r0['hier'].split(' - ')[0].lower()}, o que indica {'forte' if r0['hier'].startswith(('Metrópole', 'Capital')) else 'relevante' if r0['hier'].startswith('Centro Sub') else 'local'} centralidade para distribuição.")
+        leitura_html = f"<h2>Leitura logística de {E(disp)}</h2><p>{E(' '.join(lg))}</p>" if lg else ""
         lead = f"{disp} ({UFN[uf]}) em dados de logística: " + (f"{num(pop)} habitantes (Censo 2022), " if pop else "") + (f"diesel S10 a {brl(s10)}/l (ANP), " if s10 else "") + \
                (f"{len(prox)} praças de pedágio federais em até 100 km ({', '.join(brs)})" if prox else "sem praças de pedágio federais em até 100 km") + (f" e porto mais próximo: {pts3[0][1]['nome']}, a {num(R(pts3[0][2])[0])} km por estrada." if pts3 and R(pts3[0][2]) else f" e porto mais próximo: {pts[0][1]['nome']}, a {num(pts[0][0])} km em linha reta." if pts else ".")
         cr = [("Início", "/"), ("Estados", "/estados/"), (UFN[uf], f"/estados/{uf.lower()}/"), (f"Logística em {disp}", u)]
         body = f"""<article class="post data">{crumbs_html(E, cr)}<h1>Logística e transporte em {E(disp)} ({uf})</h1><p class="snippet">{E(lead)}</p>
 <p class="upd">Dados atualizados: diesel semana {dbr(cur['ini'])}–{dbr(cur['fim'])}; pedágio e volumes ANTT; IBGE.</p>
-<h2>Perfil econômico de {E(disp)}</h2>{perfil_html}<h2>Combustível para transporte de cargas</h2>{dz}
+{leitura_html}<h2>Perfil econômico de {E(disp)}</h2>{perfil_html}<h2>Combustível para transporte de cargas</h2>{dz}
 <h2>Rodovias federais e pedágios próximos</h2>{rd}<h2>Polo regional (IBGE)</h2>{polo}<h2>Portos e aeroportos de carga mais próximos</h2>{pt}<h2>Frete mínimo de referência (ANTT)</h2>{fr}
 <h2>Perguntas frequentes</h2>{faq_block(E, fq)}
 <p class="src">Metodologia: páginas geradas a partir de dados públicos oficiais, sem estimativas próprias além dos cálculos indicados. Veja a <a href="/metodologia/">metodologia</a>.</p></article>"""

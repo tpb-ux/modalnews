@@ -41,6 +41,9 @@ def fmt(d): return d.strftime("%d/%m/%Y %H:%M")
 import hashlib
 CSSV = hashlib.md5((ROOT / "static" / "style.css").read_bytes()).hexdigest()[:10]
 
+THIN_MIN = 300  # páginas pSEO com menos palavras que isso saem do índice (noindex,follow) e do sitemap
+THIN_FAMILIAS = ("/diesel/", "/rotas/", "/logistica/", "/aeroportos/", "/portos/", "/pedagios/", "/rodovias/", "/estados/", "/frete-minimo/", "/veiculos/", "/tipos-de-carga/", "/comparativos/", "/glossario/")
+THIN = set()
 HUB_FAQ = {}  # path -> [(pergunta, resposta)]: FAQ injetado em páginas de índice/hub que não têm FAQ próprio
 
 def _inject_faq(path, body, jsonld):
@@ -58,6 +61,9 @@ def _inject_faq(path, body, jsonld):
 
 def page(title, desc, path, body, og_img=None, og_type="website", jsonld=None, robots=None):
     body, jsonld = _inject_faq(path, body, jsonld)
+    if not robots and path.startswith(THIN_FAMILIAS) and path.count("/") >= 3:
+        nw = len(re.sub(r"<[^>]+>", " ", re.sub(r"<script.*?</script>", " ", body, flags=re.S)).split())
+        if nw < THIN_MIN: robots = "noindex,follow"; THIN.add(path)
     canon = BASE + path
     img = og_img or BASE + "/static/og-default.png"
     nav = "".join(f'<a href="/{s}/">{E(n)}</a>' for s, n in EDS.items())
@@ -215,6 +221,7 @@ def main():
     own = [p for p in posts if not p.get("gerado_por")]
     today = dt.date.today().isoformat()
     def smfile(name, urls, lastmod={}, images=None):
+        urls = [u for u in urls if u not in THIN]
         rows = "".join(f"<url><loc>{BASE}{u}</loc>" + (f"<lastmod>{lastmod[u]}</lastmod>" if u in lastmod else "")
                        + (f"<image:image><image:loc>{BASE}{images[u]}</image:loc></image:image>" if images and u in images else "") + "</url>" for u in urls)
         (OUT / name).write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">' + rows + "</urlset>", encoding="utf-8")
@@ -237,6 +244,7 @@ def main():
     if CFG.get("indexnow_key"): (OUT / f"{CFG['indexnow_key']}.txt").write_text(CFG["indexnow_key"])
     import indexnow; indexnow.diff(me)
     print(f"Busca: {nb} páginas no índice")
+    if THIN: print(f"Qualidade: {len(THIN)} página(s) pSEO com menos de {THIN_MIN} palavras em noindex: " + ", ".join(sorted(THIN)[:10]))
     broken = linkcheck()
     if broken:
         for u, (n, src) in sorted(broken.items(), key=lambda x: -x[1][0])[:30]: print(f"LINK QUEBRADO {u} ({n}x, ex.: {src})")

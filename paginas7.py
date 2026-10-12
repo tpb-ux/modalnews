@@ -123,6 +123,13 @@ def aeroportos(B):
             uf_html = f"<h2>Aeroportos de carga em {UFN[uf]}</h2><ul>" + "".join(f"<li>" + (f"<a href='/aeroportos/{x.lower()}/'>{E(b_['nome_oficial'].title())} ({x})</a>" if x != k else f"<strong>{E(b_['nome_oficial'].title())} ({x})</strong>") + f": {num(b_['dom'] + b_['int'])} t</li>" for x, b_ in mesmo_uf) + "</ul>"
         else:
             fq.append((f"Há outros aeroportos de carga em {UFN[uf]}?", f"Na estatística da ANAC do período, o {k} é o único aeroporto de {UFN[uf]} com mais de mil toneladas de carga e correio em 12 meses."))
+        shi = a["int"] / t if t else 0; pfa = []
+        pfa.append(f"O {k} é {'majoritariamente internacional: a maior parte da carga chega ou sai em voos para o exterior' if shi >= 0.5 else 'misto, com parcela relevante de carga internacional' if shi >= 0.15 else 'essencialmente doméstico, voltado ao abastecimento e à distribuição dentro do país'} ({num(100 * shi, 1)}% internacional).")
+        if a["emb"] + a["des"]:
+            be = a["emb"] / (a["emb"] + a["des"])
+            pfa.append("Embarques e desembarques estão equilibrados." if 0.45 <= be <= 0.55 else (f"Predominam os embarques ({num(100 * be, 1)}%), perfil de região que envia mercadorias." if be > 0.55 else f"Predominam os desembarques ({num(100 * (1 - be), 1)}%), perfil de região consumidora ou de redistribuição."))
+        pfa.append(f"No ranking nacional, está {'entre os 5 maiores' if rk <= 5 else 'entre os 15 maiores' if rk <= 15 else 'na faixa intermediária' if rk <= 30 else 'entre os menores com movimento regular'} ({rk}º de {len(lst)}).")
+        uf_html = f"<h2>Perfil do aeroporto</h2><p>{E(' '.join(pfa))}</p>" + uf_html
         if len(serie) >= 6:
             v1 = sum(v for _, v in serie[:3]); v2 = sum(v for _, v in serie[-3:])
             uf_html += f"<h2>Tendência recente</h2><p>Os últimos 3 meses ({mfmt(serie[-3][0])} a {mfmt(serie[-1][0])}) somaram {num(v2)} t, contra {num(v1)} t nos 3 primeiros meses da série ({mfmt(serie[0][0])} a {mfmt(serie[2][0])}), variação de {('+' if v2 >= v1 else '') + num(100 * (v2 / v1 - 1), 1) if v1 else '—'}%.</p>"

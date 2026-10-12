@@ -105,6 +105,23 @@ def diesel(B):
         if len(pares_uf) > 1:
             vz = [x for x in pares_uf if x is not c]; mais_barata = vz[0]; mais_cara = vz[-1]
             rk_html += f"<p>Em {UFN[uf]}, a cidade com {main_n} mais barato na semana foi <a href=\"/diesel/{mais_barata['slug']}/\">{E(mais_barata['nome'])}</a> ({brl(mais_barata['d'][mk]['media'])}) e a mais cara, <a href=\"/diesel/{mais_cara['slug']}/\">{E(mais_cara['nome'])}</a> ({brl(mais_cara['d'][mk]['media'])}).</p>"
+        # leitura da semana: frases escolhidas pelos próprios números (não por sorteio)
+        lt = []
+        if stm and brm:
+            acima_uf, acima_br = main_v["media"] > stm, main_v["media"] > brm
+            lt.append({(True, True): f"{nome} ficou acima tanto da média de {UFN[uf]} quanto da média do país, o que encarece o abastecimento local frente a outras praças.",
+                       (True, False): f"O preço em {nome} superou a média de {UFN[uf]}, mas ficou abaixo da média nacional: o estado como um todo tem diesel mais barato que o país.",
+                       (False, True): f"{nome} teve diesel mais barato que a média de {UFN[uf]}, embora ainda acima da média nacional, refletindo um estado de preços altos.",
+                       (False, False): f"{nome} ficou abaixo das médias de {UFN[uf]} e do Brasil, o que torna a cidade um ponto de abastecimento competitivo na região."}[(acima_uf, acima_br)])
+        if pv.get(mk) and pv[mk].get("media"):
+            dv = main_v["media"] - pv[mk]["media"]
+            lt.append(f"Na comparação com a semana anterior, o litro {'subiu ' + brl(dv) if dv > 0.004 else 'caiu ' + brl(-dv) if dv < -0.004 else 'ficou praticamente estável'}" + (f", indo de {brl(pv[mk]['media'])} para {brl(main_v['media'])}." if abs(dv) > 0.004 else "."))
+        spr = main_v["max"] - main_v["min"]
+        if main_v["postos"] < 5: lt.append(f"Com apenas {main_v['postos']} posto(s) na amostra, a média é sensível a poucos preços; vale comparar com cidades vizinhas.")
+        elif spr >= 0.5: lt.append(f"A diferença de {brl(spr)} por litro entre os postos pesquisados é alta: pesquisar antes de abastecer pode render economia relevante numa carreta.")
+        else: lt.append(f"Os preços entre os {main_v['postos']} postos pesquisados variaram pouco ({brl(spr)} por litro), indicando mercado local homogêneo.")
+        if s10 and s5: lt.append(f"O S500 saiu {brl(abs(s10['media'] - s5['media']))} {'mais barato' if s5['media'] < s10['media'] else 'mais caro'} que o S10 por litro.")
+        rk_html = f"<h2>Leitura da semana em {E(nome)}</h2><p>{E(' '.join(lt))}</p>" + rk_html
         uniq = len(rows) * 5 + len(comp) + (1 if pv else 0)
         robots = None if uniq >= 5 else "noindex,follow"
         body = f"""<article class="post data">{crumbs_html(E, [("Início", "/"), ("Diesel", "/diesel/"), (UFN[uf], f"/diesel/estado/{uf.lower()}/"), (label, url)])}
@@ -113,10 +130,10 @@ def diesel(B):
 {f'<h2>{E(nome)} comparado ao estado e ao Brasil</h2>' + table(comp, ["Produto", label, UFN[uf], "Brasil"]) if comp else ''}
 {rk_html}
 <h2>Histórico do diesel em {E(nome)}</h2>{hist(lambda w: w["municipios"].get(k))}
-<p>Use os preços para estimar o custo de uma viagem na <a href="/calculadoras/custo-diesel-viagem/">calculadora de custo de diesel</a>. Entenda o <a href="/glossario/frete/">frete</a> e o <a href="/glossario/frete-minimo/">piso mínimo de frete da ANTT</a>, reajustado quando o diesel varia.</p>
+
 <h2>Perguntas frequentes sobre o diesel em {E(nome)}</h2>{faq_block(E, fq)}
 {f'<h2>Diesel em outras cidades de {UFN[uf]}</h2><div class="chips">' + "".join(f'<a class="chip" href="/diesel/{x["slug"]}/">{E(x["nome"])}</a>' for x in viz) + "</div>" if viz else ''}
-<h2>Fonte e metodologia</h2><p>Dados do {src}, publicado semanalmente pela Agência Nacional do Petróleo, Gás Natural e Biocombustíveis. O Modal News apenas organiza os números divulgados; não faz estimativas. Veja a <a href="/metodologia/">metodologia</a>.</p></article>"""
+<p class="src">Fonte: {src}. <a href="/metodologia/">Metodologia</a> · <a href="/calculadoras/custo-diesel-viagem/">Calcular custo de viagem</a></p></article>"""
         ld = {"@context": "https://schema.org", "@graph": [ds(f"Preço do diesel em {label}", f"{nome}, {UFN[uf]}", c), faq_ld(fq),
               crumbs_ld(BASE, [("Início", "/"), ("Diesel", "/diesel/"), (UFN[uf], f"/diesel/estado/{uf.lower()}/"), (label, url)])]}
         title = f"Preço do diesel em {nome} ({uf}) hoje: S10 e S500"

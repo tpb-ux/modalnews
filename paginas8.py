@@ -26,7 +26,7 @@ def rotas(B):
         lk = lambda u, t: f"<a href='{u}'>{t}</a>" if (B.OUT / u.strip("/") / "index.html").exists() else t
         rows = "".join(f"<tr><td>{lk('/rodovias/' + p['br'].lower() + '/', p['br'])}</td><td>{E(p['nome'])}</td><td>{E(p['mun'])}/{p['uf']}</td><td>{E(p['conc'].title())}</td><td>{brl(t * 5) if t else lk('/pedagios/' + B.slugify(p['conc']) + '/', 'ver tarifa')}</td></tr>" for p, t in ts)
         ped_html = (f"<p>No traçado calculado há <strong>{len(pr)} praça(s) de pedágio federais</strong> (ANTT)" + (f", que somam {brl(ped5)} para uma carreta de 5 eixos" + ("" if allk else " nas praças com tarifa identificada") if known else "") + ".</p><div class='tblw'><table class='tbl'><thead><tr><th>Rodovia</th><th>Praça</th><th>Município</th><th>Concessão</th><th>5 eixos</th></tr></thead><tbody>" + rows + "</tbody></table></div>") if pr else "<p>O traçado calculado não passa por praças de pedágio de rodovias federais concedidas (ANTT).</p>"
-        ped_html += "<p class='src'>Somente praças federais (ANTT). Rodovias estaduais concedidas no trajeto cobram pedágio à parte e não estão incluídas. Praças identificadas por coordenadas oficiais da ANTT a até 250 m do traçado.</p>"
+        ped_html += "<p class='src'>Só praças federais (ANTT), a até 250 m do traçado; pedágios estaduais à parte.</p>"
         brs = ", ".join(f"<a href='/rodovias/{x.lower()}/'>{x}</a>" if (B.OUT / "rodovias" / x.lower()).exists() else x for x, _ in r.get("brs", [])[:5])
         lead = f"De {orig} a {dest} são cerca de {num(km_)} km por estrada ({hr(r['min'])} de direção estimada, sem paradas). O piso de frete ANTT para carga geral em carreta de 5 eixos é {brl(f5)}" + (f", e as praças federais no caminho somam {brl(ped5)} para 5 eixos." if known and allk else ".")
         fq = [(f"Qual a distância de {a['nome']} a {b.get('porto_nome') or b['nome']} por estrada?", f"Cerca de {num(km_)} km entre os centros dos municípios, pelo cálculo de rota OSRM com dados do OpenStreetMap; em linha reta são {num(r['linha_reta'])} km. O tempo estimado é de {hr(r['min'])} sem paradas, e caminhões levam mais por limites de velocidade e jornada."),
@@ -54,13 +54,20 @@ def rotas(B):
             mo_html = f"<h2>Outras rotas saindo de {E(a['nome'])}</h2><ul>" + "".join(f"<li><a href='{_u(x)}'>{E(x['b'].get('porto_nome') or x['b']['nome'])}</a>: {num(x['km'])} km, {len(x['pracas'])} praça(s) federal(is)</li>" for x in sorted(mesma, key=lambda x: x["km"])[:8]) + "</ul>"
         if pr and known:
             fq.append((f"Quanto custa o pedágio ida e volta de {a['nome']} a {b['nome']}?", f"Para carreta de 5 eixos, as praças federais com tarifa identificada somam {brl(ped5)} por sentido, cerca de {brl(ped5 * 2)} ida e volta" + ("" if allk else ", sem contar praças cuja tarifa não foi identificada") + ". Pedágios estaduais não estão incluídos."))
+        pf = []
+        pf.append(f"É uma rota {'curta, típica de distribuição regional' if km_ < 300 else 'de média distância, que um caminhão cumpre normalmente em um dia de jornada' if km_ < 700 else 'longa, que em geral exige pernoite e paradas obrigatórias de descanso' if km_ < 1500 else 'de longa distância interestadual, com mais de um dia de viagem para o caminhão'} ({num(km_)} km).")
+        pf.append("O destino é um porto organizado, o que torna o trajeto relevante para exportação e importação." if b.get("porto") else ("Origem e destino ficam no mesmo estado." if a["uf"] == b["uf"] else f"A viagem cruza a divisa entre {UFN.get(a['uf'], a['uf'])} e {UFN.get(b['uf'], b['uf'])}."))
+        pf.append("Não há praças de pedágio federais no traçado calculado." if not pr else f"Há {len(pr)} praça(s) federal(is) no caminho" + (f", cerca de {brl(ped5 / km_ * 100)} de pedágio a cada 100 km para 5 eixos." if known and allk and km_ else "."))
+        if sinu: pf.append(f"O traçado é {'bem direto' if sinu < 1.2 else 'moderadamente sinuoso' if sinu < 1.4 else 'bastante sinuoso'}: a estrada tem {num((sinu - 1) * 100)}% a mais que a linha reta.")
+        if d1 and d2 and abs(d1 - d2) >= 0.05: pf.append(f"O diesel é {brl(abs(d1 - d2))} por litro mais barato em {a['nome'] if d1 < d2 else b['nome']}, o que favorece abastecer lá.")
+        perfil_html = f"<h2>Perfil da rota</h2><p>{E(' '.join(pf))}</p>"
         cr = [("Início", "/"), ("Rotas", "/rotas/"), (f"{a['nome']} × {b.get('porto_nome') or b['nome']}", u)]
         body = f"""<article class="post data">{crumbs_html(E, cr)}<h1>Frete {E(a['nome'])} × {E(b.get('porto_nome') or b['nome'])}: distância, pedágios e frete mínimo</h1><p class="snippet">{E(lead)}</p>
 <dl class="deflist"><dt>Distância por estrada*</dt><dd>{num(km_)} km</dd><dt>Tempo estimado*</dt><dd>{hr(r['min'])}</dd><dt>Linha reta</dt><dd>{num(r['linha_reta'])} km</dd>{f"<dt>Principais rodovias</dt><dd>{brs}</dd>" if brs else ''}</dl>
 <p class="src">*{E(R['fonte'])}. Tempo do roteador para automóvel, sem paradas.</p>
 <h2>Frete mínimo ANTT (carga geral, lotação)</h2><div class="tblw"><table class="tbl"><thead><tr><th>Veículo</th><th>Piso para {num(km_)} km</th></tr></thead><tbody><tr><td><a href="/veiculos/carreta-cinco-eixos/">Carreta 5 eixos</a></td><td>{brl(f5)}</td></tr><tr><td><a href="/veiculos/carreta-ls/">Carreta LS 6 eixos</a></td><td>{brl(f6)}</td></tr><tr><td><a href="/veiculos/bitrem/">Bitrem 7 eixos</a></td><td>{brl(f7)}</td></tr></tbody></table></div>
 <p class="src">{E(ato['nome'])}, Tabela A. Cálculo: km × CCD + CC. Outros tipos de carga na <a href="/frete-minimo/">calculadora de frete mínimo</a>.</p>
-{outras_html}
+{perfil_html}{outras_html}
 <h2>Pedágios federais no trajeto</h2>{ped_html}
 <h2>Custo estimado de diesel</h2><p>{num(litros)} litros a 2,5 km/l × {brl(dm)}/l (S10, média de origem e destino, ANP) ≈ <strong>{brl(custo_d)}</strong>. Simule com o seu consumo na <a href="/calculadoras/custo-diesel-viagem/">calculadora de custo de diesel</a>.</p>
 {dz_html}{mo_html}
