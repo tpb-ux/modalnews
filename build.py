@@ -47,7 +47,7 @@ def page(title, desc, path, body, og_img=None, og_type="website", jsonld=None, r
     nav = "".join(f'<a href="/{s}/">{E(n)}</a>' for s, n in EDS.items())
     nav_ed = "".join(f'<a class="{"on" if path.startswith(f"/{s}/") else ""}" href="/{s}/">{E(n)}</a>' for s, n in EDS.items())
     ref_links = "".join(f'<a href="{u}">{n}</a>' for u, n in [("/diesel/", "Preço do diesel"), ("/frete-minimo/", "Frete mínimo"), ("/portos/", "Portos"), ("/rodovias/", "Rodovias"),
-                        ("/guias/", "Guias"), ("/calculadoras/cubagem/", "Calculadora de cubagem"), ("/calculadoras/custo-diesel-viagem/", "Custo de diesel"), ("/siglas/", "Siglas")])
+                        ("/guias/", "Guias"), ("/estados/", "Logística por estado"), ("/calculadoras/cubagem/", "Calculadora de cubagem"), ("/calculadoras/custo-diesel-viagem/", "Custo de diesel"), ("/siglas/", "Siglas")])
     ld = f'<script type="application/ld+json">{json.dumps(jsonld, ensure_ascii=False)}</script>' if jsonld else ""
     ld += f'<script type="application/ld+json">{json.dumps(SITE_LD, ensure_ascii=False)}</script>'
     rb = f'<meta name="robots" content="{robots}">' if robots else ""
@@ -73,7 +73,7 @@ document.addEventListener('keydown',function(e){{if(e.key==='Escape'&&!d.hidden)
 var a=document.querySelector('nav.ed a.on,nav.ed a.pill');if(a&&a.scrollIntoView&&innerWidth<860)a.scrollIntoView({{inline:'center',block:'nearest'}});
 document.addEventListener('click',function(e){{var x=document.querySelector('details.dd[open]');if(x&&!x.contains(e.target))x.open=false}})}})();</script>
 <main class="wrap">{body}</main><footer><div class="wrap fgrid"><div><img src="/static/logo.svg" alt="" width="180" height="36" class="flogo"><p>{E(CFG['tagline'])}</p></div>
-<div><h4>Editorias</h4>{nav}</div><div><h4>Referência</h4><a href="/glossario/">Glossário de Logística</a><a href="/siglas/">Siglas</a><a href="/diesel/">Preço do diesel</a><a href="/frete-minimo/">Frete mínimo ANTT</a><a href="/portos/">Portos</a><a href="/rodovias/">Rodovias</a><a href="/guias/">Guias práticos</a><a href="/calculadoras/cubagem/">Calculadora de cubagem</a><a href="/calculadoras/custo-diesel-viagem/">Custo de diesel</a><a href="/links-uteis/">Links úteis</a></div>
+<div><h4>Editorias</h4>{nav}</div><div><h4>Referência</h4><a href="/glossario/">Glossário de Logística</a><a href="/siglas/">Siglas</a><a href="/diesel/">Preço do diesel</a><a href="/frete-minimo/">Frete mínimo ANTT</a><a href="/portos/">Portos</a><a href="/rodovias/">Rodovias</a><a href="/estados/">Logística por estado</a><a href="/guias/">Guias práticos</a><a href="/calculadoras/cubagem/">Calculadora de cubagem</a><a href="/calculadoras/custo-diesel-viagem/">Custo de diesel</a><a href="/links-uteis/">Links úteis</a></div>
 <div><h4>Institucional</h4><a href="/sobre/">Sobre</a><a href="/politica-editorial/">Política editorial</a><a href="/metodologia/">Metodologia</a><a href="/correcoes/">Correções</a><a href="/privacidade/">Privacidade</a><a href="/rss.xml">Feed RSS</a></div></div>
 <div class="wrap fbot">© {dt.date.today().year} {E(CFG['site_name'])} · Todos os direitos reservados</div></footer></body></html>"""
 
@@ -109,6 +109,8 @@ def sec(title_small, title_big, link=None):
     return f'<h2 class="st">{f"<a href={chr(34)}{link}{chr(34)}>{t}</a>" if link else t}</h2>'
 
 def write(path, txt):
+    import relacionados
+    txt = relacionados.inject(path, txt, E)
     f = OUT / path.lstrip("/"); f = f / "index.html" if path.endswith("/") else f
     txt = re.sub(r'(href|src)="/(?!/)', lambda m: f'{m.group(1)}="{PREFIX}/', txt)
     f.parent.mkdir(parents=True, exist_ok=True); f.write_text(txt, encoding="utf-8")
@@ -120,6 +122,8 @@ def main():
     if CFG.get("cname"): (OUT / "CNAME").write_text(CFG["cname"].strip() + "\n")
     own = lambda p: not p["imagem"].startswith("/static/img/editoria/")
     recent48 = lambda p: (dt.datetime.now(dt.timezone.utc) - p["data"]) < dt.timedelta(hours=48)
+    import relacionados
+    hub_urls = relacionados.build(sys.modules[__name__], posts)
     pri = CFG.get("destaque_prioritario")
     dest = ([p for p in posts if p.get("destaque")] or [p for p in posts if own(p) and pri and p.get("fonte") == pri and recent48(p)][:1]
             or [p for p in posts if own(p)][:1] or posts[:1])
@@ -180,7 +184,7 @@ def main():
     latest = max([p["data"] for p in posts], default=dt.datetime.now(dt.timezone.utc)).date().isoformat()
     files = [smfile("sitemap-paginas.xml", ["/"] + [f"/{s}/" for s in EDS] + conf_urls + calc_urls + sig_urls, {"/": latest, **{f"/{s}/": latest for s in EDS}}),
              smfile("sitemap-glossario.xml", gl_urls, gl_lastmod), smfile("sitemap-diesel.xml", ds_urls, ds_lastmod),
-             smfile("sitemap-frete-minimo.xml", fm_urls, fm_lm), smfile("sitemap-entidades.xml", pt_urls + rd_urls, {**pt_lm, **rd_lm}), smfile("sitemap-guias.xml", gu_urls, gu_lm)]
+             smfile("sitemap-frete-minimo.xml", fm_urls, fm_lm), smfile("sitemap-entidades.xml", pt_urls + rd_urls, {**pt_lm, **rd_lm}), smfile("sitemap-guias.xml", gu_urls, gu_lm), smfile("sitemap-estados.xml", hub_urls)]
     if own: files.append(smfile("sitemap-artigos.xml", [p["url"] for p in own], {p["url"]: p["data"].date().isoformat() for p in own}, {p["url"]: p["imagem"] for p in own}))
     (OUT / "sitemap.xml").write_text('<?xml version="1.0" encoding="UTF-8"?>\n<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
         + "".join(f"<sitemap><loc>{BASE}/{f}</loc></sitemap>" for f in files) + "</sitemapindex>", encoding="utf-8")

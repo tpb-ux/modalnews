@@ -63,6 +63,8 @@ def revisar(cfg, remove=False):
             if remove:
                 f.unlink()
                 with REMOVED.open("a", encoding="utf-8") as r: r.write(fm.get("link", "") + "\n")
+                rf = ROOT / "data" / "redirects.yaml"; rd = (yaml.safe_load(rf.read_text()) or {}) if rf.exists() else {}
+                rd[f"/{fm.get('editoria')}/{f.stem}/"] = f"/{fm.get('editoria')}/"; rf.write_text(yaml.safe_dump(rd, allow_unicode=True), encoding="utf-8")
     print(f"{n} matéria(s) fora dos filtros{' removida(s)' if remove else ''}.")
 
 def clean(s):
