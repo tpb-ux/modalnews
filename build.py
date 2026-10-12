@@ -44,6 +44,7 @@ CSSV = hashlib.md5((ROOT / "static" / "style.css").read_bytes()).hexdigest()[:10
 THIN_MIN = 300  # páginas pSEO com menos palavras que isso saem do índice (noindex,follow) e do sitemap
 THIN_FAMILIAS = ("/diesel/", "/rotas/", "/logistica/", "/aeroportos/", "/portos/", "/pedagios/", "/rodovias/", "/estados/", "/frete-minimo/", "/veiculos/", "/tipos-de-carga/", "/comparativos/", "/glossario/")
 THIN = set()
+ED_IMG = {"veiculos": BASE + "/static/img/editoria/transporte.webp", "resumo-semanal": BASE + "/static/img/editoria/mercado.webp"}
 HUB_FAQ = {}  # path -> [(pergunta, resposta)]: FAQ injetado em páginas de índice/hub que não têm FAQ próprio
 
 def _inject_faq(path, body, jsonld):
@@ -59,8 +60,23 @@ def _inject_faq(path, body, jsonld):
         j = {k: v for k, v in jsonld.items() if k != "@context"}; jsonld = {"@context": "https://schema.org", "@graph": [j, faq_ld(fq)]}
     return body, jsonld
 
+def fit_title(t, n=65):
+    """Encurta títulos longos sem cortar palavras: tira o sufixo da marca, depois o trecho após ':'."""
+    for f in (lambda x: x.replace(f" | {CFG['site_name']}", ""), lambda x: x.replace(" hoje:", ":"), lambda x: x.split(":")[0].strip()):
+        if len(t) <= n: break
+        t = f(t)
+    return t if len(t) <= n else t[:n - 1].rsplit(" ", 1)[0] + "…"
+
+def fit_desc(d, n=160):
+    return d if len(d) <= n else d[:n - 1].rsplit(" ", 1)[0].rstrip(",;:") + "…"
+
 def page(title, desc, path, body, og_img=None, og_type="website", jsonld=None, robots=None):
     body, jsonld = _inject_faq(path, body, jsonld)
+    title, desc = fit_title(title), fit_desc(desc)
+    if jsonld:  # Article/NewsArticle sem imagem: usa a imagem social da página (rich results exigem image)
+        for it in (jsonld.get("@graph") or [jsonld]):
+            if isinstance(it, dict) and it.get("@type") in ("Article", "NewsArticle") and not it.get("image"):
+                it["image"] = og_img or ED_IMG.get(path.split("/")[1]) or BASE + "/static/og-default.png"
     if not robots and path.startswith(THIN_FAMILIAS) and path.count("/") >= 3:
         nw = len(re.sub(r"<[^>]+>", " ", re.sub(r"<script.*?</script>", " ", body, flags=re.S)).split())
         if nw < THIN_MIN: robots = "noindex,follow"; THIN.add(path)
@@ -133,9 +149,9 @@ def hero(p):
 def mini(p):
     return f"""<a class="mini" href="{p['url']}">{img(p, sizes="96px")}<div><span class="kick">{E(EDS[p['editoria']])}</span><h3>{E(p['titulo'])}</h3></div></a>"""
 
-def sec(title_small, title_big, link=None):
+def sec(title_small, title_big, link=None, tag="h2"):
     t = f'<span>{E(title_small)}</span><strong>{E(title_big)}</strong>'
-    return f'<h2 class="st">{f"<a href={chr(34)}{link}{chr(34)}>{t}</a>" if link else t}</h2>'
+    return f'<{tag} class="st">{f"<a href={chr(34)}{link}{chr(34)}>{t}</a>" if link else t}</{tag}>'
 
 def write(path, txt):
     import relacionados
@@ -179,13 +195,16 @@ def main():
         if ps: body += f'<section class="blk">{sec("As últimas em", n, f"/{s}/")}<div class="grid">{"".join(card(p) for p in ps)}</div></section>'
     org = {"@type": "NewsMediaOrganization", "@id": BASE + "/#org", "name": CFG["site_name"], "url": BASE}
     body += '<section class="blk refbox"><h2 class="st"><span>Referência</span><strong>Ferramentas e dados</strong></h2><div class="chips"><a class="chip" href="/glossario/">Glossário de Logística</a><a class="chip" href="/siglas/">Siglas</a><a class="chip" href="/diesel/">Preço do diesel por cidade</a><a class="chip" href="/frete-minimo/">Frete mínimo ANTT</a><a class="chip" href="/portos/">Portos</a><a class="chip" href="/rodovias/">Rodovias</a><a class="chip" href="/guias/">Guias</a><a class="chip" href="/calculadoras/cubagem/">Calculadora de cubagem</a><a class="chip" href="/calculadoras/custo-diesel-viagem/">Custo de diesel por viagem</a></div></section>'
+    body = f'<h1 class="sr-only">{E(CFG["site_name"])}: notícias de logística, transporte e supply chain</h1>' + body
     write("/", page(f"{CFG['site_name']}: notícias de logística, transporte e supply chain", CFG["tagline"] + ". Glossário, preço do diesel por cidade (ANP) e calculadoras.", "/", body,
                     jsonld=itemlist(posts)))
     for s, n in EDS.items():
         ps = [p for p in posts if p["editoria"] == s]
         inner = "".join(card(p) for p in ps) or "<p>Nenhuma matéria ainda.</p>"
-        write(f"/{s}/", page(f"{n} — {CFG['site_name']}", f"Notícias de {n} no {CFG['site_name']}", f"/{s}/",
-                             f'<section class="blk">{sec("Editoria", n)}<div class="grid">{inner}</div></section>', jsonld=itemlist(ps)))
+        fts = sorted({p.get("fonte", "") for p in ps if p.get("fonte")})
+        dsc = f"Notícias de {n.lower()} na logística: resumos de {', '.join(fts[:3]) if fts else 'portais do setor'} com link para a fonte, atualizados a cada 3 horas."
+        write(f"/{s}/", page(f"Notícias de {n} na logística | {CFG['site_name']}", dsc[:160], f"/{s}/",
+                             f'<section class="blk">{sec("Editoria", n, tag="h1")}<div class="grid">{inner}</div></section>', jsonld=itemlist(ps)))
     import glossario
     gl_urls, interlink, gl_lastmod, terms = glossario.build(sys.modules["__main__"] if "__main__" in sys.modules and hasattr(sys.modules["__main__"], "page") else sys.modules[__name__], posts)
     for p in posts:
@@ -240,6 +259,7 @@ def main():
     paginas.extras(sys.modules[__name__], {"build": dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds"), "ultima_coleta": col.get("hora"), "feeds_com_erro": col.get("erros", []),
         "materias": len(posts), "termos": len(terms), "paginas_indexaveis": sum(len(x) for x in (gl_urls, ds_urls, calc_urls, conf_urls, sig_urls, fm_urls, pt_urls, rd_urls, gu_urls)) + 1 + len(EDS),
         "diesel_semana": max(ds_lastmod.values(), default=None)})
+    gen_llms()
     nb = paginas8.busca_index(me)
     if CFG.get("indexnow_key"): (OUT / f"{CFG['indexnow_key']}.txt").write_text(CFG["indexnow_key"])
     import indexnow; indexnow.diff(me)
@@ -250,6 +270,39 @@ def main():
         for u, (n, src) in sorted(broken.items(), key=lambda x: -x[1][0])[:30]: print(f"LINK QUEBRADO {u} ({n}x, ex.: {src})")
         sys.exit(f"ERRO: {len(broken)} destinos internos quebrados")
     print(f"OK: {len(posts)} matérias -> {OUT}")
+
+def _meta(u):
+    f = OUT / u.strip("/") / "index.html"
+    if not f.exists(): return "", ""
+    h = f.read_text(encoding="utf-8")
+    t = re.search(r"<title>(.*?)</title>", h, re.S); d = re.search(r'<meta name="description" content="(.*?)"', h)
+    return html.unescape(t.group(1).strip()) if t else "", html.unescape(d.group(1)) if d else ""
+
+def gen_llms():
+    """llms.txt e llms-full.txt gerados a partir dos sitemaps: todas as seções indexáveis, sem lista fixa."""
+    urls = []
+    for f in sorted(OUT.glob("sitemap-*.xml")): urls += re.findall(r"<loc>(.*?)</loc>", f.read_text(encoding="utf-8"))
+    urls = [u[len(BASE):] or "/" for u in urls]
+    sec = {}
+    for u in urls: sec.setdefault("/" + u.strip("/").split("/")[0] + "/" if u != "/" else "/", []).append(u)
+    t0, d0 = _meta("/")
+    out = [f"# {CFG['site_name']}", "", f"> {d0 or CFG['tagline']}", "",
+           f"Site estático em português (pt-BR), {len(urls)} páginas indexáveis. Dados de fontes oficiais citadas em cada página; notícias de terceiros são resumos com link para a fonte e não são indexadas.", "",
+           "## Seções", ""]
+    full = list(out[:5]) + ["## Todas as páginas indexáveis", ""]
+    inst = []
+    for hub, us in sorted(sec.items(), key=lambda x: -len(x[1])):
+        if hub == "/": continue
+        t, d = _meta(hub)
+        if len(us) == 1 and us[0] == hub: inst.append(f"- [{t or hub}]({BASE}{hub}): {d}"); continue
+        out.append(f"- [{t or hub}]({BASE}{hub}): {d} ({len(us)} páginas)")
+        for u in [x for x in us if x != hub][:3]:
+            tt, _ = _meta(u); out.append(f"  - [{tt or u}]({BASE}{u})")
+    out += ["", "## Páginas institucionais e ferramentas", ""] + inst + ["", f"Lista completa: {BASE}/llms-full.txt · Sitemap: {BASE}/sitemap.xml", ""]
+    for u in urls:
+        tt, dd = _meta(u); full.append(f"- [{tt or u}]({BASE}{u}): {dd}")
+    (OUT / "llms.txt").write_text("\n".join(out), encoding="utf-8")
+    (OUT / "llms-full.txt").write_text("\n".join(full) + "\n", encoding="utf-8")
 
 HREF = re.compile(r"""href=["']([^"'#?]+)""")
 def linkcheck():
