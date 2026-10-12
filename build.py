@@ -50,13 +50,26 @@ def page(title, desc, path, body, og_img=None, og_type="website", jsonld=None):
 <meta property="og:type" content="{og_type}"><meta property="og:title" content="{E(title)}">
 <meta property="og:description" content="{E(desc)}"><meta property="og:url" content="{canon}">
 <meta property="og:image" content="{E(img)}"><meta name="twitter:card" content="summary_large_image">{ld}
-</head><body><header class="top"><div class="wrap"><a class="logo" href="/">Modal<span>News</span></a>
-<div class="tag">{E(CFG['tagline'])}</div></div></header><nav class="ed"><div class="wrap"><a href="/">Início</a>{nav}</div></nav>
-<main class="wrap">{body}</main><footer><div class="wrap">© {dt.date.today().year} {E(CFG['site_name'])} · modalnews.com.br · <a href="/rss.xml">RSS</a></div></footer></body></html>"""
+</head><body><header class="top"><div class="wrap hrow"><a class="logo" href="/"><img src="/static/logo.svg" alt="{E(CFG['site_name'])}" width="220" height="44"></a>
+<div class="tag">{E(CFG['tagline'])}</div></div></header><nav class="ed"><div class="wrap"><a class="pill" href="/">Início</a>{nav}</div></nav>
+<main class="wrap">{body}</main><footer><div class="wrap fgrid"><div><img src="/static/logo.svg" alt="" width="180" height="36" class="flogo"><p>{E(CFG['tagline'])}</p></div>
+<div><h4>Editorias</h4>{nav}</div><div><h4>Assine</h4><a href="/rss.xml">Feed RSS</a><a href="/sitemap.xml">Mapa do site</a></div></div>
+<div class="wrap fbot">© {dt.date.today().year} {E(CFG['site_name'])} · Todos os direitos reservados</div></footer></body></html>"""
 
 def card(p, cls="", h="h3"):
-    return f"""<div class="card {cls}"><a href="{p['url']}"><img src="{E(p.get('imagem',''))}" alt="" loading="lazy">
-<div class="in"><div class="kick">{E(EDS[p['editoria']])}</div><{h}>{E(p['titulo'])}</{h}><p>{E(p.get('resumo',''))}</p></div></a></div>"""
+    return f"""<div class="card {cls}"><a href="{p['url']}"><div class="thumb"><img src="{E(p.get('imagem',''))}" alt="" loading="lazy"><span class="badge">{E(EDS[p['editoria']])}</span></div>
+<div class="in"><{h}>{E(p['titulo'])}</{h}><p>{E(p.get('resumo',''))}</p><span class="more">Ler na íntegra</span></div></a></div>"""
+
+def hero(p):
+    return f"""<a class="hero-main" href="{p['url']}"><div class="htxt"><div class="kick">Destaque <span>• {p['data'].strftime('%d/%m/%Y')}</span></div>
+<h2>{E(p['titulo'])}</h2><p>{E(p.get('resumo',''))}</p></div><img src="{E(p.get('imagem',''))}" alt=""></a>"""
+
+def mini(p):
+    return f"""<a class="mini" href="{p['url']}"><img src="{E(p.get('imagem',''))}" alt="" loading="lazy"><div><span class="kick">{E(EDS[p['editoria']])}</span><h3>{E(p['titulo'])}</h3></div></a>"""
+
+def sec(title_small, title_big, link=None):
+    t = f'<span>{E(title_small)}</span><strong>{E(title_big)}</strong>'
+    return f'<h2 class="st">{f"<a href={chr(34)}{link}{chr(34)}>{t}</a>" if link else t}</h2>'
 
 def write(path, txt):
     f = OUT / path.lstrip("/"); f = f / "index.html" if path.endswith("/") else f
@@ -69,11 +82,11 @@ def main():
     shutil.copytree(ROOT / "static", OUT / "static")
     if CFG.get("cname"): (OUT / "CNAME").write_text(CFG["cname"].strip() + "\n")
     dest = [p for p in posts if p.get("destaque")] or posts[:1]
-    main_p = dest[0]; side = [p for p in posts if p is not main_p][:2]
-    body = f'<div class="hero">{card(main_p,"main","h2")}<div class="side">{"".join(card(p) for p in side)}</div></div>'
+    main_p = dest[0]; side = [p for p in posts if p is not main_p][:4]
+    body = f'<div class="hero">{hero(main_p)}<div class="side">{"".join(mini(p) for p in side)}</div></div>'
     for s, n in EDS.items():
         ps = [p for p in posts if p["editoria"] == s][:4]
-        if ps: body += f'<section class="blk"><h2 class="st"><a href="/{s}/">{E(n)}</a></h2><div class="grid">{"".join(card(p) for p in ps)}</div></section>'
+        if ps: body += f'<section class="blk">{sec("As últimas em", n, f"/{s}/")}<div class="grid">{"".join(card(p) for p in ps)}</div></section>'
     org = {"@type": "NewsMediaOrganization", "name": CFG["site_name"], "url": BASE}
     write("/", page(f"{CFG['site_name']} — {CFG['tagline']}", CFG["tagline"], "/", body,
                     jsonld={"@context": "https://schema.org", **org}))
@@ -81,7 +94,7 @@ def main():
         ps = [p for p in posts if p["editoria"] == s]
         inner = "".join(card(p) for p in ps) or "<p>Nenhuma matéria ainda.</p>"
         write(f"/{s}/", page(f"{n} — {CFG['site_name']}", f"Notícias de {n} no {CFG['site_name']}", f"/{s}/",
-                             f'<section class="blk"><h2 class="st">{E(n)}</h2><div class="grid">{inner}</div></section>'))
+                             f'<section class="blk">{sec("Editoria", n)}<div class="grid">{inner}</div></section>'))
     for p in posts:
         ld = {"@context": "https://schema.org", "@type": "NewsArticle", "headline": p["titulo"][:110],
               "description": p.get("resumo", ""), "image": [p.get("imagem")] if p.get("imagem") else [],

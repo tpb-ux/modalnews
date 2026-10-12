@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="300" height="60" viewBox="0 0 300 60" role="img" aria-label="Modal News">
+  <g transform="translate(4,10)">
+    <rect x="0" y="0" width="40" height="40" rx="6" fill="#F04E23"/>
+    <path d="M9 30 V12 L20 23 L31 12 V30" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <text x="54" y="41" font-family="'Open Sans','Segoe UI',Arial,sans-serif" font-size="30" fill="#2E333D"><tspan font-weight="800">modal</tspan><tspan font-weight="300" fill="#F04E23">news</tspan></text>
+</svg>
