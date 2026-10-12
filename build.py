@@ -220,6 +220,24 @@ def main():
     if CFG.get("indexnow_key"): (OUT / f"{CFG['indexnow_key']}.txt").write_text(CFG["indexnow_key"])
     import indexnow; indexnow.diff(me)
     print(f"Busca: {nb} páginas no índice")
+    broken = linkcheck()
+    if broken:
+        for u, (n, src) in sorted(broken.items(), key=lambda x: -x[1][0])[:30]: print(f"LINK QUEBRADO {u} ({n}x, ex.: {src})")
+        sys.exit(f"ERRO: {len(broken)} destinos internos quebrados")
     print(f"OK: {len(posts)} matérias -> {OUT}")
+
+HREF = re.compile(r"""href=["']([^"'#?]+)""")
+def linkcheck():
+    """Falha o build se algum link interno apontar para página/arquivo inexistente."""
+    bad = {}
+    for f in OUT.rglob("*.html"):
+        src = "/" + f.relative_to(OUT).as_posix().replace("index.html", "")
+        for h in HREF.findall(f.read_text(encoding="utf-8")):
+            if h.startswith(BASE): h = h[len(BASE):] or "/"
+            if not h.startswith("/") or h.startswith("//"): continue
+            t = OUT / h.lstrip("/")
+            if (t / "index.html").exists() or t.is_file(): continue
+            n, s0 = bad.get(h, (0, src)); bad[h] = (n + 1, s0)
+    return bad
 
 if __name__ == "__main__": main()

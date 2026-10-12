@@ -1,21 +1,28 @@
 """Rotas entre cidades (pares relevantes) com OSRM: distância, duração e praças de pedágio FEDERAIS (ANTT) no traçado.
 Pares: (a) entre as 30 cidades mais populosas com dados de diesel, até 900 km em linha reta; (b) cada uma das 60 maiores cidades até o porto organizado
 mais próximo dos 8 de maior porte. Saída: data/rotas.json. Usa cache OSRM (1 req/s)."""
-import json, math, sys, urllib.request, csv, io
+import json, math, sys, urllib.request, csv, io, re
 from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent; sys.path.insert(0, str(ROOT)); sys.path.insert(0, str(ROOT / "tools"))
 import geo, osrm, yaml
 PORTOS_GRANDES = ["santos", "paranagua", "rio-grande", "itaqui", "suape", "itajai", "rio-de-janeiro", "salvador", "vitoria", "itaguai", "sao-francisco-do-sul", "fortaleza", "manaus", "belem"]
+def norm_br(b):
+    """'BR-40', '40', 'br 040' -> 'BR-040' (padrão oficial com 3 dígitos)."""
+    m = re.search(r"(\d+)", str(b or ""))
+    return f"BR-{int(m.group(1)):03d}" if m else str(b)
 def pracas_antt():
     f = ROOT / "data/raw/pracas_antt.csv"
     if not f.exists():
         u = json.loads((ROOT / "data/rodovias.json").read_text())["fonte_pracas"]
         f.write_bytes(urllib.request.urlopen(urllib.request.Request(u, headers={"User-Agent": "ModalNews"}), timeout=120).read())
-    rows = list(csv.DictReader(io.StringIO(f.read_bytes().decode("utf-8-sig", "replace")), delimiter=";"))
+    raw = f.read_bytes()
+    try: txt = raw.decode("utf-8-sig")
+    except UnicodeDecodeError: txt = raw.decode("cp1252", "replace")  # CSV da ANTT às vezes vem em Latin-1
+    rows = list(csv.DictReader(io.StringIO(txt), delimiter=";"))
     out = []
     for r in rows:
         if r.get("situacao", "").lower() != "ativo": continue
-        try: out.append({"conc": r["concessionaria"], "nome": r["praca_de_pedagio"], "br": r["rodovia"], "uf": r["uf"], "km": r["km_m"], "mun": r["municipal"], "lat": float(r["latitude"].replace(",", ".")), "lon": float(r["longitude"].replace(",", "."))})
+        try: out.append({"conc": r["concessionaria"], "nome": r["praca_de_pedagio"], "br": norm_br(r["rodovia"]), "uf": r["uf"], "km": r["km_m"], "mun": r["municipal"], "lat": float(r["latitude"].replace(",", ".")), "lon": float(r["longitude"].replace(",", "."))})
         except Exception: pass
     return out
 def seg_dist(p, a, b):

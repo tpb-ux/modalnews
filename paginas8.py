@@ -23,7 +23,8 @@ def rotas(B):
         litros = km_ / 2.5; custo_d = litros * dm
         f5 = km_ * cg["ccd"]["5"] + cg["cc"]["5"]; f6 = km_ * cg["ccd"]["6"] + cg["cc"]["6"]; f7 = km_ * cg["ccd"]["7"] + cg["cc"]["7"]
         ped5 = sum(known) * 5 if known else None
-        rows = "".join(f"<tr><td><a href='/rodovias/{p['br'].lower()}/'>{p['br']}</a></td><td>{E(p['nome'])}</td><td>{E(p['mun'])}/{p['uf']}</td><td>{E(p['conc'].title())}</td><td>{brl(t * 5) if t else '<a href=' + chr(39) + '/pedagios/' + B.slugify(p['conc']) + '/' + chr(39) + '>ver tarifa</a>'}</td></tr>" for p, t in ts)
+        lk = lambda u, t: f"<a href='{u}'>{t}</a>" if (B.OUT / u.strip("/") / "index.html").exists() else t
+        rows = "".join(f"<tr><td>{lk('/rodovias/' + p['br'].lower() + '/', p['br'])}</td><td>{E(p['nome'])}</td><td>{E(p['mun'])}/{p['uf']}</td><td>{E(p['conc'].title())}</td><td>{brl(t * 5) if t else lk('/pedagios/' + B.slugify(p['conc']) + '/', 'ver tarifa')}</td></tr>" for p, t in ts)
         ped_html = (f"<p>No traçado calculado há <strong>{len(pr)} praça(s) de pedágio federais</strong> (ANTT)" + (f", que somam {brl(ped5)} para uma carreta de 5 eixos" + ("" if allk else " nas praças com tarifa identificada") if known else "") + ".</p><div class='tblw'><table class='tbl'><thead><tr><th>Rodovia</th><th>Praça</th><th>Município</th><th>Concessão</th><th>5 eixos</th></tr></thead><tbody>" + rows + "</tbody></table></div>") if pr else "<p>O traçado calculado não passa por praças de pedágio de rodovias federais concedidas (ANTT).</p>"
         ped_html += "<p class='src'>Somente praças federais (ANTT). Rodovias estaduais concedidas no trajeto cobram pedágio à parte e não estão incluídas. Praças identificadas por coordenadas oficiais da ANTT a até 250 m do traçado.</p>"
         brs = ", ".join(f"<a href='/rodovias/{x.lower()}/'>{x}</a>" if (B.OUT / "rodovias" / x.lower()).exists() else x for x, _ in r.get("brs", [])[:5])
