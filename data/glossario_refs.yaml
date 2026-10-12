@@ -1,0 +1,495 @@
+# Referências externas validadas (HTTP 200) — tools/glossario_assets.py + tools/refs_fill.py
+3pl:
+- titulo: ABOL — Associação Brasileira de Operadores Logísticos
+  url: https://abolbrasil.org.br/
+- titulo: Third-party logistics — Wikipédia
+  url: https://pt.wikipedia.org/wiki/Third-party_logistics
+4pl:
+- titulo: 4Play (série de televisão) — Wikipédia
+  url: https://pt.wikipedia.org/wiki/4Play_(s%C3%A9rie_de_televis%C3%A3o)
+- titulo: ABOL — Associação Brasileira de Operadores Logísticos
+  url: https://abolbrasil.org.br/
+acuracidade-de-estoque:
+- titulo: ABOL — Associação Brasileira de Operadores Logísticos
+  url: https://abolbrasil.org.br/
+ad-valorem:
+- titulo: Ad valorem — Wikipédia
+  url: https://pt.wikipedia.org/wiki/Ad_valorem
+- titulo: ANTT — Agência Nacional de Transportes Terrestres
+  url: https://www.gov.br/antt/pt-br
+agente-de-carga:
+- titulo: Receita Federal — Aduana e Comércio Exterior
+  url: https://www.gov.br/receitafederal/pt-br/assuntos/aduana-e-comercio-exterior
+agv:
+- titulo: AGV (fabricante de capacete) — Wikipédia
+  url: https://pt.wikipedia.org/wiki/AGV_(fabricante_de_capacete)
+- titulo: GS1 Brasil — Associação Brasileira de Automação
+  url: https://www.gs1br.org/
+amr:
+- titulo: AMR — Wikipédia
+  url: https://pt.wikipedia.org/wiki/AMR
+- titulo: GS1 Brasil — Associação Brasileira de Automação
+  url: https://www.gs1br.org/
+armador:
+- titulo: Armador — Wikipédia
+  url: https://pt.wikipedia.org/wiki/Armador
+- titulo: Receita Federal — Aduana e Comércio Exterior
+  url: https://www.gov.br/receitafederal/pt-br/assuntos/aduana-e-comercio-exterior
+automacao-de-armazem:
+- titulo: GS1 Brasil — Associação Brasileira de Automação
+  url: https://www.gs1br.org/
+awb:
+- titulo: AWB — Wikipédia
+  url: https://pt.wikipedia.org/wiki/AWB
+- titulo: Receita Federal — Aduana e Comércio Exterior
+  url: https://www.gov.br/receitafederal/pt-br/assuntos/aduana-e-comercio-exterior
+bl:
+- titulo: BL — Wikipédia
+  url: https://pt.wikipedia.org/wiki/BL
+- titulo: Receita Federal — Aduana e Comércio Exterior
+  url: https://www.gov.br/receitafederal/pt-br/assuntos/aduana-e-comercio-exterior
+cabotagem:
+- titulo: Cabotagem — Wikipédia
+  url: https://pt.wikipedia.org/wiki/Cabotagem
+- titulo: ANTAQ
+  url: https://www.gov.br/antaq/pt-br
+canais-de-parametrizacao:
+- titulo: Receita Federal
+  url: https://www.gov.br/receitafederal/pt-br/assuntos/aduana-e-comercio-exterior
+carga-fracionada:
+- titulo: ANTT — Agência Nacional de Transportes Terrestres
+  url: https://www.gov.br/antt/pt-br
+carga-lotacao:
+- titulo: ANTT — Agência Nacional de Transportes Terrestres
+  url: https://www.gov.br/antt/pt-br
+centro-de-distribuicao:
+- titulo: Centro de distribuição — Wikipédia
+  url: https://pt.wikipedia.org/wiki/Centro_de_distribui%C3%A7%C3%A3o
+- titulo: ABOL — Associação Brasileira de Operadores Logísticos
+  url: https://abolbrasil.org.br/
+cif:
+- titulo: ICC — Incoterms® rules
+  url: https://iccwbo.org/business-solutions/incoterms-rules/
+- titulo: CIF — Wikipédia
+  url: https://pt.wikipedia.org/wiki/CIF
+codigo-de-barras:
+- titulo: Código de barras — Wikipédia
+  url: https://pt.wikipedia.org/wiki/C%C3%B3digo_de_barras
+- titulo: GS1 Brasil
+  url: https://www.gs1br.org/
+condominio-logistico:
+- titulo: ABOL — Associação Brasileira de Operadores Logísticos
+  url: https://abolbrasil.org.br/
+cross-docking:
+- titulo: Cross docking — Wikipédia
+  url: https://pt.wikipedia.org/wiki/Cross_docking
+- titulo: ABOL — Associação Brasileira de Operadores Logísticos
+  url: https://abolbrasil.org.br/
+ct-e:
+- titulo: Conhecimento de transporte eletrônico — Wikipédia
+  url: https://pt.wikipedia.org/wiki/Conhecimento_de_transporte_eletr%C3%B4nico
+- titulo: Portal Nacional do CT-e
+  url: https://www.cte.fazenda.gov.br/portal/
+cubagem:
+- titulo: Cubagem — Wikipédia
+  url: https://pt.wikipedia.org/wiki/Cubagem
+- titulo: ANTT — Agência Nacional de Transportes Terrestres
+  url: https://www.gov.br/antt/pt-br
+curva-abc:
+- titulo: Curva ABC — Wikipédia
+  url: https://pt.wikipedia.org/wiki/Curva_ABC
+- titulo: ABOL — Associação Brasileira de Operadores Logísticos
+  url: https://abolbrasil.org.br/
+custo-logistico:
+- titulo: ABOL — Associação Brasileira de Operadores Logísticos
+  url: https://abolbrasil.org.br/
+dark-store:
+- titulo: ABOL — Associação Brasileira de Operadores Logísticos
+  url: https://abolbrasil.org.br/
+ddp:
+- titulo: ICC — Incoterms® rules
+  url: https://iccwbo.org/business-solutions/incoterms-rules/
+- titulo: DDP — Wikipédia
+  url: https://pt.wikipedia.org/wiki/DDP
+demurrage:
+- titulo: Receita Federal — Aduana e Comércio Exterior
+  url: https://www.gov.br/receitafederal/pt-br/assuntos/aduana-e-comercio-exterior
+despacho-aduaneiro:
+- titulo: Receita Federal
+  url: https://www.gov.br/receitafederal/pt-br/assuntos/aduana-e-comercio-exterior
+- titulo: Despacho aduaneiro — Wikipédia
+  url: https://pt.wikipedia.org/wiki/Despacho_aduaneiro
+doca:
+- titulo: Doca — Wikipédia
+  url: https://pt.wikipedia.org/wiki/Doca
+- titulo: ABOL — Associação Brasileira de Operadores Logísticos
+  url: https://abolbrasil.org.br/
+drawback:
+- titulo: Drawback — Wikipédia
+  url: https://pt.wikipedia.org/wiki/Drawback
+- titulo: MDIC
+  url: https://www.gov.br/mdic/pt-br/assuntos/comercio-exterior/drawback
+du-e:
+- titulo: Portal Siscomex
+  url: https://www.gov.br/siscomex/pt-br
+- titulo: Du er ikke alene — Wikipédia
+  url: https://pt.wikipedia.org/wiki/Du_er_ikke_alene
+duimp:
+- titulo: Portal Siscomex
+  url: https://www.gov.br/siscomex/pt-br
+- titulo: Receita Federal — Aduana e Comércio Exterior
+  url: https://www.gov.br/receitafederal/pt-br/assuntos/aduana-e-comercio-exterior
+edi:
+- titulo: EDI — Wikipédia
+  url: https://pt.wikipedia.org/wiki/EDI
+- titulo: GS1 Brasil — Associação Brasileira de Automação
+  url: https://www.gs1br.org/
+efeito-chicote:
+- titulo: Efeito chicote — Wikipédia
+  url: https://pt.wikipedia.org/wiki/Efeito_chicote
+- titulo: ABOL — Associação Brasileira de Operadores Logísticos
+  url: https://abolbrasil.org.br/
+enderecamento:
+- titulo: Endereçamento de bloco lógico — Wikipédia
+  url: https://pt.wikipedia.org/wiki/Endere%C3%A7amento_de_bloco_l%C3%B3gico
+- titulo: ABOL — Associação Brasileira de Operadores Logísticos
+  url: https://abolbrasil.org.br/
+erp:
+- titulo: Sistema integrado de gestão empresarial — Wikipédia
+  url: https://pt.wikipedia.org/wiki/Sistema_integrado_de_gest%C3%A3o_empresarial
+- titulo: GS1 Brasil — Associação Brasileira de Automação
+  url: https://www.gs1br.org/
+estoque-de-seguranca:
+- titulo: Estoque de segurança — Wikipédia
+  url: https://pt.wikipedia.org/wiki/Estoque_de_seguran%C3%A7a
+- titulo: ABOL — Associação Brasileira de Operadores Logísticos
+  url: https://abolbrasil.org.br/
+ex-tarifario:
+- titulo: MDIC
+  url: https://www.gov.br/mdic/pt-br/assuntos/sdic/ex-tarifario
+- titulo: Receita Federal — Aduana e Comércio Exterior
+  url: https://www.gov.br/receitafederal/pt-br/assuntos/aduana-e-comercio-exterior
+exw:
+- titulo: ICC — Incoterms® rules
+  url: https://iccwbo.org/business-solutions/incoterms-rules/
+- titulo: Receita Federal — Aduana e Comércio Exterior
+  url: https://www.gov.br/receitafederal/pt-br/assuntos/aduana-e-comercio-exterior
+fca:
+- titulo: ICC — Incoterms® rules
+  url: https://iccwbo.org/business-solutions/incoterms-rules/
+- titulo: FCA — Wikipédia
+  url: https://pt.wikipedia.org/wiki/FCA
+fefo:
+- titulo: ABOL — Associação Brasileira de Operadores Logísticos
+  url: https://abolbrasil.org.br/
+fifo:
+- titulo: FIFO — Wikipédia
+  url: https://pt.wikipedia.org/wiki/FIFO
+- titulo: ABOL — Associação Brasileira de Operadores Logísticos
+  url: https://abolbrasil.org.br/
+first-mile:
+- titulo: ANTT — Agência Nacional de Transportes Terrestres
+  url: https://www.gov.br/antt/pt-br
+fob:
+- titulo: ICC — Incoterms® rules
+  url: https://iccwbo.org/business-solutions/incoterms-rules/
+- titulo: FOB — Wikipédia
+  url: https://pt.wikipedia.org/wiki/FOB
+free-time:
+- titulo: Free! Timeless Medley — Wikipédia
+  url: https://pt.wikipedia.org/wiki/Free!_Timeless_Medley
+- titulo: Receita Federal — Aduana e Comércio Exterior
+  url: https://www.gov.br/receitafederal/pt-br/assuntos/aduana-e-comercio-exterior
+frete:
+- titulo: Frete — Wikipédia
+  url: https://pt.wikipedia.org/wiki/Frete
+- titulo: ANTT — Agência Nacional de Transportes Terrestres
+  url: https://www.gov.br/antt/pt-br
+frete-minimo:
+- titulo: ABOL — Associação Brasileira de Operadores Logísticos
+  url: https://abolbrasil.org.br/
+frete-retorno:
+- titulo: Backhaul — Wikipédia
+  url: https://pt.wikipedia.org/wiki/Backhaul
+- titulo: ANTT — Agência Nacional de Transportes Terrestres
+  url: https://www.gov.br/antt/pt-br
+fulfillment:
+- titulo: ABOL — Associação Brasileira de Operadores Logísticos
+  url: https://abolbrasil.org.br/
+galpao-classe-aaa:
+- titulo: ABOL — Associação Brasileira de Operadores Logísticos
+  url: https://abolbrasil.org.br/
+gemeo-digital:
+- titulo: Gêmeo digital — Wikipédia
+  url: https://pt.wikipedia.org/wiki/G%C3%AAmeo_digital
+- titulo: GS1 Brasil — Associação Brasileira de Automação
+  url: https://www.gs1br.org/
+giro-de-estoque:
+- titulo: ABOL — Associação Brasileira de Operadores Logísticos
+  url: https://abolbrasil.org.br/
+gris:
+- titulo: GRIS — Wikipédia
+  url: https://pt.wikipedia.org/wiki/GRIS
+- titulo: ANTT — Agência Nacional de Transportes Terrestres
+  url: https://www.gov.br/antt/pt-br
+incoterms:
+- titulo: Incoterms — Wikipédia
+  url: https://pt.wikipedia.org/wiki/Incoterms
+- titulo: ICC — Incoterms® rules
+  url: https://iccwbo.org/business-solutions/incoterms-rules/
+intermodal:
+- titulo: Transporte intermodal — Wikipédia
+  url: https://pt.wikipedia.org/wiki/Transporte_intermodal
+- titulo: ANTT — Agência Nacional de Transportes Terrestres
+  url: https://www.gov.br/antt/pt-br
+inventario-ciclico:
+- titulo: ABOL — Associação Brasileira de Operadores Logísticos
+  url: https://abolbrasil.org.br/
+iot:
+- titulo: Internet das coisas — Wikipédia
+  url: https://pt.wikipedia.org/wiki/Internet_das_coisas
+- titulo: GS1 Brasil — Associação Brasileira de Automação
+  url: https://www.gs1br.org/
+just-in-time:
+- titulo: Just in time — Wikipédia
+  url: https://pt.wikipedia.org/wiki/Just_in_time
+- titulo: ABOL — Associação Brasileira de Operadores Logísticos
+  url: https://abolbrasil.org.br/
+kanban:
+- titulo: Kanban — Wikipédia
+  url: https://pt.wikipedia.org/wiki/Kanban
+- titulo: ABOL — Associação Brasileira de Operadores Logísticos
+  url: https://abolbrasil.org.br/
+last-mile:
+- titulo: Última milha — Wikipédia
+  url: https://pt.wikipedia.org/wiki/%C3%9Altima_milha
+- titulo: ANTT — Agência Nacional de Transportes Terrestres
+  url: https://www.gov.br/antt/pt-br
+lead-time:
+- titulo: Lead time — Wikipédia
+  url: https://pt.wikipedia.org/wiki/Lead_time
+- titulo: ABOL — Associação Brasileira de Operadores Logísticos
+  url: https://abolbrasil.org.br/
+logistica-reversa:
+- titulo: Logística reversa — Wikipédia
+  url: https://pt.wikipedia.org/wiki/Log%C3%ADstica_reversa
+- titulo: Ministério do Meio Ambiente
+  url: https://www.gov.br/mma/pt-br
+lote-economico:
+- titulo: ABOL — Associação Brasileira de Operadores Logísticos
+  url: https://abolbrasil.org.br/
+mdf-e:
+- titulo: Portal do MDF-e (SVRS)
+  url: https://dfe-portal.svrs.rs.gov.br/Mdfe
+- titulo: ANTT — Agência Nacional de Transportes Terrestres
+  url: https://www.gov.br/antt/pt-br
+middle-mile:
+- titulo: ANTT — Agência Nacional de Transportes Terrestres
+  url: https://www.gov.br/antt/pt-br
+milk-run:
+- titulo: Milk Run — Wikipédia
+  url: https://pt.wikipedia.org/wiki/Milk_Run
+- titulo: ABOL — Associação Brasileira de Operadores Logísticos
+  url: https://abolbrasil.org.br/
+modal-aereo:
+- titulo: Transporte aéreo — Wikipédia
+  url: https://pt.wikipedia.org/wiki/Transporte_a%C3%A9reo
+- titulo: ANTT — Agência Nacional de Transportes Terrestres
+  url: https://www.gov.br/antt/pt-br
+modal-aquaviario:
+- titulo: Transporte aquaviário — Wikipédia
+  url: https://pt.wikipedia.org/wiki/Transporte_aquavi%C3%A1rio
+- titulo: ANTAQ
+  url: https://www.gov.br/antaq/pt-br
+modal-dutoviario:
+- titulo: ANTT — Agência Nacional de Transportes Terrestres
+  url: https://www.gov.br/antt/pt-br
+modal-ferroviario:
+- titulo: Transporte ferroviário — Wikipédia
+  url: https://pt.wikipedia.org/wiki/Transporte_ferrovi%C3%A1rio
+- titulo: ANTT
+  url: https://www.gov.br/antt/pt-br
+modal-rodoviario:
+- titulo: Transporte rodoviário — Wikipédia
+  url: https://pt.wikipedia.org/wiki/Transporte_rodovi%C3%A1rio
+- titulo: CNT — Confederação Nacional do Transporte
+  url: https://www.cnt.org.br/
+mrp:
+- titulo: Planejamento das necessidades de materiais — Wikipédia
+  url: https://pt.wikipedia.org/wiki/Planejamento_das_necessidades_de_materiais
+- titulo: ABOL — Associação Brasileira de Operadores Logísticos
+  url: https://abolbrasil.org.br/
+multimodal:
+- titulo: Transporte multimodal — Wikipédia
+  url: https://pt.wikipedia.org/wiki/Transporte_multimodal
+- titulo: ANTT — Agência Nacional de Transportes Terrestres
+  url: https://www.gov.br/antt/pt-br
+ncm:
+- titulo: Nomenclatura Comum do Mercosul — Wikipédia
+  url: https://pt.wikipedia.org/wiki/Nomenclatura_Comum_do_Mercosul
+- titulo: Receita Federal — Aduana e Comércio Exterior
+  url: https://www.gov.br/receitafederal/pt-br/assuntos/aduana-e-comercio-exterior
+nearshoring:
+- titulo: ABOL — Associação Brasileira de Operadores Logísticos
+  url: https://abolbrasil.org.br/
+nivel-de-servico:
+- titulo: Nível de serviço — Wikipédia
+  url: https://pt.wikipedia.org/wiki/N%C3%ADvel_de_servi%C3%A7o
+- titulo: ABOL — Associação Brasileira de Operadores Logísticos
+  url: https://abolbrasil.org.br/
+nvocc:
+- titulo: Receita Federal — Aduana e Comércio Exterior
+  url: https://www.gov.br/receitafederal/pt-br/assuntos/aduana-e-comercio-exterior
+oea:
+- titulo: Receita Federal
+  url: https://www.gov.br/receitafederal/pt-br/assuntos/aduana-e-comercio-exterior/importacao-e-exportacao/oea
+- titulo: OEA — Wikipédia
+  url: https://pt.wikipedia.org/wiki/OEA
+operador-logistico:
+- titulo: ABOL — Associação Brasileira de Operadores Logísticos
+  url: https://abolbrasil.org.br/
+- titulo: Operador logístico — Wikipédia
+  url: https://pt.wikipedia.org/wiki/Operador_log%C3%ADstico
+otif:
+- titulo: ABOL — Associação Brasileira de Operadores Logísticos
+  url: https://abolbrasil.org.br/
+packing:
+- titulo: ABOL — Associação Brasileira de Operadores Logísticos
+  url: https://abolbrasil.org.br/
+palete-pbr:
+- titulo: Palete — Wikipédia
+  url: https://pt.wikipedia.org/wiki/Palete
+- titulo: ABOL — Associação Brasileira de Operadores Logísticos
+  url: https://abolbrasil.org.br/
+paletizacao:
+- titulo: Palete — Wikipédia
+  url: https://pt.wikipedia.org/wiki/Palete
+- titulo: ABOL — Associação Brasileira de Operadores Logísticos
+  url: https://abolbrasil.org.br/
+peso-cubado:
+- titulo: ANTT — Agência Nacional de Transportes Terrestres
+  url: https://www.gov.br/antt/pt-br
+picking:
+- titulo: Picking — Wikipédia
+  url: https://pt.wikipedia.org/wiki/Picking
+- titulo: ABOL — Associação Brasileira de Operadores Logísticos
+  url: https://abolbrasil.org.br/
+ponto-de-pedido:
+- titulo: ABOL — Associação Brasileira de Operadores Logísticos
+  url: https://abolbrasil.org.br/
+porta-palete:
+- titulo: Porta-paletes — Wikipédia
+  url: https://pt.wikipedia.org/wiki/Porta-paletes
+- titulo: ABOL — Associação Brasileira de Operadores Logísticos
+  url: https://abolbrasil.org.br/
+porto-seco:
+- titulo: Porto seco — Wikipédia
+  url: https://pt.wikipedia.org/wiki/Porto_seco
+- titulo: Receita Federal — Aduana e Comércio Exterior
+  url: https://www.gov.br/receitafederal/pt-br/assuntos/aduana-e-comercio-exterior
+putaway:
+- titulo: ABOL — Associação Brasileira de Operadores Logísticos
+  url: https://abolbrasil.org.br/
+rastreabilidade:
+- titulo: Rastreabilidade — Wikipédia
+  url: https://pt.wikipedia.org/wiki/Rastreabilidade
+- titulo: ABOL — Associação Brasileira de Operadores Logísticos
+  url: https://abolbrasil.org.br/
+rastreamento:
+- titulo: Rastreamento — Wikipédia
+  url: https://pt.wikipedia.org/wiki/Rastreamento
+- titulo: GS1 Brasil — Associação Brasileira de Automação
+  url: https://www.gs1br.org/
+rfid:
+- titulo: RFID — Wikipédia
+  url: https://pt.wikipedia.org/wiki/RFID
+- titulo: GS1 Brasil
+  url: https://www.gs1br.org/
+rntrc:
+- titulo: Rntrc — Wikipédia
+  url: https://pt.wikipedia.org/wiki/Rntrc
+- titulo: ANTT — Agência Nacional de Transportes Terrestres
+  url: https://www.gov.br/antt/pt-br
+roteirizacao:
+- titulo: GS1 Brasil — Associação Brasileira de Automação
+  url: https://www.gs1br.org/
+ruptura:
+- titulo: Ruptura — Wikipédia
+  url: https://pt.wikipedia.org/wiki/Ruptura
+- titulo: ABOL — Associação Brasileira de Operadores Logísticos
+  url: https://abolbrasil.org.br/
+s-op:
+- titulo: Sales and Operations Planning — Wikipédia
+  url: https://pt.wikipedia.org/wiki/Sales_and_Operations_Planning
+- titulo: ABOL — Associação Brasileira de Operadores Logísticos
+  url: https://abolbrasil.org.br/
+seguro-de-carga:
+- titulo: ANTT — Agência Nacional de Transportes Terrestres
+  url: https://www.gov.br/antt/pt-br
+siscomex:
+- titulo: Portal Siscomex
+  url: https://www.gov.br/siscomex/pt-br
+- titulo: Receita Federal — Aduana e Comércio Exterior
+  url: https://www.gov.br/receitafederal/pt-br/assuntos/aduana-e-comercio-exterior
+sku:
+- titulo: SKU — Wikipédia
+  url: https://pt.wikipedia.org/wiki/SKU
+- titulo: ABOL — Associação Brasileira de Operadores Logísticos
+  url: https://abolbrasil.org.br/
+sla:
+- titulo: Acordo de nível de serviço — Wikipédia
+  url: https://pt.wikipedia.org/wiki/Acordo_de_n%C3%ADvel_de_servi%C3%A7o
+- titulo: ABOL — Associação Brasileira de Operadores Logísticos
+  url: https://abolbrasil.org.br/
+slotting:
+- titulo: ABOL — Associação Brasileira de Operadores Logísticos
+  url: https://abolbrasil.org.br/
+supply-chain:
+- titulo: Cadeia de suprimentos — Wikipédia
+  url: https://pt.wikipedia.org/wiki/Cadeia_de_suprimentos
+- titulo: ABOL — Associação Brasileira de Operadores Logísticos
+  url: https://abolbrasil.org.br/
+taxa-de-vacancia:
+- titulo: ABOL — Associação Brasileira de Operadores Logísticos
+  url: https://abolbrasil.org.br/
+telemetria:
+- titulo: Telemetria — Wikipédia
+  url: https://pt.wikipedia.org/wiki/Telemetria
+- titulo: GS1 Brasil — Associação Brasileira de Automação
+  url: https://www.gs1br.org/
+teu:
+- titulo: TEU — Wikipédia
+  url: https://pt.wikipedia.org/wiki/TEU
+- titulo: Receita Federal — Aduana e Comércio Exterior
+  url: https://www.gov.br/receitafederal/pt-br/assuntos/aduana-e-comercio-exterior
+tms:
+- titulo: TMS — Wikipédia
+  url: https://pt.wikipedia.org/wiki/TMS
+- titulo: GS1 Brasil — Associação Brasileira de Automação
+  url: https://www.gs1br.org/
+torre-de-controle:
+- titulo: Torre de controle — Wikipédia
+  url: https://pt.wikipedia.org/wiki/Torre_de_controle
+- titulo: GS1 Brasil — Associação Brasileira de Automação
+  url: https://www.gs1br.org/
+transit-time:
+- titulo: ANTT — Agência Nacional de Transportes Terrestres
+  url: https://www.gov.br/antt/pt-br
+vale-pedagio:
+- titulo: ANTT
+  url: https://www.gov.br/antt/pt-br/assuntos/cargas/vale-pedagio-obrigatorio
+- titulo: Vale-pedágio obrigatório — Wikipédia
+  url: https://pt.wikipedia.org/wiki/Vale-ped%C3%A1gio_obrigat%C3%B3rio
+vmi:
+- titulo: VMI — Wikipédia
+  url: https://pt.wikipedia.org/wiki/VMI
+- titulo: ABOL — Associação Brasileira de Operadores Logísticos
+  url: https://abolbrasil.org.br/
+wms:
+- titulo: WMS — Wikipédia
+  url: https://pt.wikipedia.org/wiki/WMS
+- titulo: GS1 Brasil — Associação Brasileira de Automação
+  url: https://www.gs1br.org/
+yms:
+- titulo: GS1 Brasil — Associação Brasileira de Automação
+  url: https://www.gs1br.org/

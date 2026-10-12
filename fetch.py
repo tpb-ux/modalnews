@@ -42,8 +42,8 @@ def blocked(cfg, src, link, title, summ, trusted=False):
     hay_src = f"{src} {link}".lower(); txt = f"{title} {summ}".lower()
     for b in cfg.get("bloqueio_fontes", []):
         if b.lower() in hay_src: return f"fonte bloqueada ({b})"
-    for b in cfg.get("bloqueio_palavras", []):
-        if b.lower() in txt: return f"palavra bloqueada ({b})"
+    for b in cfg.get("bloqueio_palavras", []):  # início de palavra: "lula" não casa com "celular"
+        if re.search(r"(?<!\w)" + re.escape(b.lower()), txt): return f"palavra bloqueada ({b})"
     if trusted: return None
     sc = score(title, summ)
     if sc < cfg.get("nota_minima", 3): return f"nota {sc} < {cfg.get('nota_minima', 3)}"
@@ -164,7 +164,7 @@ def main():
         if not d.entries: print(f"! {fd['nome']}: sem itens"); continue
         got = 0
         for e in d.entries:
-            if got >= per or new >= limit: break
+            if got >= fd.get("max", per) or new >= limit: break
             link, title = e.get("link", "").strip(), clean(e.get("title", ""))
             src_name = fd["nome"]; gn = "news.google.com" in fd["url"]
             if gn:

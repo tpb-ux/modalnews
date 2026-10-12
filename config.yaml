@@ -13,3 +13,6 @@ editorias:
   - {slug: comercio-exterior, nome: Comércio Exterior}
   - {slug: tecnologia, nome: Tecnologia}
   - {slug: mercado, nome: Mercado}
+# Fonte com prioridade no destaque da home (matéria com imagem própria das últimas 48h)
+destaque_prioritario: Logweb
+glossario_atualizado: 2026-10-12

@@ -1,0 +1,1078 @@
+# Origem e licença das imagens do glossário (Openverse), revisadas manualmente quanto à relevância.
+# Termos ausentes usam a ilustração própria da editoria.
+3pl:
+  alt: '3PL: Returns Warehouse Forklift moving boxes'
+  altura: 768
+  arquivo: static/img/glossario/3pl.webp
+  autor: Autor desconhecido
+  autor_url: null
+  busca: warehouse forklift
+  id: c3bc7c15-201c-400f-a1ad-17e6e14c51bb
+  largura: 1024
+  licenca: CC0 1.0
+  licenca_url: https://creativecommons.org/publicdomain/zero/1.0/
+  origem: https://www.rawpixel.com/image/11073059/photo-image-face-person-public-domain
+  provedor: rawpixel
+  titulo_original: Returns Warehouse Forklift moving boxes
+acuracidade-de-estoque:
+  alt: 'Acuracidade de estoque: books'
+  altura: 768
+  arquivo: static/img/glossario/acuracidade-de-estoque.webp
+  autor: EvelynGiggles
+  autor_url: https://www.flickr.com/photos/23797059@N02
+  busca: warehouse shelves inventory
+  id: fbea4e29-e26b-4b7e-a4d8-e96a332637f3
+  largura: 1024
+  licenca: BY 2.0
+  licenca_url: https://creativecommons.org/licenses/by/2.0/
+  origem: https://www.flickr.com/photos/23797059@N02/6626010553
+  provedor: flickr
+  titulo_original: books
+agente-de-carga:
+  alt: 'Agente de carga: Libra Santos at Puerto Quetzal'
+  altura: 613
+  arquivo: static/img/glossario/agente-de-carga.webp
+  autor: wirralwater
+  autor_url: https://www.flickr.com/photos/35626429@N08
+  busca: cargo containers port
+  id: 91434d05-959f-465b-af84-f8a710d13d05
+  largura: 1024
+  licenca: BY 2.0
+  licenca_url: https://creativecommons.org/licenses/by/2.0/
+  origem: https://www.flickr.com/photos/35626429@N08/3313870718
+  provedor: flickr
+  titulo_original: Libra Santos at Puerto Quetzal
+agv:
+  alt: 'AGV: Automated guided vehicle container mover at Port of Rotterdam'
+  altura: 901
+  arquivo: static/img/glossario/agv.webp
+  autor: Alf van Beem
+  autor_url: null
+  busca: automated guided vehicle
+  id: fa6ceed0-facd-44ef-bc75-54cd0d04348b
+  largura: 1200
+  licenca: CC0 1.0
+  licenca_url: https://creativecommons.org/publicdomain/zero/1.0/deed.en/
+  origem: https://commons.wikimedia.org/w/index.php?curid=45155580
+  provedor: wikimedia
+  titulo_original: Automated guided vehicle container mover at Port of Rotterdam
+amr:
+  alt: 'AMR: Tesla Sedan Side Panel'
+  altura: 722
+  arquivo: static/img/glossario/amr.webp
+  autor: jurvetson
+  autor_url: https://www.flickr.com/photos/44124348109@N01
+  busca: warehouse robot
+  id: 731b274d-954d-41f3-9479-69f2dcabf6b0
+  largura: 1024
+  licenca: BY 2.0
+  licenca_url: https://creativecommons.org/licenses/by/2.0/
+  origem: https://www.flickr.com/photos/44124348109@N01/7004201859
+  provedor: flickr
+  titulo_original: Tesla Sedan Side Panel
+armador:
+  alt: 'Armador: Container ship'
+  altura: 768
+  arquivo: static/img/glossario/armador.webp
+  autor: Martin Pettitt
+  autor_url: https://www.flickr.com/photos/95012874@N00
+  busca: container ship
+  id: e7c5e334-f211-4a92-8a3a-45b07db95bcf
+  largura: 1024
+  licenca: BY 2.0
+  licenca_url: https://creativecommons.org/licenses/by/2.0/
+  origem: https://www.flickr.com/photos/95012874@N00/2483655809
+  provedor: flickr
+  titulo_original: Container ship
+automacao-de-armazem:
+  alt: 'Automação de armazém: Fully automated warehouse model'
+  altura: 901
+  arquivo: static/img/glossario/automacao-de-armazem.webp
+  autor: Pancho507
+  autor_url: https://commons.wikimedia.org/wiki/User:Pancho507
+  busca: automated warehouse
+  id: 57631931-24bd-440b-aedd-a592955162ef
+  largura: 1200
+  licenca: BY 4.0
+  licenca_url: https://creativecommons.org/licenses/by/4.0/
+  origem: https://commons.wikimedia.org/w/index.php?curid=193825137
+  provedor: wikimedia
+  titulo_original: Fully automated warehouse model
+awb:
+  alt: 'AWB: Northern Air Cargo 737 landing at Anchorage Airport'
+  altura: 903
+  arquivo: static/img/glossario/awb.webp
+  autor: Frank Kovalchek
+  autor_url: https://www.flickr.com/people/72213316@N00
+  busca: air cargo
+  id: f22ab128-8ac0-4487-af32-814abd600dbd
+  largura: 1200
+  licenca: BY 2.0
+  licenca_url: https://creativecommons.org/licenses/by/2.0/
+  origem: https://commons.wikimedia.org/w/index.php?curid=14882463
+  provedor: wikimedia
+  titulo_original: Northern Air Cargo 737 landing at Anchorage Airport
+bl:
+  alt: 'BL: Bill of lading (50116721023)'
+  altura: 714
+  arquivo: static/img/glossario/bl.webp
+  autor: Archives New Zealand from New Zealand
+  autor_url: https://www.flickr.com/people/35759981@N08
+  busca: bill of lading
+  id: 6ca9e3a5-b810-407f-bbcc-599f50839264
+  largura: 900
+  licenca: BY 2.0
+  licenca_url: https://creativecommons.org/licenses/by/2.0/
+  origem: https://commons.wikimedia.org/w/index.php?curid=97704398
+  provedor: wikimedia
+  titulo_original: Bill of lading (50116721023)
+cabotagem:
+  alt: 'Cabotagem: Container Ship'
+  altura: 681
+  arquivo: static/img/glossario/cabotagem.webp
+  autor: NOAA's National Ocean Service
+  autor_url: https://www.flickr.com/photos/40322276@N04
+  busca: coastal container ship
+  id: 51bfea7f-0963-4f02-a414-06223ba91525
+  largura: 1024
+  licenca: BY 2.0
+  licenca_url: https://creativecommons.org/licenses/by/2.0/
+  origem: https://www.flickr.com/photos/40322276@N04/5369581593
+  provedor: flickr
+  titulo_original: Container Ship
+carga-fracionada:
+  alt: 'Carga fracionada: Heavy Load HDR'
+  altura: 1024
+  arquivo: static/img/glossario/carga-fracionada.webp
+  autor: mescon
+  autor_url: https://www.flickr.com/photos/23666014@N08
+  busca: pallets loading truck
+  id: 45eb95d6-39c1-4493-8be8-cb49e4c652f8
+  largura: 819
+  licenca: BY 2.0
+  licenca_url: https://creativecommons.org/licenses/by/2.0/
+  origem: https://www.flickr.com/photos/23666014@N08/3713343211
+  provedor: flickr
+  titulo_original: Heavy Load HDR
+carga-lotacao:
+  alt: 'Carga lotação: 1/40 Peterbilt 359/379 „The Black Cat“ Big Rig Semi-Trailer
+    Truck'
+  altura: 769
+  arquivo: static/img/glossario/carga-lotacao.webp
+  autor: ER0L
+  autor_url: https://www.flickr.com/photos/61030174@N03
+  busca: semi trailer truck
+  id: 910b1f61-3f67-45c5-b5fb-289c64320da2
+  largura: 1024
+  licenca: BY 2.0
+  licenca_url: https://creativecommons.org/licenses/by/2.0/
+  origem: https://www.flickr.com/photos/61030174@N03/33671701458
+  provedor: flickr
+  titulo_original: 1/40 Peterbilt 359/379 „The Black Cat“ Big Rig Semi-Trailer Truck
+centro-de-distribuicao:
+  alt: 'Centro de distribuição: Balzac Fresh Food Distribution Center - Floor Reflectivity'
+  altura: 683
+  arquivo: static/img/glossario/centro-de-distribuicao.webp
+  autor: Walmart Corporate
+  autor_url: https://www.flickr.com/photos/50128414@N05
+  busca: distribution center
+  id: 28cebaae-5e6f-473d-a4b2-cf0befaf031c
+  largura: 1024
+  licenca: BY 2.0
+  licenca_url: https://creativecommons.org/licenses/by/2.0/
+  origem: https://www.flickr.com/photos/50128414@N05/5391507982
+  provedor: flickr
+  titulo_original: Balzac Fresh Food Distribution Center - Floor Reflectivity
+cif:
+  alt: 'CIF: Container ship Olga Maersk'
+  altura: 701
+  arquivo: static/img/glossario/cif.webp
+  autor: L2F1
+  autor_url: https://www.flickr.com/photos/40686262@N05
+  busca: container ship
+  id: 17819c39-2b00-4e27-86f0-7b0e1b60efdc
+  largura: 1024
+  licenca: BY 2.0
+  licenca_url: https://creativecommons.org/licenses/by/2.0/
+  origem: https://www.flickr.com/photos/40686262@N05/4755758395
+  provedor: flickr
+  titulo_original: Container ship Olga Maersk
+codigo-de-barras:
+  alt: 'Código de barras: Barcode'
+  altura: 681
+  arquivo: static/img/glossario/codigo-de-barras.webp
+  autor: baekken
+  autor_url: https://www.flickr.com/photos/28907073@N07
+  busca: barcode
+  id: a808a943-d31a-4095-bde3-504db21f9fb7
+  largura: 1024
+  licenca: BY 2.0
+  licenca_url: https://creativecommons.org/licenses/by/2.0/
+  origem: https://www.flickr.com/photos/28907073@N07/4263086504
+  provedor: flickr
+  titulo_original: Barcode
+condominio-logistico:
+  alt: 'Condomínio logístico: DSW Designer Show Warehouse Building'
+  altura: 765
+  arquivo: static/img/glossario/condominio-logistico.webp
+  autor: JeepersMedia
+  autor_url: https://www.flickr.com/photos/39160147@N03
+  busca: warehouse building
+  id: 4e1d98b9-285a-420d-94d9-3eeed0990d24
+  largura: 1024
+  licenca: BY 2.0
+  licenca_url: https://creativecommons.org/licenses/by/2.0/
+  origem: https://www.flickr.com/photos/39160147@N03/13931351236
+  provedor: flickr
+  titulo_original: DSW Designer Show Warehouse Building
+cross-docking:
+  alt: 'Cross docking: Dover ferry terminal'
+  altura: 779
+  arquivo: static/img/glossario/cross-docking.webp
+  autor: selkovjr
+  autor_url: https://www.flickr.com/photos/14192663@N07
+  busca: loading dock trucks
+  id: 374f0aec-c534-4f88-b5f6-6e6345a7d2f5
+  largura: 1024
+  licenca: BY 2.0
+  licenca_url: https://creativecommons.org/licenses/by/2.0/
+  origem: https://www.flickr.com/photos/14192663@N07/6145552676
+  provedor: flickr
+  titulo_original: Dover ferry terminal
+ct-e:
+  alt: 'CT-e: Ural-375, Truck, Cargo, 4000 kg, 4 tonne, 6×6 (cropped)'
+  altura: 1557
+  arquivo: static/img/glossario/ct-e.webp
+  autor: Mick Bell
+  autor_url: null
+  busca: truck cargo
+  id: 65db478d-3a57-40cc-833f-b2de890d63f4
+  largura: 1200
+  licenca: BY 4.0
+  licenca_url: https://creativecommons.org/licenses/by/4.0/
+  origem: https://commons.wikimedia.org/w/index.php?curid=100971491
+  provedor: wikimedia
+  titulo_original: Ural-375, Truck, Cargo, 4000 kg, 4 tonne, 6×6 (cropped)
+cubagem:
+  alt: 'Cubagem: 29362 Grand Canyon National Park: 1893 Miner''s Measuring Tape'
+  altura: 736
+  arquivo: static/img/glossario/cubagem.webp
+  autor: Grand Canyon NPS
+  autor_url: https://www.flickr.com/photos/50693818@N08
+  busca: measuring box tape
+  id: 86e33ed6-54ab-4dd0-8b2b-f5af0cb07d9e
+  largura: 1024
+  licenca: BY 2.0
+  licenca_url: https://creativecommons.org/licenses/by/2.0/
+  origem: https://www.flickr.com/photos/50693818@N08/6883822876
+  provedor: flickr
+  titulo_original: '29362 Grand Canyon National Park: 1893 Miner''s Measuring Tape'
+curva-abc:
+  alt: 'Curva ABC: Many Crates, One Drink'
+  altura: 700
+  arquivo: static/img/glossario/curva-abc.webp
+  autor: Abhisek Sarda
+  autor_url: https://www.flickr.com/photos/7927132@N08
+  busca: warehouse inventory
+  id: fc509791-b462-4c56-8651-88cb65287e18
+  largura: 1024
+  licenca: BY 2.0
+  licenca_url: https://creativecommons.org/licenses/by/2.0/
+  origem: https://www.flickr.com/photos/7927132@N08/3615551027
+  provedor: flickr
+  titulo_original: Many Crates, One Drink
+custo-logistico:
+  alt: 'Custo logístico: Overnite/UPS Freight Truck'
+  altura: 576
+  arquivo: static/img/glossario/custo-logistico.webp
+  autor: Dorsey Photography
+  autor_url: https://www.flickr.com/photos/72780460@N08
+  busca: freight truck
+  id: 4eaec8a2-8445-43e9-b593-d867241db67a
+  largura: 1024
+  licenca: BY 2.0
+  licenca_url: https://creativecommons.org/licenses/by/2.0/
+  origem: https://www.flickr.com/photos/72780460@N08/7004050369
+  provedor: flickr
+  titulo_original: Overnite/UPS Freight Truck
+ddp:
+  alt: 'DDP: Customer Satisfaction Guaranteed :)'
+  altura: 768
+  arquivo: static/img/glossario/ddp.webp
+  autor: EpicFireworks
+  autor_url: https://www.flickr.com/photos/30048753@N05
+  busca: customs delivery
+  id: d8116a2d-60a2-44f5-bca8-fc8f1a3731bf
+  largura: 1024
+  licenca: BY 2.0
+  licenca_url: https://creativecommons.org/licenses/by/2.0/
+  origem: https://www.flickr.com/photos/30048753@N05/7764617792
+  provedor: flickr
+  titulo_original: Customer Satisfaction Guaranteed :)
+demurrage:
+  alt: 'Demurrage: Container Truck (Container Yard project, build #2)'
+  altura: 503
+  arquivo: static/img/glossario/demurrage.webp
+  autor: ER0L
+  autor_url: https://www.flickr.com/photos/61030174@N03
+  busca: container yard
+  id: 876771ea-1ea8-4484-861a-9ce0af27093e
+  largura: 1024
+  licenca: BY 2.0
+  licenca_url: https://creativecommons.org/licenses/by/2.0/
+  origem: https://www.flickr.com/photos/61030174@N03/32685650372
+  provedor: flickr
+  titulo_original: 'Container Truck (Container Yard project, build #2)'
+doca:
+  alt: 'Doca: Loading Dock'
+  altura: 681
+  arquivo: static/img/glossario/doca.webp
+  autor: darkday.
+  autor_url: https://www.flickr.com/photos/99649389@N02
+  busca: loading dock
+  id: 65b480c0-77a9-484f-a4e5-beebac371d79
+  largura: 1024
+  licenca: BY 2.0
+  licenca_url: https://creativecommons.org/licenses/by/2.0/
+  origem: https://www.flickr.com/photos/99649389@N02/14040923789
+  provedor: flickr
+  titulo_original: Loading Dock
+drawback:
+  alt: 'Drawback: Caterpillar mining dump trucks await export, Port of Houston'
+  altura: 683
+  arquivo: static/img/glossario/drawback.webp
+  autor: roy.luck
+  autor_url: https://www.flickr.com/photos/21550937@N03
+  busca: export port
+  id: 6e9dfc95-cd13-4140-bcb2-c70e0ef3df9e
+  largura: 1024
+  licenca: BY 2.0
+  licenca_url: https://creativecommons.org/licenses/by/2.0/
+  origem: https://www.flickr.com/photos/21550937@N03/6859400894
+  provedor: flickr
+  titulo_original: Caterpillar mining dump trucks await export, Port of Houston
+du-e:
+  alt: 'DU-E: Containers'
+  altura: 768
+  arquivo: static/img/glossario/du-e.webp
+  autor: Jim Bahn
+  autor_url: https://www.flickr.com/photos/35425743@N00
+  busca: export containers
+  id: 0df5c229-ae50-4ebe-961c-95e6b360e4b8
+  largura: 1024
+  licenca: BY 2.0
+  licenca_url: https://creativecommons.org/licenses/by/2.0/
+  origem: https://www.flickr.com/photos/35425743@N00/281385801
+  provedor: flickr
+  titulo_original: Containers
+duimp:
+  alt: 'DUIMP: Shipping Container'
+  altura: 682
+  arquivo: static/img/glossario/duimp.webp
+  autor: PughPugh
+  autor_url: https://www.flickr.com/photos/34937436@N02
+  busca: import containers
+  id: c5d07524-1ca9-4097-be15-afd134376dc8
+  largura: 1024
+  licenca: BY 2.0
+  licenca_url: https://creativecommons.org/licenses/by/2.0/
+  origem: https://www.flickr.com/photos/34937436@N02/8484891404
+  provedor: flickr
+  titulo_original: Shipping Container
+edi:
+  alt: 'EDI: Ethernet switch'
+  altura: 683
+  arquivo: static/img/glossario/edi.webp
+  autor: Open Grid Scheduler / Grid Engine
+  autor_url: https://www.flickr.com/photos/29155878@N03
+  busca: computer data network
+  id: e0d59744-939f-4c52-83c9-cd2e748b4bf3
+  largura: 1024
+  licenca: CC0 1.0
+  licenca_url: https://creativecommons.org/publicdomain/zero/1.0/
+  origem: https://www.flickr.com/photos/29155878@N03/16480450157
+  provedor: flickr
+  titulo_original: Ethernet switch
+enderecamento:
+  alt: 'Endereçamento: P1070904_DxO'
+  altura: 769
+  arquivo: static/img/glossario/enderecamento.webp
+  autor: nSeika
+  autor_url: https://www.flickr.com/photos/33542052@N07
+  busca: warehouse aisle racks
+  id: 5c189edb-7f29-4ec7-bde1-b286d5b97966
+  largura: 1024
+  licenca: BY 2.0
+  licenca_url: https://creativecommons.org/licenses/by/2.0/
+  origem: https://www.flickr.com/photos/33542052@N07/8096899965
+  provedor: flickr
+  titulo_original: P1070904_DxO
+erp:
+  alt: 'ERP: Caledos Runner - New share buttons leaked... ;-) - WP_20130904_20_10_57_Pro'
+  altura: 577
+  arquivo: static/img/glossario/erp.webp
+  autor: Nicola since 1972
+  autor_url: https://www.flickr.com/photos/15216811@N06
+  busca: business computer dashboard
+  id: 7d2e93c8-22ac-4ca6-b866-5d156ffa9730
+  largura: 1024
+  licenca: BY 2.0
+  licenca_url: https://creativecommons.org/licenses/by/2.0/
+  origem: https://www.flickr.com/photos/15216811@N06/9720896079
+  provedor: flickr
+  titulo_original: Caledos Runner - New share buttons leaked... ;-) - WP_20130904_20_10_57_Pro
+ex-tarifario:
+  alt: 'Ex-tarifário: Industrial machinery'
+  altura: 765
+  arquivo: static/img/glossario/ex-tarifario.webp
+  autor: National Crime Agency
+  autor_url: https://www.flickr.com/photos/100324035@N06
+  busca: industrial machinery
+  id: 03269838-5ad6-47d3-8aa3-d41be260b1e2
+  largura: 1024
+  licenca: BY 2.0
+  licenca_url: https://creativecommons.org/licenses/by/2.0/
+  origem: https://www.flickr.com/photos/100324035@N06/29482739531
+  provedor: flickr
+  titulo_original: Industrial machinery
+fca:
+  alt: 'FCA: Bintulu International Container Terminal'
+  altura: 768
+  arquivo: static/img/glossario/fca.webp
+  autor: richardsinyem
+  autor_url: https://www.flickr.com/photos/8578872@N05
+  busca: container terminal truck
+  id: ba6dfda0-ebb7-4cce-99e5-d2964279d9b2
+  largura: 1024
+  licenca: BY 2.0
+  licenca_url: https://creativecommons.org/licenses/by/2.0/
+  origem: https://www.flickr.com/photos/8578872@N05/1183289327
+  provedor: flickr
+  titulo_original: Bintulu International Container Terminal
+fifo:
+  alt: 'FIFO: Sealey Power Products Warehouse'
+  altura: 681
+  arquivo: static/img/glossario/fifo.webp
+  autor: toolstop
+  autor_url: https://www.flickr.com/photos/42408834@N06
+  busca: pallets warehouse
+  id: 4f813b38-77b6-4c63-9d26-6a29f480f674
+  largura: 1024
+  licenca: BY 2.0
+  licenca_url: https://creativecommons.org/licenses/by/2.0/
+  origem: https://www.flickr.com/photos/42408834@N06/4325151224
+  provedor: flickr
+  titulo_original: Sealey Power Products Warehouse
+fob:
+  alt: 'FOB: Container ship at Thamesport'
+  altura: 768
+  arquivo: static/img/glossario/fob.webp
+  autor: suvodeb
+  autor_url: https://www.flickr.com/photos/8706370@N02
+  busca: ship loading port crane
+  id: 388138e2-b90c-46a6-9b63-83e6a8f8823e
+  largura: 1024
+  licenca: BY 2.0
+  licenca_url: https://creativecommons.org/licenses/by/2.0/
+  origem: https://www.flickr.com/photos/8706370@N02/6614272657
+  provedor: flickr
+  titulo_original: Container ship at Thamesport
+free-time:
+  alt: 'Free time: Containers, Port of Rotterdam'
+  altura: 683
+  arquivo: static/img/glossario/free-time.webp
+  autor: LukePricePhotography
+  autor_url: https://www.flickr.com/photos/80192717@N08
+  busca: container port
+  id: 1f00187c-9e3d-491e-a69b-579132cc90af
+  largura: 1024
+  licenca: BY 2.0
+  licenca_url: https://creativecommons.org/licenses/by/2.0/
+  origem: https://www.flickr.com/photos/80192717@N08/9703431992
+  provedor: flickr
+  titulo_original: Containers, Port of Rotterdam
+frete:
+  alt: 'Frete: USPS Ford Cargo'
+  altura: 768
+  arquivo: static/img/glossario/frete.webp
+  autor: JLaw45
+  autor_url: https://www.flickr.com/photos/27665395@N05
+  busca: cargo truck road
+  id: 5195f33d-6315-46fa-91a4-f8cfb33329be
+  largura: 1024
+  licenca: BY 2.0
+  licenca_url: https://creativecommons.org/licenses/by/2.0/
+  origem: https://www.flickr.com/photos/27665395@N05/14632302406
+  provedor: flickr
+  titulo_original: USPS Ford Cargo
+frete-minimo:
+  alt: 'Frete mínimo: Walmart’s Grease Fuel Truck'
+  altura: 678
+  arquivo: static/img/glossario/frete-minimo.webp
+  autor: Walmart Corporate
+  autor_url: https://www.flickr.com/photos/50128414@N05
+  busca: diesel fuel truck
+  id: f9de5de6-e744-40cd-b2a7-33a3e88153c1
+  largura: 1024
+  licenca: BY 2.0
+  licenca_url: https://creativecommons.org/licenses/by/2.0/
+  origem: https://www.flickr.com/photos/50128414@N05/5261659794
+  provedor: flickr
+  titulo_original: Walmart’s Grease Fuel Truck
+frete-retorno:
+  alt: 'Frete retorno: Classic Kenworth Truck and Trailer'
+  altura: 538
+  arquivo: static/img/glossario/frete-retorno.webp
+  autor: born1945
+  autor_url: https://www.flickr.com/photos/12567713@N00
+  busca: empty truck trailer
+  id: e7fe6bcf-1d85-41bb-9117-225b3b50c80e
+  largura: 1024
+  licenca: BY 2.0
+  licenca_url: https://creativecommons.org/licenses/by/2.0/
+  origem: https://www.flickr.com/photos/12567713@N00/6793183938
+  provedor: flickr
+  titulo_original: Classic Kenworth Truck and Trailer
+galpao-classe-aaa:
+  alt: 'Galpão classe AAA: knud holscher, KHR arkitekter, odense university, 1966-1976'
+  altura: 1024
+  arquivo: static/img/glossario/galpao-classe-aaa.webp
+  autor: seier+seier
+  autor_url: https://www.flickr.com/photos/94852245@N00
+  busca: modern warehouse interior
+  id: f1fa172a-0257-4b90-b861-6ced3bcef362
+  largura: 823
+  licenca: BY 2.0
+  licenca_url: https://creativecommons.org/licenses/by/2.0/
+  origem: https://www.flickr.com/photos/94852245@N00/5102151518
+  provedor: flickr
+  titulo_original: knud holscher, KHR arkitekter, odense university, 1966-1976
+gemeo-digital:
+  alt: 'Gêmeo digital: Tesla Motors Assembly Line'
+  altura: 630
+  arquivo: static/img/glossario/gemeo-digital.webp
+  autor: jurvetson
+  autor_url: https://www.flickr.com/photos/44124348109@N01
+  busca: factory automation
+  id: 878b6887-a64f-442a-8756-e1e7b996f1d1
+  largura: 1024
+  licenca: BY 2.0
+  licenca_url: https://creativecommons.org/licenses/by/2.0/
+  origem: https://www.flickr.com/photos/44124348109@N01/6858583426
+  provedor: flickr
+  titulo_original: Tesla Motors Assembly Line
+intermodal:
+  alt: 'Intermodal: containers'
+  altura: 768
+  arquivo: static/img/glossario/intermodal.webp
+  autor: JAXPORT
+  autor_url: https://www.flickr.com/photos/24847875@N05
+  busca: intermodal container terminal
+  id: c473febc-f879-4276-9466-486eaeb80cf6
+  largura: 1024
+  licenca: BY 2.0
+  licenca_url: https://creativecommons.org/licenses/by/2.0/
+  origem: https://www.flickr.com/photos/24847875@N05/3220395113
+  provedor: flickr
+  titulo_original: containers
+inventario-ciclico:
+  alt: 'Inventário cíclico: Red Wing Shoes Factory Tour'
+  altura: 682
+  arquivo: static/img/glossario/inventario-ciclico.webp
+  autor: ninahale
+  autor_url: https://www.flickr.com/photos/94693506@N00
+  busca: warehouse inventory
+  id: 78a1cff0-550e-47f0-8298-12c5e8e0d977
+  largura: 1023
+  licenca: BY 2.0
+  licenca_url: https://creativecommons.org/licenses/by/2.0/
+  origem: https://www.flickr.com/photos/94693506@N00/4643862950
+  provedor: flickr
+  titulo_original: Red Wing Shoes Factory Tour
+iot:
+  alt: 'IoT: Internet of Anonymous Things'
+  altura: 461
+  arquivo: static/img/glossario/iot.webp
+  autor: sndrv
+  autor_url: https://www.flickr.com/photos/94549193@N00
+  busca: internet of things sensor
+  id: fad9f718-17c0-4ae0-a8f6-3b7e27a85072
+  largura: 1023
+  licenca: BY 2.0
+  licenca_url: https://creativecommons.org/licenses/by/2.0/
+  origem: https://www.flickr.com/photos/94549193@N00/20810757344
+  provedor: flickr
+  titulo_original: Internet of Anonymous Things
+just-in-time:
+  alt: 'Just in time: Hyundai car assembly line'
+  altura: 903
+  arquivo: static/img/glossario/just-in-time.webp
+  autor: 'User: Anonyme'
+  autor_url: https://commons.wikimedia.org/w/index.php?title=User:Anonyme&action=edit&redlink=1
+  busca: car assembly line
+  id: 5fba5dd7-76f5-4618-9998-e5fe220c69fd
+  largura: 1200
+  licenca: BY 2.5
+  licenca_url: https://creativecommons.org/licenses/by/2.5/
+  origem: https://commons.wikimedia.org/w/index.php?curid=1987247
+  provedor: wikimedia
+  titulo_original: Hyundai car assembly line
+kanban:
+  alt: 'Kanban: Productivity: Cleaning Up the Personal Kanban Board Layout'
+  altura: 683
+  arquivo: static/img/glossario/kanban.webp
+  autor: orcmid
+  autor_url: https://www.flickr.com/photos/91555706@N00
+  busca: kanban board
+  id: d1d9d129-9cb6-46cb-9f53-e7e833a90fe7
+  largura: 1024
+  licenca: BY 2.0
+  licenca_url: https://creativecommons.org/licenses/by/2.0/
+  origem: https://www.flickr.com/photos/91555706@N00/3879259373
+  provedor: flickr
+  titulo_original: 'Productivity: Cleaning Up the Personal Kanban Board Layout'
+last-mile:
+  alt: 'Last mile: POSTMAN PAT'
+  altura: 586
+  arquivo: static/img/glossario/last-mile.webp
+  autor: RubyGoes
+  autor_url: https://www.flickr.com/photos/61997808@N00
+  busca: delivery van parcel
+  id: 24256f11-37e8-4202-8069-2de312e99c1b
+  largura: 1024
+  licenca: BY 2.0
+  licenca_url: https://creativecommons.org/licenses/by/2.0/
+  origem: https://www.flickr.com/photos/61997808@N00/4272899457
+  provedor: flickr
+  titulo_original: POSTMAN PAT
+lead-time:
+  alt: 'Lead time: Clock'
+  altura: 683
+  arquivo: static/img/glossario/lead-time.webp
+  autor: bigpresh
+  autor_url: https://www.flickr.com/photos/62806367@N00
+  busca: clock
+  id: 9607700a-0079-4f33-8b66-9fb21d22c8b0
+  largura: 1024
+  licenca: BY 2.0
+  licenca_url: https://creativecommons.org/licenses/by/2.0/
+  origem: https://www.flickr.com/photos/62806367@N00/7169630025
+  provedor: flickr
+  titulo_original: Clock
+lote-economico:
+  alt: 'Lote econômico: Sealey Forklift'
+  altura: 681
+  arquivo: static/img/glossario/lote-economico.webp
+  autor: toolstop
+  autor_url: https://www.flickr.com/photos/42408834@N06
+  busca: warehouse pallets
+  id: d5d465dd-c53d-418c-b472-58715d99959a
+  largura: 1024
+  licenca: BY 2.0
+  licenca_url: https://creativecommons.org/licenses/by/2.0/
+  origem: https://www.flickr.com/photos/42408834@N06/4325153724
+  provedor: flickr
+  titulo_original: Sealey Forklift
+middle-mile:
+  alt: 'Middle mile: GMC Truck 1931'
+  altura: 594
+  arquivo: static/img/glossario/middle-mile.webp
+  autor: rich701
+  autor_url: https://www.flickr.com/photos/63490482@N03
+  busca: semi truck highway
+  id: 86e9ec31-f6de-4dcd-a7f2-bd34d7d460da
+  largura: 1023
+  licenca: BY 2.0
+  licenca_url: https://creativecommons.org/licenses/by/2.0/
+  origem: https://www.flickr.com/photos/63490482@N03/8818925846
+  provedor: flickr
+  titulo_original: GMC Truck 1931
+milk-run:
+  alt: 'Milk run: Milk Truck'
+  altura: 593
+  arquivo: static/img/glossario/milk-run.webp
+  autor: jurvetson
+  autor_url: https://www.flickr.com/photos/44124348109@N01
+  busca: milk truck
+  id: 99075585-565a-47de-9167-52187ae81ed6
+  largura: 1024
+  licenca: BY 2.0
+  licenca_url: https://creativecommons.org/licenses/by/2.0/
+  origem: https://www.flickr.com/photos/44124348109@N01/2381971
+  provedor: flickr
+  titulo_original: Milk Truck
+modal-aereo:
+  alt: 'Modal aéreo: Asian Cargo airplane taking off'
+  altura: 685
+  arquivo: static/img/glossario/modal-aereo.webp
+  autor: Ivan Radic
+  autor_url: https://www.flickr.com/photos/26344495@N05
+  busca: cargo airplane
+  id: 00675e9a-0c53-42b3-8955-7161cb25ce6e
+  largura: 1023
+  licenca: BY 2.0
+  licenca_url: https://creativecommons.org/licenses/by/2.0/
+  origem: https://www.flickr.com/photos/26344495@N05/47755060262
+  provedor: flickr
+  titulo_original: Asian Cargo airplane taking off
+modal-aquaviario:
+  alt: 'Modal aquaviário: Clipper ship ''City of Adelaide'' in the Thames River'
+  altura: 879
+  arquivo: static/img/glossario/modal-aquaviario.webp
+  autor: Aussie~mobs
+  autor_url: https://www.flickr.com/photos/70994841@N07
+  busca: barge river cargo
+  id: c51377e3-793f-4924-af8b-527ba8d7367b
+  largura: 1024
+  licenca: PDM 1.0
+  licenca_url: https://creativecommons.org/publicdomain/mark/1.0/
+  origem: https://www.flickr.com/photos/70994841@N07/10550444134
+  provedor: flickr
+  titulo_original: Clipper ship 'City of Adelaide' in the Thames River
+modal-dutoviario:
+  alt: 'Modal dutoviário: Danville, Kentucky - August 1, 2019- Natural gas pipeline
+    and a subsequent fire'
+  altura: 552
+  arquivo: static/img/glossario/modal-dutoviario.webp
+  autor: NTSBgov
+  autor_url: https://www.flickr.com/photos/68618467@N03
+  busca: pipeline
+  id: ef0c426d-9a90-45a5-9400-7bce2bfaca2f
+  largura: 1024
+  licenca: PDM 1.0
+  licenca_url: https://creativecommons.org/publicdomain/mark/1.0/
+  origem: https://www.flickr.com/photos/68618467@N03/52358210485
+  provedor: flickr
+  titulo_original: Danville, Kentucky - August 1, 2019- Natural gas pipeline and a
+    subsequent fire
+modal-ferroviario:
+  alt: 'Modal ferroviário: Freight train'
+  altura: 733
+  arquivo: static/img/glossario/modal-ferroviario.webp
+  autor: Loco Steve
+  autor_url: https://www.flickr.com/photos/36989019@N08
+  busca: freight train
+  id: aaf9e3e1-2751-43a7-8bab-775f987bb776
+  largura: 1024
+  licenca: BY 2.0
+  licenca_url: https://creativecommons.org/licenses/by/2.0/
+  origem: https://www.flickr.com/photos/36989019@N08/4552360219
+  provedor: flickr
+  titulo_original: Freight train
+modal-rodoviario:
+  alt: 'Modal rodoviário: Red delivery truck, highway 405, coming into Bellevue, Mercer
+    Slough Nature Park, Norwood Village trees, Washington, USA'
+  altura: 612
+  arquivo: static/img/glossario/modal-rodoviario.webp
+  autor: Wonderlane
+  autor_url: https://www.flickr.com/photos/71401718@N00
+  busca: trucks highway
+  id: 124f89bf-f9cf-4a6c-9066-95d871268ed3
+  largura: 1024
+  licenca: BY 2.0
+  licenca_url: https://creativecommons.org/licenses/by/2.0/
+  origem: https://www.flickr.com/photos/71401718@N00/47634935511
+  provedor: flickr
+  titulo_original: Red delivery truck, highway 405, coming into Bellevue, Mercer Slough
+    Nature Park, Norwood Village trees, Washington, USA
+nvocc:
+  alt: 'NVOCC: Unloading a shipping container with household contents -d'
+  altura: 768
+  arquivo: static/img/glossario/nvocc.webp
+  autor: booledozer
+  autor_url: https://www.flickr.com/photos/55289779@N00
+  busca: shipping containers
+  id: 07d106ec-cde5-4138-b2d2-29c7df8767c5
+  largura: 1024
+  licenca: CC0 1.0
+  licenca_url: https://creativecommons.org/publicdomain/zero/1.0/
+  origem: https://www.flickr.com/photos/55289779@N00/4717377612
+  provedor: flickr
+  titulo_original: Unloading a shipping container with household contents -d
+otif:
+  alt: 'OTIF: Laundry delivery truck: Worthington, Ohio 1939'
+  altura: 694
+  arquivo: static/img/glossario/otif.webp
+  autor: dok1
+  autor_url: https://www.flickr.com/photos/51096110@N00
+  busca: delivery truck
+  id: c4ffb331-2c9c-4de5-b299-cf57fd07c5d7
+  largura: 920
+  licenca: BY 2.0
+  licenca_url: https://creativecommons.org/licenses/by/2.0/
+  origem: https://www.flickr.com/photos/51096110@N00/4062285156
+  provedor: flickr
+  titulo_original: 'Laundry delivery truck: Worthington, Ohio 1939'
+packing:
+  alt: 'Packing: packing up'
+  altura: 1024
+  arquivo: static/img/glossario/packing.webp
+  autor: Joanna Bourne
+  autor_url: https://www.flickr.com/photos/66992990@N00
+  busca: packing boxes warehouse
+  id: 6818e582-95d2-4326-acef-42032c4d6b74
+  largura: 814
+  licenca: BY 2.0
+  licenca_url: https://creativecommons.org/licenses/by/2.0/
+  origem: https://www.flickr.com/photos/66992990@N00/6532911971
+  provedor: flickr
+  titulo_original: packing up
+palete-pbr:
+  alt: 'Palete PBR: Wooden Pallets'
+  altura: 576
+  arquivo: static/img/glossario/palete-pbr.webp
+  autor: Reuse Warehouse Houston
+  autor_url: https://www.flickr.com/photos/44177494@N04
+  busca: wooden pallet
+  id: 3fb05fb6-18c6-4472-bb67-dccd3e1652cf
+  largura: 1024
+  licenca: BY 2.0
+  licenca_url: https://creativecommons.org/licenses/by/2.0/
+  origem: https://www.flickr.com/photos/44177494@N04/5717269860
+  provedor: flickr
+  titulo_original: Wooden Pallets
+paletizacao:
+  alt: 'Paletização: Pallet & Stacked Fence Panels'
+  altura: 753
+  arquivo: static/img/glossario/paletizacao.webp
+  autor: Steve Snodgrass
+  autor_url: https://www.flickr.com/photos/10710442@N08
+  busca: pallets stacked
+  id: 94bef22d-829e-486a-b77d-3535ee480b45
+  largura: 1024
+  licenca: BY 2.0
+  licenca_url: https://creativecommons.org/licenses/by/2.0/
+  origem: https://www.flickr.com/photos/10710442@N08/10710883293
+  provedor: flickr
+  titulo_original: Pallet & Stacked Fence Panels
+peso-cubado:
+  alt: 'Peso cubado: Curing Box'
+  altura: 767
+  arquivo: static/img/glossario/peso-cubado.webp
+  autor: John Loo
+  autor_url: https://www.flickr.com/photos/8510225@N07
+  busca: cardboard boxes stack
+  id: 83893ffd-c992-488b-8c21-9cdd1d4437b9
+  largura: 1023
+  licenca: BY 2.0
+  licenca_url: https://creativecommons.org/licenses/by/2.0/
+  origem: https://www.flickr.com/photos/8510225@N07/4046270655
+  provedor: flickr
+  titulo_original: Curing Box
+picking:
+  alt: 'Picking: Man organizing shelves while selecting wooden planks in a hardware
+    store'
+  altura: 681
+  arquivo: static/img/glossario/picking.webp
+  autor: nenad53
+  autor_url: https://www.flickr.com/photos/202780880@N02
+  busca: warehouse worker shelves
+  id: 4d3e118e-08c3-4592-b0c6-7bd59e6a6aef
+  largura: 1023
+  licenca: BY 2.0
+  licenca_url: https://creativecommons.org/licenses/by/2.0/
+  origem: https://www.flickr.com/photos/202780880@N02/54560052467
+  provedor: flickr
+  titulo_original: Man organizing shelves while selecting wooden planks in a hardware
+    store
+ponto-de-pedido:
+  alt: 'Ponto de pedido: Walmart Broadens Product Assortment and Reintroduces Items
+    with ''It''s Back!'' Tags'
+  altura: 689
+  arquivo: static/img/glossario/ponto-de-pedido.webp
+  autor: Walmart Corporate
+  autor_url: https://www.flickr.com/photos/50128414@N05
+  busca: stock shelves supermarket
+  id: e3c51c54-f7ce-4155-b629-f351e624d557
+  largura: 1024
+  licenca: BY 2.0
+  licenca_url: https://creativecommons.org/licenses/by/2.0/
+  origem: https://www.flickr.com/photos/50128414@N05/5684838910
+  provedor: flickr
+  titulo_original: Walmart Broadens Product Assortment and Reintroduces Items with
+    'It's Back!' Tags
+porto-seco:
+  alt: 'Porto seco: High and Dry'
+  altura: 836
+  arquivo: static/img/glossario/porto-seco.webp
+  autor: A.Davey
+  autor_url: https://www.flickr.com/photos/40595948@N00
+  busca: dry port container
+  id: 354ba5cc-90b7-4a18-b6e1-6443343420f8
+  largura: 1024
+  licenca: BY 2.0
+  licenca_url: https://creativecommons.org/licenses/by/2.0/
+  origem: https://www.flickr.com/photos/40595948@N00/3507535703
+  provedor: flickr
+  titulo_original: High and Dry
+putaway:
+  alt: 'Putaway: Sealey Warehouse'
+  altura: 681
+  arquivo: static/img/glossario/putaway.webp
+  autor: toolstop
+  autor_url: https://www.flickr.com/photos/42408834@N06
+  busca: forklift pallet rack
+  id: 27237698-d3db-4566-acbc-521c3d293a18
+  largura: 1024
+  licenca: BY 2.0
+  licenca_url: https://creativecommons.org/licenses/by/2.0/
+  origem: https://www.flickr.com/photos/42408834@N06/4324416999
+  provedor: flickr
+  titulo_original: Sealey Warehouse
+rastreabilidade:
+  alt: 'Rastreabilidade: INQ IMEI barcode label'
+  altura: 768
+  arquivo: static/img/glossario/rastreabilidade.webp
+  autor: renaissancechambara
+  autor_url: https://www.flickr.com/photos/39435232@N00
+  busca: barcode label
+  id: 22052136-ca4f-49a5-94d8-4a257fc80273
+  largura: 1024
+  licenca: BY 2.0
+  licenca_url: https://creativecommons.org/licenses/by/2.0/
+  origem: https://www.flickr.com/photos/39435232@N00/5837101200
+  provedor: flickr
+  titulo_original: INQ IMEI barcode label
+rfid:
+  alt: 'RFID: RFID - Tag laverie avec EPC imprimé'
+  altura: 315
+  arquivo: static/img/glossario/rfid.webp
+  autor: Nicolas Eynaud
+  autor_url: https://commons.wikimedia.org/wiki/User:Nicolas_Eynaud
+  busca: rfid tag
+  id: d8150da4-f797-49c3-95d2-96664f0e3453
+  largura: 856
+  licenca: BY 4.0
+  licenca_url: https://creativecommons.org/licenses/by/4.0/
+  origem: https://commons.wikimedia.org/w/index.php?curid=163337716
+  provedor: wikimedia
+  titulo_original: RFID - Tag laverie avec EPC imprimé
+roteirizacao:
+  alt: 'Roteirização: Hammond Cylindrical Projection World Map 1905'
+  altura: 676
+  arquivo: static/img/glossario/roteirizacao.webp
+  autor: perpetualplum
+  autor_url: https://www.flickr.com/photos/14277117@N03
+  busca: route map navigation
+  id: a37d315c-0adb-4577-9550-2c80e8a0ccb1
+  largura: 1024
+  licenca: BY 2.0
+  licenca_url: https://creativecommons.org/licenses/by/2.0/
+  origem: https://www.flickr.com/photos/14277117@N03/4775662240
+  provedor: flickr
+  titulo_original: Hammond Cylindrical Projection World Map 1905
+ruptura:
+  alt: 'Ruptura: Empty supermarket shelves'
+  altura: 768
+  arquivo: static/img/glossario/ruptura.webp
+  autor: sachab
+  autor_url: https://www.flickr.com/photos/43574048@N00
+  busca: empty supermarket shelves
+  id: d3963e09-4039-492e-814b-c2a07a747b5a
+  largura: 1024
+  licenca: BY 2.0
+  licenca_url: https://creativecommons.org/licenses/by/2.0/
+  origem: https://www.flickr.com/photos/43574048@N00/49709513747
+  provedor: flickr
+  titulo_original: Empty supermarket shelves
+seguro-de-carga:
+  alt: 'Seguro de carga: Darfur support, U.S. Army Africa, Kigali, Rwanda 090114'
+  altura: 683
+  arquivo: static/img/glossario/seguro-de-carga.webp
+  autor: US Army Africa
+  autor_url: https://www.flickr.com/photos/36281822@N08
+  busca: cargo truck accident
+  id: d0c5e6fb-eb9c-4caa-ba1f-b170a105e9ae
+  largura: 1024
+  licenca: BY 2.0
+  licenca_url: https://creativecommons.org/licenses/by/2.0/
+  origem: https://www.flickr.com/photos/36281822@N08/3723047755
+  provedor: flickr
+  titulo_original: Darfur support, U.S. Army Africa, Kigali, Rwanda 090114
+slotting:
+  alt: 'Slotting: 20110826-FS-LSC-0046'
+  altura: 678
+  arquivo: static/img/glossario/slotting.webp
+  autor: USDAgov
+  autor_url: https://www.flickr.com/photos/41284017@N08
+  busca: warehouse shelves
+  id: 20faab6e-4c07-4d50-86ae-516abf144fd3
+  largura: 1024
+  licenca: BY 2.0
+  licenca_url: https://creativecommons.org/licenses/by/2.0/
+  origem: https://www.flickr.com/photos/41284017@N08/6098229518
+  provedor: flickr
+  titulo_original: 20110826-FS-LSC-0046
+taxa-de-vacancia:
+  alt: 'Taxa de vacância: Empty Warehouse'
+  altura: 768
+  arquivo: static/img/glossario/taxa-de-vacancia.webp
+  autor: Jayson Shenk
+  autor_url: https://www.flickr.com/photos/61086689@N00
+  busca: empty warehouse
+  id: 26eb520e-7584-4ba0-8732-f7a47b9fa108
+  largura: 1024
+  licenca: BY 2.0
+  licenca_url: https://creativecommons.org/licenses/by/2.0/
+  origem: https://www.flickr.com/photos/61086689@N00/428639815
+  provedor: flickr
+  titulo_original: Empty Warehouse
+teu:
+  alt: 'TEU: Unloading a shipment, 4 cranes, stacks of containers, tug boat, small
+    boat, wakes, man made island, shadow, sunlight, winter, Universal Responsib'
+  altura: 681
+  arquivo: static/img/glossario/teu.webp
+  autor: Wonderlane
+  autor_url: https://www.flickr.com/photos/71401718@N00
+  busca: shipping containers stack
+  id: cc4f9e1a-fbec-4186-b075-bf30aa56daa1
+  largura: 1024
+  licenca: BY 2.0
+  licenca_url: https://creativecommons.org/licenses/by/2.0/
+  origem: https://www.flickr.com/photos/71401718@N00/3187440502
+  provedor: flickr
+  titulo_original: Unloading a shipment, 4 cranes, stacks of containers, tug boat,
+    small boat, wakes, man made island, shadow, sunlight, winter, Universal Responsibility
+    in a Matrixed Economic World, Port of Seattle, West Seattle, Washington, USA
+tms:
+  alt: 'TMS: Delivery truck, logistics freight delivery'
+  altura: 683
+  arquivo: static/img/glossario/tms.webp
+  autor: Autor desconhecido
+  autor_url: null
+  busca: truck logistics
+  id: b7da9861-3e07-4e71-829a-0a8e3775ee4e
+  largura: 1024
+  licenca: CC0 1.0
+  licenca_url: https://creativecommons.org/publicdomain/zero/1.0/
+  origem: https://www.rawpixel.com/image/6030836/photo-image-public-domain-free-delivery
+  provedor: rawpixel
+  titulo_original: Delivery truck, logistics freight delivery
+torre-de-controle:
+  alt: 'Torre de controle: WoW running on TV'
+  altura: 768
+  arquivo: static/img/glossario/torre-de-controle.webp
+  autor: czarcats
+  autor_url: https://www.flickr.com/photos/98498050@N00
+  busca: control room screens
+  id: 4afd979b-191b-4adb-a726-5c3338790822
+  largura: 1024
+  licenca: BY 2.0
+  licenca_url: https://creativecommons.org/licenses/by/2.0/
+  origem: https://www.flickr.com/photos/98498050@N00/434918864
+  provedor: flickr
+  titulo_original: WoW running on TV
+transit-time:
+  alt: 'Transit time: Free cargo ship ocean image'
+  altura: 576
+  arquivo: static/img/glossario/transit-time.webp
+  autor: Autor desconhecido
+  autor_url: null
+  busca: cargo ship ocean
+  id: 3640ac74-7a77-447f-947a-4310e410a803
+  largura: 1024
+  licenca: CC0 1.0
+  licenca_url: https://creativecommons.org/publicdomain/zero/1.0/
+  origem: https://www.rawpixel.com/image/5923270/photo-image-public-domain-ocean-free
+  provedor: rawpixel
+  titulo_original: Free cargo ship ocean image
