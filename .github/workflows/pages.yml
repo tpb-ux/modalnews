@@ -34,7 +34,8 @@ jobs:
           git add content static/img data
           git diff --cached --quiet && exit 0
           git commit -m "Coleta automática $(date -u +%Y-%m-%dT%H:%MZ) [skip ci]"
-          for i in 1 2 3; do git pull --rebase -q && git push && exit 0; sleep 5; done; exit 1
+          # rebase só com -X theirs para o arquivo de hashes do IndexNow, que é regravado a cada execução
+          for i in 1 2 3; do git pull --rebase -X theirs -q && git push && exit 0; sleep $((i * 5)); done; exit 1
       - name: Guardar lista do IndexNow
         run: mkdir -p inx && cp data/indexnow_pendentes.txt data/indexnow_hashes.next.json inx/ 2>/dev/null || true
       - uses: actions/upload-artifact@v4
@@ -86,7 +87,13 @@ jobs:
           git config user.name "modalnews-bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           [ -f data/indexnow_hashes.json ] || { echo "sem hashes para guardar"; exit 0; }
-          git add -- data/indexnow_hashes.json
-          git diff --cached --quiet && exit 0
-          git commit -m "IndexNow: hashes [skip ci]"
-          for i in 1 2 3; do git pull --rebase -q && git push && exit 0; sleep 5; done; exit 1
+          cp data/indexnow_hashes.json /tmp/enviados.json
+          # Outra execução pode ter gravado hashes antes: parte sempre do main atual e mescla (sem conflito de rebase).
+          for i in 1 2 3 4 5; do
+            git fetch -q origin main && git reset -q --hard origin/main
+            python -c "import json,pathlib as p; f=p.Path('data/indexnow_hashes.json'); r=json.loads(f.read_text()) if f.exists() else {}; r.update(json.load(open('/tmp/enviados.json'))); f.write_text(json.dumps(r, separators=(',', ':')))"
+            git add -- data/indexnow_hashes.json
+            git diff --cached --quiet && exit 0
+            git commit -qm "IndexNow: hashes [skip ci]" && git push -q && exit 0
+            sleep $((i * 5))
+          done; exit 1
