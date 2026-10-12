@@ -65,7 +65,7 @@ def page(title, desc, path, body, og_img=None, og_type="website", jsonld=None, r
 <nav class="ed" aria-label="Editorias"><div class="wrap"><a class="{'pill' if path == '/' else ''}" href="/">Início</a>{nav_ed}<a class="{'on' if path.startswith('/glossario/') else ''}" href="/glossario/">Glossário</a>
 <details class="dd"><summary>Referência</summary><div class="ddm">{ref_links}</div></details></div></nav>
 <div class="drawer" id="mn-drawer" hidden><div class="dpanel" role="dialog" aria-modal="true" aria-label="Menu"><button class="dclose" id="mn-close" aria-label="Fechar menu">×</button>
-<h4>Editorias</h4><a href="/">Início</a>{nav}<h4>Referência</h4><a href="/glossario/">Glossário</a>{ref_links}</div></div>
+<p class="fh">Editorias</p><a href="/">Início</a>{nav}<p class="fh">Referência</p><a href="/glossario/">Glossário</a>{ref_links}</div></div>
 <script>(function(){{var b=document.getElementById('mn-btn'),d=document.getElementById('mn-drawer'),c=document.getElementById('mn-close');
 function o(x){{d.hidden=!x;b.setAttribute('aria-expanded',x);document.body.style.overflow=x?'hidden':'';if(x)c.focus();else b.focus()}}
 b.onclick=function(){{o(d.hidden)}};c.onclick=function(){{o(false)}};d.onclick=function(e){{if(e.target===d)o(false)}};
@@ -73,8 +73,8 @@ document.addEventListener('keydown',function(e){{if(e.key==='Escape'&&!d.hidden)
 var a=document.querySelector('nav.ed a.on,nav.ed a.pill');if(a&&a.scrollIntoView&&innerWidth<860)a.scrollIntoView({{inline:'center',block:'nearest'}});
 document.addEventListener('click',function(e){{var x=document.querySelector('details.dd[open]');if(x&&!x.contains(e.target))x.open=false}})}})();</script>
 <main class="wrap">{body}</main><footer><div class="wrap fgrid"><div><img src="/static/logo.svg" alt="" width="180" height="36" class="flogo"><p>{E(CFG['tagline'])}</p></div>
-<div><h4>Editorias</h4>{nav}</div><div><h4>Referência</h4><a href="/glossario/">Glossário de Logística</a><a href="/siglas/">Siglas</a><a href="/diesel/">Preço do diesel</a><a href="/frete-minimo/">Frete mínimo ANTT</a><a href="/portos/">Portos</a><a href="/rodovias/">Rodovias</a><a href="/estados/">Logística por estado</a><a href="/guias/">Guias práticos</a><a href="/calculadoras/cubagem/">Calculadora de cubagem</a><a href="/calculadoras/custo-diesel-viagem/">Custo de diesel</a><a href="/links-uteis/">Links úteis</a></div>
-<div><h4>Institucional</h4><a href="/sobre/">Sobre</a><a href="/politica-editorial/">Política editorial</a><a href="/metodologia/">Metodologia</a><a href="/correcoes/">Correções</a><a href="/privacidade/">Privacidade</a><a href="/rss.xml">Feed RSS</a></div></div>
+<div><p class="fh">Editorias</p>{nav}</div><div><p class="fh">Referência</p><a href="/glossario/">Glossário de Logística</a><a href="/siglas/">Siglas</a><a href="/diesel/">Preço do diesel</a><a href="/frete-minimo/">Frete mínimo ANTT</a><a href="/portos/">Portos</a><a href="/rodovias/">Rodovias</a><a href="/estados/">Logística por estado</a><a href="/guias/">Guias práticos</a><a href="/calculadoras/cubagem/">Calculadora de cubagem</a><a href="/calculadoras/custo-diesel-viagem/">Custo de diesel</a><a href="/links-uteis/">Links úteis</a></div>
+<div><p class="fh">Institucional</p><a href="/sobre/">Sobre</a><a href="/politica-editorial/">Política editorial</a><a href="/metodologia/">Metodologia</a><a href="/correcoes/">Correções</a><a href="/privacidade/">Privacidade</a><a href="/rss.xml">Feed RSS</a></div></div>
 <div class="wrap fbot">© {dt.date.today().year} {E(CFG['site_name'])} · Todos os direitos reservados</div></footer></body></html>"""
 
 SITE_LD = {"@context": "https://schema.org", "@graph": [
@@ -119,6 +119,7 @@ def main():
     posts = load()
     if OUT.exists(): shutil.rmtree(OUT)
     shutil.copytree(ROOT / "static", OUT / "static")
+    shutil.copy(ROOT / "static" / "favicon.ico", OUT / "favicon.ico")
     if CFG.get("cname"): (OUT / "CNAME").write_text(CFG["cname"].strip() + "\n")
     own = lambda p: not p["imagem"].startswith("/static/img/editoria/")
     recent48 = lambda p: (dt.datetime.now(dt.timezone.utc) - p["data"]) < dt.timedelta(hours=48)
