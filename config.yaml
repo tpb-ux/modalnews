@@ -1,0 +1,12 @@
+site_name: Modal News
+tagline: Notícias de logística, transporte e supply chain
+base_url: https://modalnews.com.br
+language: pt-BR
+publisher_logo: /static/logo.png
+editorias:
+  - {slug: transporte, nome: Transporte}
+  - {slug: supply-chain, nome: Supply Chain}
+  - {slug: armazenagem, nome: Armazenagem}
+  - {slug: comercio-exterior, nome: Comércio Exterior}
+  - {slug: tecnologia, nome: Tecnologia}
+  - {slug: mercado, nome: Mercado}
