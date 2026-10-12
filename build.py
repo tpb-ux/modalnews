@@ -30,6 +30,7 @@ def load():
         if d.tzinfo is None: d = d.replace(tzinfo=dt.timezone(dt.timedelta(hours=-3)))
         if m["editoria"] not in EDS: raise SystemExit(f"{f.name}: editoria inválida {m['editoria']}")
         slug = m.get("slug") or slugify(f.stem)
+        if not m.get("imagem"): m["imagem"] = BASE + "/static/og-default.png"
         posts.append(dict(m, data=d, slug=slug, url=f"/{m['editoria']}/{slug}/",
                           html=markdown.markdown(body, extensions=["extra"])))
     return sorted(posts, key=lambda p: p["data"], reverse=True)
@@ -51,9 +52,9 @@ def page(title, desc, path, body, og_img=None, og_type="website", jsonld=None):
 <meta property="og:description" content="{E(desc)}"><meta property="og:url" content="{canon}">
 <meta property="og:image" content="{E(img)}"><meta name="twitter:card" content="summary_large_image">{ld}
 </head><body><header class="top"><div class="wrap hrow"><a class="logo" href="/"><img src="/static/logo.svg" alt="{E(CFG['site_name'])}" width="220" height="44"></a>
-<div class="tag">{E(CFG['tagline'])}</div></div></header><nav class="ed"><div class="wrap"><a class="pill" href="/">Início</a>{nav}</div></nav>
+<div class="tag">{E(CFG['tagline'])}</div></div></header><nav class="ed"><div class="wrap"><a class="pill" href="/">Início</a>{nav}<a href="/glossario/">Glossário</a></div></nav>
 <main class="wrap">{body}</main><footer><div class="wrap fgrid"><div><img src="/static/logo.svg" alt="" width="180" height="36" class="flogo"><p>{E(CFG['tagline'])}</p></div>
-<div><h4>Editorias</h4>{nav}</div><div><h4>Assine</h4><a href="/rss.xml">Feed RSS</a><a href="/sitemap.xml">Mapa do site</a></div></div>
+<div><h4>Editorias</h4>{nav}</div><div><h4>Assine</h4><a href="/glossario/">Glossário de Logística</a><a href="/rss.xml">Feed RSS</a><a href="/sitemap.xml">Mapa do site</a></div></div>
 <div class="wrap fbot">© {dt.date.today().year} {E(CFG['site_name'])} · Todos os direitos reservados</div></footer></body></html>"""
 
 def card(p, cls="", h="h3"):
@@ -76,14 +77,65 @@ def write(path, txt):
     txt = re.sub(r'(href|src)="/(?!/)', lambda m: f'{m.group(1)}="{PREFIX}/', txt)
     f.parent.mkdir(parents=True, exist_ok=True); f.write_text(txt, encoding="utf-8")
 
+def build_glossary():
+    """Glossário pSEO: /glossario/ (índice A-Z) e /glossario/<slug>/. Retorna as URLs geradas."""
+    gf = ROOT / "data" / "glossario.yaml"
+    if not gf.exists(): return []
+    terms = yaml.safe_load(gf.read_text(encoding="utf-8"))
+    for t in terms: t["slug"] = slugify(t["t"])
+    by = {t["t"]: t for t in terms}
+    terms.sort(key=lambda t: slugify(t["t"]))
+    G = "/glossario/"
+    def label(t): return f'{t["t"]} ({t["n"]})' if t.get("n") else t["t"]
+    crumbs = lambda extra: {"@type": "BreadcrumbList", "itemListElement": [
+        {"@type": "ListItem", "position": i + 1, "name": n, "item": BASE + u} for i, (n, u) in enumerate([("Início", "/"), ("Glossário", G)] + extra)]}
+    for t in terms:
+        url = f"{G}{t['slug']}/"; ed = t.get("ed", "mercado")
+        defs = "".join(f"<p>{E(x)}</p>" for x in t["d"])
+        rel = [by[r] for r in t.get("rel", []) if r in by]
+        rel_html = "".join(f'<a class="chip" href="{G}{r["slug"]}/">{E(r["t"])}</a>' for r in rel)
+        desc = t["d"][0][:155].rsplit(" ", 1)[0] + "…" if len(t["d"][0]) > 158 else t["d"][0]
+        title = f"O que é {t['t']}? Significado na logística"
+        faq = [(f"O que é {t['t']}?", " ".join(t["d"])), (f"Qual um exemplo de {t['t']} na prática?", t["ex"])]
+        ld = {"@context": "https://schema.org", "@graph": [
+            {"@type": "DefinedTerm", "name": t["t"], **({"alternateName": t["n"]} if t.get("n") else {}), "description": t["d"][0], "url": BASE + url,
+             "inDefinedTermSet": {"@type": "DefinedTermSet", "name": f"Glossário de Logística — {CFG['site_name']}", "url": BASE + G}},
+            {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in faq]},
+            crumbs([(t["t"], url)])]}
+        b = f"""<article class="post gl"><nav class="crumbs"><a href="/">Início</a> › <a href="{G}">Glossário</a> › {E(t['t'])}</nav>
+<div class="kick"><a href="/{ed}/">{E(EDS.get(ed, ed))}</a></div><h1>O que é {E(t['t'])}?</h1>
+{f'<p class="meta">{E(t["n"])}</p>' if t.get('n') else ''}{defs}
+<div class="exbox"><strong>Exemplo prático</strong><p>{E(t['ex'])}</p></div>
+{f'<h2>Termos relacionados</h2><div class="chips">{rel_html}</div>' if rel else ''}
+<p class="more-ed">Acompanhe as notícias de <a href="/{ed}/">{E(EDS.get(ed, ed))}</a> no {E(CFG['site_name'])} ou volte ao <a href="{G}">Glossário de Logística</a>.</p></article>"""
+        write(url, page(f"{title} | {CFG['site_name']}", desc, url, b, jsonld=ld))
+    groups = {}
+    for t in terms: groups.setdefault(slugify(t["t"])[0].upper(), []).append(t)
+    letters = "".join(f'<a href="#l-{k}">{k}</a>' for k in groups)
+    lists = "".join(f'<section class="az" id="l-{k}"><h2>{k}</h2><ul>' + "".join(
+        f'<li><a href="{G}{t["slug"]}/"><strong>{E(t["t"])}</strong>{(" — " + E(t["n"])) if t.get("n") else ""}</a></li>' for t in v) + "</ul></section>" for k, v in groups.items())
+    ld = {"@context": "https://schema.org", "@graph": [
+        {"@type": "DefinedTermSet", "name": f"Glossário de Logística — {CFG['site_name']}", "url": BASE + G,
+         "hasDefinedTerm": [{"@type": "DefinedTerm", "name": t["t"], "url": f"{BASE}{G}{t['slug']}/"} for t in terms]},
+        crumbs([])]}
+    body = f"""<section class="blk">{sec("Modal News", "Glossário de Logística")}
+<p class="lead">{len(terms)} termos de transporte, armazenagem, supply chain, comércio exterior e tecnologia explicados de forma simples, com exemplos práticos.</p>
+<nav class="letters">{letters}</nav>{lists}</section>"""
+    write(G, page(f"Glossário de Logística: {len(terms)} termos explicados | {CFG['site_name']}",
+                  "Glossário de logística de A a Z: o que é cross docking, WMS, TMS, Incoterms, FOB, CIF, CT-e, MDF-e, last mile e outros termos do setor.", G, body, jsonld=ld))
+    print(f"Glossário: {len(terms)} termos")
+    return [G] + [f"{G}{t['slug']}/" for t in terms]
+
 def main():
     posts = load()
     if OUT.exists(): shutil.rmtree(OUT)
     shutil.copytree(ROOT / "static", OUT / "static")
     if CFG.get("cname"): (OUT / "CNAME").write_text(CFG["cname"].strip() + "\n")
     dest = [p for p in posts if p.get("destaque")] or posts[:1]
-    main_p = dest[0]; side = [p for p in posts if p is not main_p][:4]
-    body = f'<div class="hero">{hero(main_p)}<div class="side">{"".join(mini(p) for p in side)}</div></div>'
+    body = ""
+    if dest:
+        main_p = dest[0]; side = [p for p in posts if p is not main_p][:4]
+        body = f'<div class="hero">{hero(main_p)}<div class="side">{"".join(mini(p) for p in side)}</div></div>'
     for s, n in EDS.items():
         ps = [p for p in posts if p["editoria"] == s][:4]
         if ps: body += f'<section class="blk">{sec("As últimas em", n, f"/{s}/")}<div class="grid">{"".join(card(p) for p in ps)}</div></section>'
@@ -104,12 +156,12 @@ def main():
               "publisher": {**org, "logo": {"@type": "ImageObject", "url": BASE + CFG["publisher_logo"]}}}
         b = f"""<article class="post"><div class="kick"><a href="/{p['editoria']}/">{E(EDS[p['editoria']])}</a></div>
 <h1>{E(p['titulo'])}</h1><p class="meta">Publicado em <time datetime="{p['data'].isoformat()}">{fmt(p['data'])}</time>
-{(' · Fonte: ' + E(p['fonte'])) if p.get('fonte') else ''}</p><p><strong>{E(p.get('resumo',''))}</strong></p>
+{(' · Fonte: ' + E(p['fonte'])) if p.get('fonte') else ''}</p>{'' if p.get('gerado_por') else '<p><strong>' + E(p.get('resumo','')) + '</strong></p>'}
 {f'<img class="cover" src="{E(p["imagem"])}" alt="">' if p.get('imagem') else ''}{p['html']}</article>"""
         write(p["url"], page(f"{p['titulo']} — {CFG['site_name']}", p.get("resumo", ""), p["url"], b,
                              p.get("imagem"), "article", ld))
     now = dt.datetime.now(dt.timezone.utc)
-    urls = ["/"] + [f"/{s}/" for s in EDS] + [p["url"] for p in posts]
+    urls = ["/"] + [f"/{s}/" for s in EDS] + [p["url"] for p in posts] + build_glossary()
     (OUT / "sitemap.xml").write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
         + "".join(f"<url><loc>{BASE}{u}</loc></url>" for u in urls) + "</urlset>", encoding="utf-8")
     recent = [p for p in posts if now - p["data"] < dt.timedelta(days=2)] or posts[:1]

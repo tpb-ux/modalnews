@@ -1,0 +1,838 @@
+# Glossário de Logística do Modal News. Campos: t (termo), n (nome completo, opcional), ed (editoria),
+# d (parágrafos da definição), ex (exemplo prático), rel (termos relacionados, pelo campo t).
+- t: Cross docking
+  ed: armazenagem
+  d:
+    - "Cross docking é uma operação em que a mercadoria recebida no armazém é separada e enviada para a expedição quase imediatamente, sem passar pela estocagem. A carga entra por uma doca, é conferida e redistribuída por destino, e sai por outra doca em poucas horas."
+    - "O objetivo é reduzir tempo de permanência, custo de armazenagem e manuseio. Funciona melhor com fluxos previsíveis, boa integração de informações com fornecedores e transportadoras e janelas de recebimento bem agendadas."
+  ex: "Uma rede de supermercados recebe caminhões de vários fornecedores pela manhã e, à tarde, os mesmos produtos já saem consolidados por loja, sem nunca ocupar uma posição de estoque."
+  rel: [Centro de distribuição, WMS, Milk run, Doca]
+- t: WMS
+  n: Warehouse Management System
+  ed: tecnologia
+  d:
+    - "WMS é o sistema de gestão de armazém. Ele controla tudo o que acontece dentro do depósito: recebimento, endereçamento, armazenagem, separação, conferência e expedição, sempre registrando onde cada item está."
+    - "Com o WMS, a operação deixa de depender da memória das pessoas. O sistema indica a melhor posição para guardar cada produto, gera listas de separação otimizadas e mede a produtividade, o que aumenta a acuracidade do estoque."
+  ex: "Ao receber um palete, o operador lê a etiqueta com um coletor e o WMS indica a rua, o nível e a posição em que ele deve ser guardado."
+  rel: [TMS, ERP, Picking, Endereçamento, Acuracidade de estoque]
+- t: TMS
+  n: Transportation Management System
+  ed: tecnologia
+  d:
+    - "TMS é o sistema de gestão de transportes. Ele planeja, executa e controla o deslocamento das cargas: escolha da transportadora, cálculo e auditoria de frete, roteirização, emissão de documentos e acompanhamento das entregas."
+    - "Para embarcadores, o TMS ajuda a comparar tabelas de frete e evitar cobranças indevidas. Para transportadoras, organiza a frota, as viagens e os indicadores de desempenho como prazo de entrega e custo por quilo."
+  ex: "Uma indústria cadastra as tabelas de cinco transportadoras no TMS, que escolhe automaticamente a opção mais barata que atende ao prazo de cada pedido."
+  rel: [WMS, Roteirização, Auditoria de frete, ERP]
+- t: ERP
+  n: Enterprise Resource Planning
+  ed: tecnologia
+  d:
+    - "ERP é o sistema de gestão integrada da empresa, que reúne em uma única base dados de vendas, compras, finanças, estoque, produção e faturamento."
+    - "Na logística, o ERP costuma ser a origem dos pedidos e das notas fiscais que alimentam o WMS e o TMS. A qualidade da integração entre esses sistemas define a velocidade com que um pedido vira entrega."
+  ex: "Quando o cliente fecha um pedido, o ERP reserva o estoque, emite a nota fiscal e envia a ordem de separação para o WMS."
+  rel: [WMS, TMS, MRP, EDI]
+- t: Picking
+  ed: armazenagem
+  d:
+    - "Picking é a separação de pedidos: a atividade de retirar do estoque os itens e quantidades solicitados por cada cliente. Costuma ser a etapa que mais consome mão de obra em um armazém."
+    - "Existem vários métodos, como picking por pedido, por lote (vários pedidos de uma vez), por zona e por onda. A escolha depende do perfil dos pedidos, do número de SKUs e do nível de automação."
+  ex: "Em um e-commerce, o separador percorre os corredores com um carrinho e coleta os itens de 20 pedidos de uma só vez, no chamado picking por lote."
+  rel: [Packing, Slotting, WMS, SKU, Curva ABC]
+- t: Packing
+  ed: armazenagem
+  d:
+    - "Packing é a etapa de embalagem dos pedidos depois da separação. Inclui conferência dos itens, escolha da caixa, proteção, fechamento, pesagem e etiquetagem para o transporte."
+    - "Um packing bem dimensionado reduz avarias e o custo de frete, porque evita caixas grandes demais que aumentam o peso cubado."
+  ex: "Na bancada de packing, o operador confere o pedido com o leitor de código de barras e o sistema sugere a menor caixa capaz de acomodar os produtos."
+  rel: [Picking, Peso cubado, Expedição]
+- t: Last mile
+  n: Última milha
+  ed: transporte
+  d:
+    - "Last mile, ou última milha, é o trecho final da entrega, do último ponto de distribuição até o endereço do cliente. Apesar de curto, é o trecho mais caro e complexo da cadeia, especialmente nas grandes cidades."
+    - "Trânsito, restrições de circulação, endereços imprecisos e ausência do destinatário elevam o custo. Por isso surgem soluções como pontos de retirada, lockers, entregas com bicicletas e microcentros urbanos."
+  ex: "Um varejista instala minicentros de distribuição em bairros de São Paulo para entregar pedidos no mesmo dia com motos e vans elétricas."
+  rel: [First mile, Middle mile, Dark store, Roteirização]
+- t: First mile
+  n: Primeira milha
+  ed: transporte
+  d:
+    - "First mile é o primeiro trecho do transporte: a coleta da mercadoria no fornecedor ou vendedor e sua chegada ao primeiro centro de triagem ou armazém."
+    - "Em marketplaces, a primeira milha é crítica porque envolve muitos vendedores pequenos e dispersos. Coletas programadas e pontos de postagem ajudam a reduzir o custo."
+  ex: "Uma transportadora passa diariamente em 40 lojistas de um bairro para coletar os pacotes vendidos online e levá-los ao hub de triagem."
+  rel: [Last mile, Middle mile, Milk run]
+- t: Middle mile
+  ed: transporte
+  d:
+    - "Middle mile é o trecho intermediário do transporte, que liga centros de distribuição, hubs e fábricas entre si, normalmente com cargas consolidadas e veículos maiores."
+    - "Por ser mais previsível, o middle mile é onde se obtém ganho de escala: rotas fixas, carretas cheias e uso de modais como o ferroviário ou a cabotagem."
+  ex: "Uma carreta parte todas as noites do CD de Cajamar (SP) para o hub de Curitiba (PR) levando os pacotes que serão entregues na região Sul."
+  rel: [First mile, Last mile, Carga lotação]
+- t: CT-e
+  n: Conhecimento de Transporte Eletrônico
+  ed: transporte
+  d:
+    - "O CT-e é o documento fiscal eletrônico que registra a prestação de serviço de transporte de cargas. Ele é emitido pela transportadora e autorizado pela Secretaria da Fazenda antes do início da viagem."
+    - "O CT-e informa remetente, destinatário, valor do frete, tributos e as notas fiscais das mercadorias transportadas. É a base para a cobrança do frete e para o recolhimento de ICMS sobre o serviço."
+  ex: "Antes de sair para a entrega, a transportadora emite um CT-e vinculado às três notas fiscais que o caminhão está levando."
+  rel: [MDF-e, RNTRC, Frete]
+- t: MDF-e
+  n: Manifesto Eletrônico de Documentos Fiscais
+  ed: transporte
+  d:
+    - "O MDF-e é o documento eletrônico que reúne todos os documentos fiscais (CT-e ou NF-e) transportados em um mesmo veículo em uma viagem. Funciona como um resumo da carga."
+    - "Ele é obrigatório no transporte interestadual e em diversos casos intermunicipais, e deve ser encerrado ao final da viagem. Facilita a fiscalização nos postos, que consulta um único documento."
+  ex: "Um caminhão que leva cargas de dez clientes para três estados viaja com um único MDF-e que relaciona os dez CT-e."
+  rel: [CT-e, Frete]
+- t: RNTRC
+  n: Registro Nacional de Transportadores Rodoviários de Cargas
+  ed: transporte
+  d:
+    - "O RNTRC é o cadastro obrigatório, mantido pela ANTT, para quem transporta cargas por rodovia mediante remuneração, seja empresa, cooperativa ou caminhoneiro autônomo."
+    - "Sem o registro, o transportador não pode emitir CT-e nem receber o pagamento eletrônico do frete. O número do RNTRC deve constar nos documentos de transporte."
+  ex: "Antes de contratar um caminhoneiro autônomo, o embarcador consulta no site da ANTT se o RNTRC dele está ativo."
+  rel: [CT-e, Frete mínimo, Vale-pedágio]
+- t: Frete
+  ed: transporte
+  d:
+    - "Frete é o valor pago pelo transporte de uma mercadoria de um ponto a outro. Seu cálculo considera distância, peso ou volume, tipo de carga, prazo, riscos e taxas adicionais."
+    - "No Brasil, o frete rodoviário costuma ser composto por frete-peso, frete-valor (Ad Valorem), GRIS, pedágio e eventuais taxas de dificuldade de entrega."
+  ex: "Uma carga de 2 toneladas entre Campinas e Belo Horizonte é cotada considerando o peso real, o peso cubado e o valor da nota fiscal para o seguro."
+  rel: [Peso cubado, Ad Valorem, GRIS, Frete mínimo, CT-e]
+- t: Frete mínimo
+  n: Piso mínimo do frete
+  ed: mercado
+  d:
+    - "O frete mínimo é a tabela de pisos para o transporte rodoviário de cargas definida pela ANTT, criada em 2018 após a greve dos caminhoneiros. Ela estabelece valores mínimos por quilômetro e por eixo, conforme o tipo de carga."
+    - "A tabela é reajustada periodicamente, sobretudo quando o preço do diesel varia de forma relevante. Contratar abaixo do piso pode gerar multa e indenização ao transportador."
+  ex: "Após uma alta de mais de 5% no diesel, a ANTT publica nova tabela e as transportadoras repassam o reajuste aos contratos."
+  rel: [Frete, RNTRC, Carga lotação]
+- t: Peso cubado
+  ed: transporte
+  d:
+    - "Peso cubado é o peso calculado a partir do volume da mercadoria, usado quando a carga é leve mas ocupa muito espaço. O transportador cobra pelo maior valor entre o peso real e o peso cubado."
+    - "O cálculo multiplica o volume em metros cúbicos por um fator de cubagem. No rodoviário é comum o fator 300 kg/m³; no aéreo, 166,7 kg/m³ (ou divisor 6.000 em centímetros)."
+  ex: "Uma caixa de travesseiros com 0,5 m³ e 8 kg reais pesa 150 kg cubados no rodoviário, e o frete é cobrado sobre os 150 kg."
+  rel: [Cubagem, Frete, Packing]
+- t: Cubagem
+  ed: transporte
+  d:
+    - "Cubagem é a medição do volume ocupado por uma carga ou embalagem, expressa em metros cúbicos. É a base para calcular o peso cubado e para planejar a ocupação de veículos e armazéns."
+    - "Medir corretamente evita cobranças incorretas de frete e ajuda a montar carregamentos mais eficientes. Muitos centros usam equipamentos automáticos de cubagem e pesagem."
+  ex: "Antes de cotar o frete, o expedidor mede as caixas: 0,6 m x 0,4 m x 0,5 m resulta em 0,12 m³ por volume."
+  rel: [Peso cubado, Frete, Paletização]
+- t: Carga fracionada
+  n: LTL (Less Than Truckload)
+  ed: transporte
+  d:
+    - "Carga fracionada é o transporte de pequenos volumes de vários clientes compartilhando o mesmo veículo. A transportadora coleta, consolida em terminais e distribui por destino."
+    - "É indicada para embarques que não ocupam um caminhão inteiro. O preço por quilo é maior que o da lotação, mas o custo total costuma ser menor para volumes pequenos."
+  ex: "Uma loja de autopeças envia 300 kg para Recife junto com cargas de outros clientes, pagando apenas pelo seu espaço."
+  rel: [Carga lotação, Frete, Cross docking]
+- t: Carga lotação
+  n: FTL (Full Truckload)
+  ed: transporte
+  d:
+    - "Carga lotação é o embarque que ocupa um veículo inteiro, dedicado a um único cliente, indo da origem ao destino sem paradas para outras coletas ou entregas."
+    - "É mais rápida e reduz o manuseio, pois a carga não passa por terminais. Faz sentido para grandes volumes ou cargas sensíveis."
+  ex: "Uma fábrica de bebidas contrata uma carreta completa para levar 28 paletes de Jundiaí ao CD de um atacadista no Rio de Janeiro."
+  rel: [Carga fracionada, Frete mínimo, Middle mile]
+- t: Roteirização
+  ed: tecnologia
+  d:
+    - "Roteirização é o planejamento das rotas de entrega ou coleta, definindo a sequência de paradas e a alocação de pedidos por veículo para reduzir distância, tempo e custo."
+    - "Softwares de roteirização consideram janelas de horário, capacidade dos veículos, restrições de circulação e trânsito. Ganhos de 10% a 20% na quilometragem são comuns ao trocar o planejamento manual por um sistema."
+  ex: "Um distribuidor de bebidas roteiriza 1.200 entregas diárias em 60 caminhões, respeitando o horário de recebimento de cada bar."
+  rel: [Last mile, TMS, Milk run, Telemetria]
+- t: Milk run
+  ed: supply-chain
+  d:
+    - "Milk run é um sistema de coleta programada em que um único veículo passa por vários fornecedores em uma rota fixa e leva os materiais consolidados até a fábrica ou o CD."
+    - "O nome vem dos antigos leiteiros que recolhiam o leite de fazenda em fazenda. O modelo reduz estoques, aumenta a frequência de abastecimento e diminui o número de caminhões circulando."
+  ex: "Uma montadora envia um caminhão que passa às 7h, 9h e 11h em cinco fornecedores de peças da região antes de abastecer a linha de produção."
+  rel: [Just in time, Kanban, First mile, Roteirização]
+- t: Modal rodoviário
+  ed: transporte
+  d:
+    - "O modal rodoviário é o transporte feito por caminhões e outros veículos em estradas. No Brasil, ele responde pela maior parte da movimentação de cargas, graças à flexibilidade e à capilaridade."
+    - "É ideal para distâncias curtas e médias e para entregas porta a porta, mas tem custo por tonelada mais alto que o ferroviário e o aquaviário em longas distâncias."
+  ex: "Grãos saem da fazenda em caminhões até um terminal ferroviário, onde mudam de modal para seguir ao porto."
+  rel: [Modal ferroviário, Multimodal, Frete]
+- t: Modal ferroviário
+  ed: transporte
+  d:
+    - "O modal ferroviário usa trens para transportar grandes volumes por longas distâncias, com custo por tonelada menor e menor emissão de poluentes que o rodoviário."
+    - "No Brasil, a malha concentra-se em minério, grãos, celulose e contêineres. A falta de capilaridade faz com que normalmente dependa de trechos rodoviários nas pontas."
+  ex: "Uma trading envia soja do Mato Grosso por ferrovia até o porto de Santos, reduzindo o custo em comparação ao caminhão."
+  rel: [Modal rodoviário, Multimodal, Intermodal]
+- t: Modal aquaviário
+  ed: transporte
+  d:
+    - "O modal aquaviário engloba o transporte por mar, rios e lagos: navegação de longo curso, cabotagem e navegação interior (hidrovias)."
+    - "Tem o menor custo por tonelada-quilômetro e grande capacidade, mas é mais lento e depende de portos e terminais."
+  ex: "Barcaças levam grãos pela hidrovia do Madeira até terminais no Pará, de onde seguem em navios para exportação."
+  rel: [Cabotagem, Modal ferroviário, TEU]
+- t: Modal aéreo
+  ed: transporte
+  d:
+    - "O modal aéreo transporta cargas em aviões, seja no porão de voos de passageiros ou em cargueiros dedicados. É o mais rápido para longas distâncias."
+    - "Por ter custo elevado, é usado para produtos de alto valor, urgentes ou perecíveis, como eletrônicos, medicamentos e peças críticas."
+  ex: "Um fabricante de equipamentos médicos envia peças de reposição de São Paulo a Manaus por avião para evitar a parada de um hospital."
+  rel: [AWB, Peso cubado, Modal rodoviário]
+- t: Modal dutoviário
+  ed: transporte
+  d:
+    - "O modal dutoviário transporta produtos por tubulações, como oleodutos, gasodutos e minerodutos. Funciona de forma contínua e com custo operacional baixo depois de construído."
+    - "Exige investimento inicial alto e serve a poucos produtos, geralmente líquidos, gases ou minérios em polpa."
+  ex: "Gás natural percorre milhares de quilômetros por gasoduto até as distribuidoras das capitais."
+  rel: [Modal ferroviário, Multimodal]
+- t: Multimodal
+  n: Transporte multimodal
+  ed: transporte
+  d:
+    - "Transporte multimodal é aquele que usa dois ou mais modais sob um único contrato e um único responsável, o Operador de Transporte Multimodal (OTM), do início ao fim da operação."
+    - "Para o cliente, a vantagem é ter um só documento e um só interlocutor, mesmo que a carga passe por caminhão, trem e navio."
+  ex: "Um OTM assume a carga em Goiás, leva de caminhão até a ferrovia e depois ao porto, emitindo um único conhecimento para todo o trajeto."
+  rel: [Intermodal, Modal ferroviário, Cabotagem]
+- t: Intermodal
+  n: Transporte intermodal
+  ed: transporte
+  d:
+    - "Transporte intermodal também combina modais diferentes, mas cada trecho tem contrato e documento próprios, com responsabilidades separadas entre os transportadores."
+    - "É muito comum com contêineres, que mudam de caminhão para trem ou navio sem que a carga seja manuseada."
+  ex: "Um contêiner chega por navio a Santos, segue de trem até Campinas e termina a viagem em caminhão, com contratos diferentes em cada etapa."
+  rel: [Multimodal, TEU, Porto seco]
+- t: Cabotagem
+  ed: comercio-exterior
+  d:
+    - "Cabotagem é a navegação entre portos do mesmo país, pela costa. No Brasil, é uma alternativa ao rodoviário para longas distâncias entre Sul, Sudeste, Nordeste e Norte."
+    - "Costuma ter custo menor e menos risco de roubo e avaria, mas exige planejamento de prazo maior e combinação com caminhão nas pontas (porta a porta)."
+  ex: "Uma fábrica de eletrodomésticos de Manaus envia contêineres por cabotagem até Santos em vez de rodar mais de 3.000 km de estrada."
+  rel: [Modal aquaviário, Multimodal, TEU]
+- t: Transit time
+  ed: transporte
+  d:
+    - "Transit time é o tempo que a carga leva em trânsito entre a origem e o destino, desde a coleta ou embarque até a entrega ou desembarque."
+    - "É um dos critérios principais na escolha de modal e de transportador e precisa ser considerado no cálculo dos estoques de segurança."
+  ex: "O transit time marítimo entre Xangai e Santos gira em torno de 35 a 45 dias, enquanto o aéreo leva poucos dias."
+  rel: [Lead time, Estoque de segurança, OTIF]
+- t: Ad Valorem
+  ed: transporte
+  d:
+    - "Ad Valorem, no transporte, é a taxa cobrada como percentual do valor da mercadoria para cobrir o risco do transportador. Também é chamada de frete-valor."
+    - "Ela compõe o frete junto com o frete-peso e o GRIS. Mercadorias de alto valor pagam mais porque o prejuízo potencial em caso de sinistro é maior."
+  ex: "Para uma nota fiscal de R$ 100 mil e Ad Valorem de 0,3%, o embarcador paga R$ 300 além do frete-peso."
+  rel: [GRIS, Frete, Seguro de carga]
+- t: GRIS
+  n: Gerenciamento de Risco
+  ed: transporte
+  d:
+    - "GRIS é a taxa cobrada pelas transportadoras para custear o gerenciamento de risco da carga: rastreamento, escolta, iscas, consultas de motoristas e outras medidas contra roubo."
+    - "Normalmente é um percentual sobre o valor da nota fiscal e varia conforme a região e o tipo de produto, sendo maior em rotas com histórico de roubo."
+  ex: "Cargas de eletrônicos para a região metropolitana do Rio de Janeiro costumam ter GRIS mais alto que cargas de material de construção."
+  rel: [Ad Valorem, Frete, Rastreamento]
+- t: Seguro de carga
+  ed: transporte
+  d:
+    - "O seguro de carga protege a mercadoria contra perdas durante o transporte, como acidentes, roubo e avarias. No Brasil, o transportador é obrigado a contratar o RCTR-C (acidentes) e frequentemente contrata o RC-DC (roubo)."
+    - "O embarcador também pode ter apólice própria de transporte, o que muitas vezes reduz o custo do frete."
+  ex: "Após o tombamento de um caminhão, o seguro RCTR-C da transportadora indeniza o valor das mercadorias danificadas."
+  rel: [GRIS, Ad Valorem, Rastreamento]
+- t: Vale-pedágio
+  ed: transporte
+  d:
+    - "O vale-pedágio obrigatório determina que o embarcador antecipe ao transportador o valor dos pedágios da viagem, separado do valor do frete."
+    - "A regra existe para que o caminhoneiro não arque com essa despesa. O valor é pago por meios eletrônicos habilitados pela ANTT e informado nos documentos de transporte."
+  ex: "Ao contratar uma viagem de São Paulo a Goiânia, o embarcador carrega o valor dos pedágios na tag do caminhão antes da partida."
+  rel: [RNTRC, Frete, CT-e]
+- t: Frete retorno
+  n: Backhaul
+  ed: transporte
+  d:
+    - "Frete retorno é a carga transportada na volta de uma viagem, aproveitando o caminhão que, de outra forma, retornaria vazio."
+    - "Como o custo da volta já está parcialmente coberto, o frete retorno costuma ser mais barato. Plataformas digitais de fretes ajudam a encontrar essas oportunidades."
+  ex: "Um caminhão que levou frutas de Petrolina a São Paulo volta carregado com embalagens para os produtores."
+  rel: [Frete, Roteirização, Carga lotação]
+- t: Rastreamento
+  ed: tecnologia
+  d:
+    - "Rastreamento é o acompanhamento da posição e do status da carga ou do veículo, em tempo real ou por eventos, ao longo do transporte."
+    - "Usa GPS, sensores e leituras de código de barras em cada etapa. Para o cliente final, reduz a ansiedade e os contatos com o atendimento; para a operação, permite agir rápido em atrasos e desvios."
+  ex: "O comprador acompanha pelo aplicativo quando o pedido sai do CD, entra em rota e está a três paradas de sua casa."
+  rel: [Telemetria, Torre de controle, GRIS, IoT]
+- t: Telemetria
+  ed: tecnologia
+  d:
+    - "Telemetria é a coleta remota de dados do veículo, como velocidade, consumo de combustível, frenagens, tempo de motor ligado e localização."
+    - "Com esses dados, a transportadora identifica condução de risco, reduz consumo e planeja manutenções preventivas."
+  ex: "A telemetria mostra que um caminhão fica 2 horas por dia com o motor ligado parado, e a frota ajusta o procedimento de carga."
+  rel: [Rastreamento, IoT, Roteirização]
+- t: Torre de controle
+  n: Control tower
+  ed: tecnologia
+  d:
+    - "Torre de controle é uma central que monitora, em tempo real, os pedidos, cargas e estoques de toda a cadeia, reunindo dados de diferentes sistemas e parceiros em um painel único."
+    - "Seu papel é antecipar problemas, como atrasos, rupturas e gargalos, e coordenar as respostas antes que afetem o cliente."
+  ex: "A torre de controle de um varejista detecta que um navio vai atrasar uma semana e redistribui o estoque entre as lojas para evitar falta."
+  rel: [Rastreamento, Supply chain, OTIF]
+- t: Centro de distribuição
+  n: CD
+  ed: armazenagem
+  d:
+    - "Centro de distribuição é uma instalação logística que recebe produtos de fornecedores ou fábricas, armazena por período curto e os distribui para lojas, clientes ou outros pontos."
+    - "Diferente de um armazém de estocagem longa, o CD é desenhado para fluxo: alto giro, separação de pedidos e expedição frequente."
+  ex: "Uma rede de farmácias abastece 300 lojas do estado a partir de um único CD, com entregas diárias."
+  rel: [Cross docking, Condomínio logístico, WMS, Doca]
+- t: Condomínio logístico
+  ed: mercado
+  d:
+    - "Condomínio logístico é um conjunto de galpões em um mesmo terreno, com infraestrutura compartilhada (portaria, segurança, pátio, refeitório), alugados para diferentes empresas."
+    - "O modelo permite que empresas ocupem áreas modernas sem investir em construção e dividam custos fixos. É um dos principais segmentos do mercado imobiliário logístico."
+  ex: "Um operador logístico aluga 20 mil m² em um condomínio às margens do Rodoanel para atender clientes do e-commerce."
+  rel: [Galpão classe AAA, Taxa de vacância, Centro de distribuição]
+- t: Galpão classe AAA
+  ed: mercado
+  d:
+    - "Galpão classe AAA é a classificação dada aos imóveis logísticos de padrão mais alto: pé-direito elevado (geralmente 12 m ou mais), piso de alta resistência, docas niveladas, pátio amplo e sistemas de combate a incêndio."
+    - "Esses galpões permitem maior verticalização e produtividade, e por isso têm aluguel por m² mais caro que galpões antigos."
+  ex: "Um varejista troca três galpões antigos por um único galpão AAA com pé-direito de 12 m, armazenando o mesmo volume em menos área."
+  rel: [Condomínio logístico, Taxa de vacância, Porta-palete]
+- t: Taxa de vacância
+  ed: mercado
+  d:
+    - "Taxa de vacância é o percentual de área disponível para locação em relação ao estoque total de imóveis de uma região. É o principal termômetro do mercado de galpões."
+    - "Vacância baixa indica demanda aquecida e tende a elevar os preços de aluguel; vacância alta favorece os inquilinos na negociação."
+  ex: "Com o crescimento do e-commerce, a vacância de galpões na Grande São Paulo caiu e os aluguéis subiram."
+  rel: [Condomínio logístico, Galpão classe AAA]
+- t: Doca
+  ed: armazenagem
+  d:
+    - "Doca é o ponto do armazém onde os veículos encostam para carga e descarga. Geralmente tem altura compatível com a carroceria e niveladoras para facilitar a passagem das empilhadeiras."
+    - "O número de docas e o agendamento dos horários de uso determinam a capacidade de recebimento e expedição de um CD."
+  ex: "O CD agenda os recebimentos em janelas de uma hora por doca para evitar filas de caminhões no pátio."
+  rel: [Cross docking, YMS, Centro de distribuição]
+- t: Endereçamento
+  ed: armazenagem
+  d:
+    - "Endereçamento é o sistema de identificação de cada posição do armazém por um código único, normalmente composto por rua, prédio, nível e apartamento."
+    - "Com o endereçamento, qualquer item pode ser localizado com precisão, o que é indispensável para o funcionamento do WMS e para o inventário."
+  ex: "O endereço 03-12-04-B indica rua 3, prédio 12, nível 4, posição B."
+  rel: [WMS, Putaway, Slotting]
+- t: Putaway
+  n: Armazenagem após recebimento
+  ed: armazenagem
+  d:
+    - "Putaway é a atividade de guardar os produtos recebidos em suas posições definitivas de estoque, logo após a conferência."
+    - "Um putaway bem feito considera o giro do produto, o peso e as dimensões, deixando itens de alta saída nas posições mais acessíveis."
+  ex: "Após a conferência, o WMS manda guardar os paletes de alto giro no nível térreo, perto da área de separação."
+  rel: [Endereçamento, Slotting, WMS]
+- t: Slotting
+  ed: armazenagem
+  d:
+    - "Slotting é a definição da posição ideal de cada produto no armazém, com base em giro, dimensões, peso, afinidade entre itens e sazonalidade."
+    - "Um slotting revisado periodicamente reduz o deslocamento dos separadores, que pode representar mais da metade do tempo do picking."
+  ex: "Antes da Black Friday, o CD reposiciona os 200 itens mais vendidos para as primeiras ruas, próximas ao packing."
+  rel: [Picking, Curva ABC, Putaway]
+- t: Curva ABC
+  ed: armazenagem
+  d:
+    - "Curva ABC é uma classificação dos itens por importância, normalmente pelo valor ou volume movimentado. Os itens A são poucos e representam a maior parte do resultado; os C são muitos e pesam pouco."
+    - "Na logística, orienta onde guardar os produtos, com que frequência inventariar e quanto estoque de segurança manter."
+  ex: "Em um distribuidor, 15% dos SKUs (classe A) respondem por 70% do faturamento e recebem contagem semanal."
+  rel: [Slotting, Inventário cíclico, SKU]
+- t: SKU
+  n: Stock Keeping Unit
+  ed: armazenagem
+  d:
+    - "SKU é o código que identifica de forma única cada item controlado em estoque. Variações de cor, tamanho ou embalagem geram SKUs diferentes."
+    - "O número de SKUs influencia diretamente a complexidade do armazém e da separação."
+  ex: "Uma camiseta em 3 cores e 4 tamanhos corresponde a 12 SKUs."
+  rel: [Curva ABC, Picking, Código de barras]
+- t: Inventário cíclico
+  ed: armazenagem
+  d:
+    - "Inventário cíclico é a contagem de partes do estoque em intervalos programados, sem parar a operação, em vez de contar tudo de uma só vez no fim do ano."
+    - "Itens mais importantes são contados com mais frequência. O método mantém a acuracidade alta e identifica a causa das divergências mais rapidamente."
+  ex: "O armazém conta diariamente 5% das posições, cobrindo todo o estoque a cada mês."
+  rel: [Acuracidade de estoque, Curva ABC, WMS]
+- t: Acuracidade de estoque
+  ed: armazenagem
+  d:
+    - "Acuracidade de estoque é o grau de correspondência entre o estoque registrado no sistema e o estoque físico. É calculada pelo percentual de posições ou itens sem divergência."
+    - "Baixa acuracidade gera vendas de produtos que não existem, compras desnecessárias e atrasos na separação. Operações maduras buscam índices acima de 99%."
+  ex: "Uma contagem encontra diferenças em 30 de 1.000 posições: a acuracidade é de 97%."
+  rel: [Inventário cíclico, WMS, Ruptura]
+- t: FIFO
+  n: First In, First Out
+  ed: armazenagem
+  d:
+    - "FIFO, ou PEPS (primeiro que entra, primeiro que sai), é a regra de expedir primeiro os lotes mais antigos do estoque."
+    - "Evita obsolescência e é o padrão para a maioria dos produtos. O WMS aplica a regra automaticamente ao gerar as listas de separação."
+  ex: "Lotes de embalagens recebidos em janeiro são enviados antes dos recebidos em março."
+  rel: [FEFO, WMS, Giro de estoque]
+- t: FEFO
+  n: First Expired, First Out
+  ed: armazenagem
+  d:
+    - "FEFO é a regra de expedir primeiro os lotes com vencimento mais próximo, independentemente da data de entrada."
+    - "É essencial em alimentos, medicamentos e cosméticos, nos quais a validade importa mais que a ordem de chegada."
+  ex: "Um lote de iogurte que chegou depois, mas vence antes, é separado primeiro."
+  rel: [FIFO, Rastreabilidade, WMS]
+- t: Estoque de segurança
+  ed: supply-chain
+  d:
+    - "Estoque de segurança é a quantidade extra mantida para proteger a operação contra variações de demanda e atrasos de fornecimento."
+    - "Seu tamanho depende do nível de serviço desejado, da variabilidade da demanda e do lead time. Estoque demais imobiliza capital; de menos, causa ruptura."
+  ex: "Um distribuidor mantém duas semanas extras de um item importado porque o transit time marítimo é instável."
+  rel: [Lead time, Ruptura, Nível de serviço, Ponto de pedido]
+- t: Ponto de pedido
+  ed: supply-chain
+  d:
+    - "Ponto de pedido é o nível de estoque que, ao ser atingido, dispara uma nova compra ou ordem de produção."
+    - "É calculado pela demanda média durante o lead time somada ao estoque de segurança."
+  ex: "Se a venda diária é de 100 unidades, o lead time é de 10 dias e o estoque de segurança é de 300, o ponto de pedido é de 1.300 unidades."
+  rel: [Estoque de segurança, Lead time, Lote econômico]
+- t: Lote econômico
+  n: EOQ (Economic Order Quantity)
+  ed: supply-chain
+  d:
+    - "Lote econômico é a quantidade de compra que minimiza a soma dos custos de fazer pedidos e de manter estoque."
+    - "Comprar pouco aumenta o número de pedidos e fretes; comprar muito eleva o custo de armazenagem e capital parado. O modelo encontra o equilíbrio."
+  ex: "Uma empresa descobre que comprar 4 vezes por ano, em vez de todo mês, reduz o custo total de um insumo."
+  rel: [Ponto de pedido, Giro de estoque]
+- t: Giro de estoque
+  ed: supply-chain
+  d:
+    - "Giro de estoque indica quantas vezes o estoque é renovado em um período, dividindo o volume ou custo das vendas pelo estoque médio."
+    - "Giro alto significa menos capital parado e menor risco de obsolescência, mas exige abastecimento eficiente para não faltar produto."
+  ex: "Vendas anuais de R$ 12 milhões a custo e estoque médio de R$ 1 milhão resultam em giro de 12 vezes ao ano."
+  rel: [Curva ABC, Lote econômico, Estoque de segurança]
+- t: Ruptura
+  ed: supply-chain
+  d:
+    - "Ruptura é a falta de um produto no momento em que o cliente quer comprá-lo, seja na gôndola, no site ou no estoque do distribuidor."
+    - "Causa perda de vendas e de fidelidade. As origens mais comuns são erro de previsão, atraso de fornecedor e baixa acuracidade de estoque."
+  ex: "Um supermercado mede ruptura diária de 8% na categoria de bebidas durante uma onda de calor."
+  rel: [Estoque de segurança, Acuracidade de estoque, OTIF]
+- t: Lead time
+  ed: supply-chain
+  d:
+    - "Lead time é o tempo total entre o início e a conclusão de um processo, como do pedido de compra até o recebimento, ou da compra do cliente até a entrega."
+    - "Reduzir e estabilizar o lead time permite operar com menos estoque e responder mais rápido ao mercado."
+  ex: "O lead time de um fornecedor é de 15 dias: 5 para produzir, 1 para faturar e 9 de transporte."
+  rel: [Transit time, Ponto de pedido, Just in time]
+- t: OTIF
+  n: On Time In Full
+  ed: supply-chain
+  d:
+    - "OTIF mede o percentual de pedidos entregues no prazo e completos, com todos os itens e quantidades corretos."
+    - "É um dos indicadores mais usados para avaliar fornecedores e operadores logísticos, porque combina pontualidade e integridade."
+  ex: "De 1.000 entregas, 940 chegaram no prazo e 910 no prazo e completas: o OTIF é de 91%."
+  rel: [Nível de serviço, Lead time, Ruptura]
+- t: Nível de serviço
+  ed: supply-chain
+  d:
+    - "Nível de serviço é o grau de atendimento prometido ou alcançado em relação à demanda do cliente, como o percentual de pedidos atendidos imediatamente com o estoque disponível."
+    - "Elevar o nível de serviço exige mais estoque ou processos mais ágeis; por isso, ele deve ser definido conforme a importância de cada produto e cliente."
+  ex: "Um distribuidor define nível de serviço de 98% para itens A e de 90% para itens C."
+  rel: [OTIF, Estoque de segurança, SLA]
+- t: SLA
+  n: Service Level Agreement
+  ed: supply-chain
+  d:
+    - "SLA é o acordo de nível de serviço que define metas mensuráveis entre cliente e prestador, como prazo de entrega, acuracidade e tempo de resposta."
+    - "Em contratos logísticos, o SLA costuma prever bônus ou penalidades conforme o desempenho."
+  ex: "O contrato com o operador logístico exige 99,5% de acuracidade de separação e expedição em até 24 horas."
+  rel: [Nível de serviço, OTIF, Operador logístico]
+- t: Supply chain
+  n: Cadeia de suprimentos
+  ed: supply-chain
+  d:
+    - "Supply chain é o conjunto de empresas, processos e fluxos (de materiais, informações e dinheiro) que levam um produto da matéria-prima até o consumidor final."
+    - "A gestão da cadeia de suprimentos busca coordenar fornecedores, fábricas, armazéns, transportadores e varejo para entregar o produto certo, no tempo certo, com o menor custo total."
+  ex: "A cadeia de um smartphone envolve mineração, fabricantes de componentes em vários países, montagem, transporte internacional e varejo."
+  rel: [S&OP, Logística reversa, Torre de controle]
+- t: S&OP
+  n: Sales and Operations Planning
+  ed: supply-chain
+  d:
+    - "S&OP é o processo mensal que alinha os planos de vendas, produção, compras, logística e finanças em um único plano integrado."
+    - "Ele substitui decisões isoladas por um consenso baseado em dados, reduzindo excesso de estoque e falta de produto."
+  ex: "Na reunião de S&OP, comercial e produção concordam em antecipar a fabricação para atender a uma campanha de fim de ano."
+  rel: [MRP, Supply chain, Efeito chicote]
+- t: MRP
+  n: Material Requirements Planning
+  ed: supply-chain
+  d:
+    - "MRP é o método de cálculo das necessidades de materiais a partir do plano de produção e da lista de componentes de cada produto."
+    - "Ele indica o que comprar ou produzir, em que quantidade e quando, considerando estoques e lead times."
+  ex: "Para fabricar 500 bicicletas no mês, o MRP calcula 1.000 pneus, 500 quadros e as datas de compra de cada item."
+  rel: [S&OP, ERP, Lead time]
+- t: Just in time
+  ed: supply-chain
+  d:
+    - "Just in time é a filosofia de produzir e abastecer apenas o necessário, na quantidade e no momento certos, reduzindo estoques ao mínimo."
+    - "Popularizado pela Toyota, depende de fornecedores confiáveis e próximos e de transporte pontual. Interrupções na cadeia expõem sua fragilidade."
+  ex: "Uma montadora recebe bancos já sequenciados por cor e modelo poucas horas antes de instalá-los nos carros."
+  rel: [Kanban, Milk run, Lead time]
+- t: Kanban
+  ed: supply-chain
+  d:
+    - "Kanban é um sistema visual de sinalização que autoriza a produção ou o abastecimento somente quando há consumo, usando cartões, caixas ou sinais eletrônicos."
+    - "É uma das ferramentas do just in time e evita produzir além do necessário."
+  ex: "Quando uma caixa de parafusos esvazia na linha, o cartão kanban volta ao almoxarifado e dispara a reposição."
+  rel: [Just in time, Milk run]
+- t: Efeito chicote
+  n: Bullwhip effect
+  ed: supply-chain
+  d:
+    - "Efeito chicote é a amplificação das variações de demanda à medida que se sobe na cadeia de suprimentos: pequenas oscilações no varejo viram grandes oscilações nos pedidos a fornecedores."
+    - "Ocorre por falta de visibilidade, pedidos em lote e reações exageradas a faltas. Compartilhar dados de venda e planejar em conjunto reduz o problema."
+  ex: "Um aumento de 10% nas vendas de papel higiênico gera pedidos 40% maiores à fábrica e 80% maiores aos fornecedores de celulose."
+  rel: [S&OP, VMI, Supply chain]
+- t: VMI
+  n: Vendor Managed Inventory
+  ed: supply-chain
+  d:
+    - "VMI é o estoque gerenciado pelo fornecedor: o fornecedor acompanha o estoque e as vendas do cliente e decide quando e quanto repor."
+    - "O cliente reduz trabalho de compras e rupturas; o fornecedor ganha previsibilidade para produzir e entregar."
+  ex: "Um fabricante de bebidas monitora o estoque de cada loja de uma rede e programa as entregas sem esperar pedido."
+  rel: [Efeito chicote, Ruptura, EDI]
+- t: Logística reversa
+  ed: supply-chain
+  d:
+    - "Logística reversa é o fluxo de produtos, embalagens e materiais no sentido do consumidor para a empresa: devoluções, trocas, recalls, reciclagem e descarte correto."
+    - "No Brasil, a Política Nacional de Resíduos Sólidos obriga diversos setores a estruturar sistemas de logística reversa. No e-commerce, uma boa política de devolução também aumenta as vendas."
+  ex: "Um varejista online oferece coleta gratuita para devoluções e envia os produtos a um centro que decide entre revender, reparar ou reciclar."
+  rel: [Supply chain, Last mile, Rastreabilidade]
+- t: Rastreabilidade
+  ed: supply-chain
+  d:
+    - "Rastreabilidade é a capacidade de reconstituir o histórico de um produto ou lote: origem, processamento, armazenagem, transporte e destino."
+    - "É exigida em setores como alimentos e medicamentos e permite recalls rápidos e precisos."
+  ex: "Ao identificar um lote contaminado, um frigorífico sabe exatamente para quais clientes ele foi enviado."
+  rel: [FEFO, Código de barras, RFID]
+- t: Operador logístico
+  ed: mercado
+  d:
+    - "Operador logístico é a empresa contratada para executar atividades logísticas de terceiros, como armazenagem, gestão de estoque, separação, transporte e logística reversa."
+    - "Terceirizar permite ao cliente transformar custos fixos em variáveis e contar com especialização e tecnologia sem investir diretamente."
+  ex: "Uma marca de cosméticos entrega toda a operação de seu CD e das entregas para um operador logístico."
+  rel: [3PL, 4PL, SLA]
+- t: 3PL
+  n: Third-Party Logistics
+  ed: mercado
+  d:
+    - "3PL é o prestador que executa serviços logísticos terceirizados, como armazenagem e transporte, com recursos próprios ou contratados."
+    - "O termo é praticamente sinônimo de operador logístico e se diferencia do 4PL, que coordena vários prestadores."
+  ex: "Um fabricante contrata um 3PL para armazenar e distribuir seus produtos em todo o Nordeste."
+  rel: [4PL, Operador logístico, Fulfillment]
+- t: 4PL
+  n: Fourth-Party Logistics
+  ed: mercado
+  d:
+    - "4PL é o integrador que gerencia toda a cadeia logística do cliente, coordenando diversos 3PLs, transportadoras e sistemas, muitas vezes sem ativos próprios."
+    - "Seu foco é planejamento, tecnologia e desempenho global da cadeia, e não a execução física."
+  ex: "Uma multinacional contrata um 4PL para gerenciar dezenas de transportadoras e armazéns na América Latina."
+  rel: [3PL, Torre de controle, Operador logístico]
+- t: Fulfillment
+  ed: armazenagem
+  d:
+    - "Fulfillment é o serviço completo de atendimento de pedidos, especialmente no e-commerce: armazenagem, separação, embalagem, expedição e, muitas vezes, devoluções."
+    - "Marketplaces e operadores oferecem fulfillment para que lojistas foquem em vender, ganhando prazos de entrega menores."
+  ex: "Um pequeno lojista envia seu estoque ao CD do marketplace, que cuida de todo o processo após cada venda."
+  rel: [Picking, Packing, 3PL, Last mile]
+- t: Dark store
+  ed: armazenagem
+  d:
+    - "Dark store é uma loja ou miniarmazém fechado ao público, usado exclusivamente para separar pedidos online com entrega rápida."
+    - "Localizada perto dos consumidores, permite entregas em minutos ou poucas horas, principalmente de supermercado e farmácia."
+  ex: "Um aplicativo de mercado entrega em 30 minutos a partir de dark stores instaladas em bairros densos."
+  rel: [Last mile, Fulfillment, Centro de distribuição]
+- t: Porta-palete
+  ed: armazenagem
+  d:
+    - "Porta-palete é a estrutura metálica de armazenagem com vigas e colunas onde os paletes são colocados em vários níveis, aproveitando a altura do galpão."
+    - "Existem variações como seletivo, drive-in e push-back, que trocam acessibilidade por densidade."
+  ex: "Um galpão com porta-palete seletivo de 6 níveis armazena 6 vezes mais paletes que a mesma área no chão."
+  rel: [Palete PBR, Galpão classe AAA, Endereçamento]
+- t: Palete PBR
+  ed: armazenagem
+  d:
+    - "Palete PBR é o padrão brasileiro de palete de madeira, com medidas de 1,00 m x 1,20 m, desenvolvido para padronizar a movimentação de cargas no varejo e na indústria."
+    - "A padronização facilita a troca de paletes entre empresas e a ocupação eficiente de caminhões e porta-paletes."
+  ex: "Uma carreta comum transporta 28 paletes PBR."
+  rel: [Paletização, Porta-palete]
+- t: Paletização
+  ed: armazenagem
+  d:
+    - "Paletização é a montagem de cargas sobre paletes, agrupando volumes em uma unidade única que pode ser movimentada por empilhadeiras e paleteiras."
+    - "Reduz tempo de carga e descarga e avarias. A montagem deve respeitar limites de peso, altura e empilhamento de cada produto."
+  ex: "Caixas soltas que levavam 3 horas para descarregar passam a ser descarregadas em 30 minutos após a paletização."
+  rel: [Palete PBR, Cubagem, Doca]
+- t: YMS
+  n: Yard Management System
+  ed: tecnologia
+  d:
+    - "YMS é o sistema de gestão de pátio, que controla a chegada, a espera, a movimentação e a saída de veículos e carretas nas instalações."
+    - "Integrado ao agendamento de docas, reduz filas, tempo de espera de motoristas e cobranças por estadia."
+  ex: "O motorista faz check-in por QR Code na portaria e o YMS o chama para a doca 7 quando ela fica livre."
+  rel: [Doca, WMS, TMS]
+- t: EDI
+  n: Electronic Data Interchange
+  ed: tecnologia
+  d:
+    - "EDI é a troca eletrônica de documentos entre empresas em formato padronizado, como pedidos, notas, avisos de embarque e ocorrências de entrega."
+    - "Elimina digitação manual e acelera a comunicação entre embarcadores, transportadoras e varejistas. Hoje convive com integrações via API."
+  ex: "A transportadora envia ao cliente, por EDI, um arquivo de ocorrências com o status de todas as entregas do dia."
+  rel: [ERP, TMS, VMI]
+- t: RFID
+  n: Identificação por radiofrequência
+  ed: tecnologia
+  d:
+    - "RFID é uma tecnologia que identifica objetos por meio de etiquetas com chip lidas por ondas de rádio, sem necessidade de contato visual."
+    - "Permite ler dezenas de itens de uma só vez, acelerando inventários e conferências, especialmente no varejo de moda."
+  ex: "Uma loja inventaria 10 mil peças em minutos passando um leitor RFID pelos corredores."
+  rel: [Código de barras, Rastreabilidade, IoT]
+- t: Código de barras
+  ed: tecnologia
+  d:
+    - "Código de barras é a representação gráfica de dados lida por scanners ópticos, usada para identificar produtos, volumes e paletes. No Brasil, o padrão mais usado é o GTIN, da GS1."
+    - "É a base da automação logística: cada leitura registra um evento no sistema, garantindo rastreabilidade e conferência."
+  ex: "Na expedição, cada volume tem seu código de barras lido para confirmar que está no caminhão certo."
+  rel: [RFID, SKU, WMS]
+- t: IoT
+  n: Internet das Coisas
+  ed: tecnologia
+  d:
+    - "IoT é a conexão de sensores e dispositivos à internet para coletar e transmitir dados automaticamente."
+    - "Na logística, monitora temperatura de cargas refrigeradas, posição de contêineres, vibração, umidade e funcionamento de equipamentos."
+  ex: "Sensores em um contêiner refrigerado de vacinas alertam a equipe se a temperatura sair da faixa permitida."
+  rel: [Telemetria, Rastreamento, RFID]
+- t: AGV
+  n: Automated Guided Vehicle
+  ed: tecnologia
+  d:
+    - "AGV é um veículo autoguiado que transporta materiais seguindo caminhos predefinidos, por fitas, ímãs ou referências fixas."
+    - "Comum em fábricas e armazéns, reduz deslocamentos manuais e acidentes em fluxos repetitivos."
+  ex: "AGVs levam paletes da linha de produção até a área de expedição sem operadores."
+  rel: [AMR, Automação de armazém]
+- t: AMR
+  n: Autonomous Mobile Robot
+  ed: tecnologia
+  d:
+    - "AMR é um robô móvel autônomo que navega pelo ambiente com sensores e mapas, desviando de obstáculos sem trajetos fixos."
+    - "É flexível e rápido de implantar, sendo muito usado em picking colaborativo, em que o robô leva os itens até o separador."
+  ex: "No CD de um e-commerce, AMRs trazem as prateleiras até as estações de separação."
+  rel: [AGV, Automação de armazém, Picking]
+- t: Automação de armazém
+  ed: tecnologia
+  d:
+    - "Automação de armazém é o uso de equipamentos e sistemas para executar tarefas logísticas com menos intervenção humana: esteiras, sorters, transelevadores, robôs e AS/RS."
+    - "Aumenta produtividade e precisão, mas requer volume e estabilidade de operação para justificar o investimento."
+  ex: "Um sorter automático separa 10 mil pacotes por hora por rota de entrega."
+  rel: [AGV, AMR, WMS]
+- t: Gêmeo digital
+  n: Digital twin
+  ed: tecnologia
+  d:
+    - "Gêmeo digital é uma réplica virtual de uma operação física, alimentada por dados reais, que permite simular cenários antes de implementá-los."
+    - "Na logística, é usado para testar layouts de armazéns, mudanças de rede de CDs e efeitos de picos de demanda."
+  ex: "Antes de abrir um novo CD, a empresa simula no gêmeo digital o fluxo da Black Friday para dimensionar docas e equipes."
+  rel: [Torre de controle, Automação de armazém]
+- t: Incoterms
+  ed: comercio-exterior
+  d:
+    - "Incoterms são regras internacionais publicadas pela Câmara de Comércio Internacional (ICC) que definem as responsabilidades de vendedor e comprador em uma operação de comércio exterior."
+    - "Eles determinam quem paga frete e seguro, quem faz o desembaraço e em que ponto o risco passa do vendedor ao comprador. A versão em uso é a Incoterms 2020, com 11 termos."
+  ex: "Num contrato FOB Santos, o exportador é responsável pela carga até ela ser embarcada no navio no porto de Santos."
+  rel: [FOB, CIF, EXW, DDP, FCA]
+- t: FOB
+  n: Free On Board
+  ed: comercio-exterior
+  d:
+    - "FOB é o Incoterm em que o vendedor entrega a mercadoria a bordo do navio no porto de embarque indicado, já desembaraçada para exportação. A partir daí, frete, seguro e riscos são do comprador."
+    - "É exclusivo para transporte marítimo e hidroviário. No mercado interno brasileiro, o termo também é usado informalmente para indicar frete por conta do comprador."
+  ex: "Uma exportadora vende café FOB Santos: ela paga o transporte até o porto e o embarque; o importador paga o frete marítimo."
+  rel: [Incoterms, CIF, FCA]
+- t: CIF
+  n: Cost, Insurance and Freight
+  ed: comercio-exterior
+  d:
+    - "CIF é o Incoterm em que o vendedor paga o frete e o seguro mínimo até o porto de destino, mas o risco passa ao comprador quando a carga é embarcada na origem."
+    - "É usado no transporte marítimo. No Brasil, a expressão também aparece no comércio interno indicando frete pago pelo vendedor."
+  ex: "Um fornecedor chinês vende CIF Santos: ele contrata navio e seguro, mas se a carga sofrer avaria em alto-mar, o comprador aciona o seguro."
+  rel: [Incoterms, FOB, DDP]
+- t: EXW
+  n: Ex Works
+  ed: comercio-exterior
+  d:
+    - "EXW é o Incoterm de menor obrigação para o vendedor: ele apenas disponibiliza a mercadoria em seu estabelecimento. Todo o resto, incluindo carregamento e desembaraço de exportação, fica com o comprador."
+    - "Pode trazer dificuldades ao comprador estrangeiro, que nem sempre consegue cumprir formalidades de exportação no país do vendedor."
+  ex: "Um importador compra máquinas EXW na fábrica da Alemanha e contrata seu próprio agente para coletar e exportar."
+  rel: [Incoterms, FCA, DDP]
+- t: FCA
+  n: Free Carrier
+  ed: comercio-exterior
+  d:
+    - "FCA é o Incoterm em que o vendedor entrega a mercadoria desembaraçada para exportação ao transportador indicado pelo comprador, em local combinado."
+    - "Serve a qualquer modal e é recomendado no lugar do FOB para contêineres e carga aérea."
+  ex: "Um exportador entrega um contêiner FCA no terminal de Itajaí ao transportador escolhido pelo importador."
+  rel: [Incoterms, FOB, EXW]
+- t: DDP
+  n: Delivered Duty Paid
+  ed: comercio-exterior
+  d:
+    - "DDP é o Incoterm de maior obrigação para o vendedor: ele entrega a mercadoria no destino, com tributos de importação pagos e desembaraço feito."
+    - "Exige que o vendedor conheça a legislação do país de destino. Para o comprador, é a modalidade mais simples."
+  ex: "Um fabricante europeu vende equipamentos DDP na fábrica do cliente em Minas Gerais, cuidando de frete, impostos e desembaraço."
+  rel: [Incoterms, CIF, Despacho aduaneiro]
+- t: Despacho aduaneiro
+  ed: comercio-exterior
+  d:
+    - "Despacho aduaneiro é o procedimento de verificação e liberação de mercadorias pela Receita Federal na importação ou exportação, conferindo documentos, classificação fiscal e tributos."
+    - "Normalmente é feito por um despachante aduaneiro. Atrasos no despacho geram custos de armazenagem e demurrage."
+  ex: "Após a chegada ao porto, o despachante registra a declaração de importação e a carga é liberada em dois dias pelo canal verde."
+  rel: [Canais de parametrização, DUIMP, DU-E, Siscomex]
+- t: Canais de parametrização
+  ed: comercio-exterior
+  d:
+    - "Canais de parametrização são os níveis de fiscalização atribuídos pela Receita Federal às declarações de importação e exportação: verde, amarelo, vermelho e cinza."
+    - "No verde, a liberação é automática; no amarelo, há exame documental; no vermelho, documental e físico; no cinza, há suspeita de fraude, como subfaturamento."
+  ex: "Uma importação parametrizada em canal vermelho tem a carga aberta e inspecionada antes da liberação."
+  rel: [Despacho aduaneiro, OEA, Siscomex]
+- t: Siscomex
+  ed: comercio-exterior
+  d:
+    - "Siscomex é o Sistema Integrado de Comércio Exterior, plataforma do governo que registra e controla as operações de importação e exportação no Brasil."
+    - "Por ele passam licenças, declarações e o acompanhamento do despacho. O Portal Único Siscomex vem simplificando e unificando esses processos."
+  ex: "A exportadora registra a DU-E no Portal Único Siscomex antes de embarcar a carga."
+  rel: [DU-E, DUIMP, Despacho aduaneiro]
+- t: DU-E
+  n: Declaração Única de Exportação
+  ed: comercio-exterior
+  d:
+    - "DU-E é a declaração eletrônica que formaliza a exportação no Portal Único Siscomex, reunindo informações aduaneiras, comerciais, fiscais e logísticas."
+    - "Ela é vinculada às notas fiscais de exportação, o que eliminou documentos e redigitações."
+  ex: "A exportadora emite a NF-e de exportação e registra a DU-E vinculada a ela antes da chegada da carga ao porto."
+  rel: [Siscomex, DUIMP, Despacho aduaneiro]
+- t: DUIMP
+  n: Declaração Única de Importação
+  ed: comercio-exterior
+  d:
+    - "DUIMP é a nova declaração de importação do Portal Único Siscomex, que substitui gradualmente a antiga DI e o licenciamento tradicional."
+    - "Concentra dados em um único documento, permite registro antes da chegada da carga e tende a reduzir o tempo de liberação."
+  ex: "Um importador registra a DUIMP enquanto o navio ainda está a caminho e a carga é liberada logo após a atracação."
+  rel: [DU-E, Siscomex, Despacho aduaneiro]
+- t: NCM
+  n: Nomenclatura Comum do Mercosul
+  ed: comercio-exterior
+  d:
+    - "NCM é o código de oito dígitos que classifica as mercadorias no Mercosul, com base no Sistema Harmonizado internacional."
+    - "Define alíquotas de impostos, exigências de licenciamento e tratamentos tributários. Uma classificação errada pode gerar multas e retenção da carga."
+  ex: "Antes de importar, a empresa confirma a NCM do produto para calcular corretamente o imposto de importação."
+  rel: [Ex-tarifário, Despacho aduaneiro, Drawback]
+- t: Drawback
+  ed: comercio-exterior
+  d:
+    - "Drawback é um regime aduaneiro especial que suspende ou isenta tributos sobre insumos importados ou comprados no país que serão usados na fabricação de produtos exportados."
+    - "Reduz o custo do exportador e aumenta sua competitividade, exigindo controle e comprovação da exportação."
+  ex: "Uma fabricante de calçados importa couro com tributos suspensos pelo drawback e comprova a exportação dos sapatos."
+  rel: [Ex-tarifário, NCM, Siscomex]
+- t: Ex-tarifário
+  ed: comercio-exterior
+  d:
+    - "Ex-tarifário é a redução temporária do imposto de importação para bens de capital e de informática sem produção nacional equivalente."
+    - "Estimula a modernização da indústria e da infraestrutura, incluindo equipamentos de movimentação e automação logística."
+  ex: "Uma empresa importa um sistema de transelevadores com alíquota reduzida graças a um ex-tarifário."
+  rel: [NCM, Drawback]
+- t: OEA
+  n: Operador Econômico Autorizado
+  ed: comercio-exterior
+  d:
+    - "OEA é a certificação concedida pela Receita Federal a empresas da cadeia de comércio exterior que comprovam segurança e conformidade."
+    - "Empresas certificadas têm menos fiscalização, prioridade na liberação e reconhecimento em acordos com outros países."
+  ex: "Um importador OEA tem a maior parte de suas declarações parametrizadas em canal verde."
+  rel: [Canais de parametrização, Despacho aduaneiro]
+- t: Porto seco
+  ed: comercio-exterior
+  d:
+    - "Porto seco é um terminal alfandegado localizado no interior, fora da zona portuária, onde é possível armazenar e desembaraçar mercadorias sob controle aduaneiro."
+    - "Aproxima o despacho do importador e do exportador e desafoga os portos marítimos."
+  ex: "Um contêiner desembarcado em Santos segue em trânsito aduaneiro até um porto seco em Campinas, onde é desembaraçado."
+  rel: [Despacho aduaneiro, Intermodal, TEU]
+- t: TEU
+  n: Twenty-foot Equivalent Unit
+  ed: comercio-exterior
+  d:
+    - "TEU é a unidade de medida equivalente a um contêiner de 20 pés, usada para expressar a capacidade de navios e a movimentação de portos."
+    - "Um contêiner de 40 pés equivale a 2 TEUs, e às vezes se usa FEU para essa medida."
+  ex: "Um porto que movimentou 2 mil contêineres de 40 pés e mil de 20 pés registrou 5 mil TEUs."
+  rel: [Cabotagem, Demurrage, Armador]
+- t: Demurrage
+  ed: comercio-exterior
+  d:
+    - "Demurrage é a cobrança feita pelo armador quando o contêiner fica com o importador ou exportador além do período gratuito (free time) acordado."
+    - "Pode representar custos altos e decorre, em geral, de atrasos no despacho ou na devolução do contêiner vazio."
+  ex: "Uma importação ficou retida por 10 dias além do free time e gerou US$ 1.500 de demurrage."
+  rel: [Free time, Armador, Despacho aduaneiro]
+- t: Free time
+  ed: comercio-exterior
+  d:
+    - "Free time é o período sem cobrança que o armador concede para uso do contêiner após a descarga ou antes do embarque."
+    - "Negociar um free time maior é estratégico para importadores que dependem de despachos mais demorados."
+  ex: "O importador negocia 21 dias de free time em vez dos 7 dias padrão."
+  rel: [Demurrage, Armador]
+- t: Armador
+  ed: comercio-exterior
+  d:
+    - "Armador é a empresa que opera navios e oferece o transporte marítimo de cargas, sendo ou não dona das embarcações."
+    - "Os grandes armadores de contêineres operam linhas regulares entre continentes e emitem o conhecimento de embarque (BL)."
+  ex: "O importador reserva espaço com o armador para um contêiner na escala do navio em Paranaguá."
+  rel: [BL, NVOCC, TEU, Demurrage]
+- t: BL
+  n: Bill of Lading
+  ed: comercio-exterior
+  d:
+    - "BL, ou conhecimento de embarque marítimo, é o documento emitido pelo transportador que comprova o recebimento da carga, prova o contrato de transporte e pode representar a propriedade da mercadoria."
+    - "O BL original pode ser negociado e é exigido para retirar a carga no destino, salvo quando emitido na forma eletrônica ou como telex release."
+  ex: "O banco libera o BL ao importador somente após o pagamento da carta de crédito."
+  rel: [Armador, AWB, NVOCC]
+- t: AWB
+  n: Air Waybill
+  ed: comercio-exterior
+  d:
+    - "AWB é o conhecimento de transporte aéreo, que comprova o contrato e o recebimento da carga pela companhia aérea ou agente."
+    - "Diferente do BL, o AWB não é negociável e não representa a propriedade da mercadoria."
+  ex: "Cada remessa aérea de peças recebe um número de AWB, usado para rastrear o embarque."
+  rel: [BL, Modal aéreo, Agente de carga]
+- t: NVOCC
+  n: Non-Vessel Operating Common Carrier
+  ed: comercio-exterior
+  d:
+    - "NVOCC é o transportador marítimo que não opera navios: compra espaço dos armadores e revende aos embarcadores, emitindo seus próprios conhecimentos de embarque."
+    - "É importante para consolidar cargas pequenas (LCL) e oferecer condições a quem não tem volume para negociar diretamente com armadores."
+  ex: "Um NVOCC consolida cargas de dez importadores em um mesmo contêiner vindo da Ásia."
+  rel: [Armador, Agente de carga, BL]
+- t: Agente de carga
+  n: Freight forwarder
+  ed: comercio-exterior
+  d:
+    - "Agente de carga é o intermediário que organiza o transporte internacional para o cliente: reserva espaço, consolida cargas, emite documentos e coordena os trechos."
+    - "Também ajuda na escolha de Incoterms, modal e rotas, e trabalha em conjunto com o despachante aduaneiro."
+  ex: "O importador contrata um agente de carga para buscar a mercadoria na fábrica chinesa e entregá-la desembaraçada em São Paulo."
+  rel: [NVOCC, AWB, Incoterms]
+- t: Nearshoring
+  ed: mercado
+  d:
+    - "Nearshoring é a transferência de produção ou de fornecedores para países mais próximos do mercado consumidor, reduzindo distâncias e riscos logísticos."
+    - "Ganhou força após as crises nas cadeias globais e pode beneficiar o Brasil e outros países da América Latina como fornecedores dos Estados Unidos."
+  ex: "Uma fabricante americana passa a comprar componentes no México em vez da Ásia, reduzindo o transit time de semanas para dias."
+  rel: [Supply chain, Lead time]
+- t: Custo logístico
+  ed: mercado
+  d:
+    - "Custo logístico é a soma das despesas com transporte, armazenagem, estoques, embalagem e administração logística, muitas vezes medido como percentual da receita."
+    - "No Brasil, o transporte é a maior parcela do custo, influenciado por diesel, pedágios e infraestrutura."
+  ex: "Uma indústria calcula que gasta 9% do faturamento em logística, sendo 60% desse valor com transporte."
+  rel: [Frete, Giro de estoque, Operador logístico]

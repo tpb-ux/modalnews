@@ -1,0 +1,15 @@
+# Feeds RSS usados pelo fetch.py. "editoria" (opcional) força a editoria; senão classifica por palavras-chave.
+max_por_execucao: 12
+max_por_feed: 3
+max_idade_dias: 3
+feeds:
+  - {nome: Logweb, url: "https://www.logweb.com.br/feed/"}
+  - {nome: Comex do Brasil, url: "https://www.comexdobrasil.com/feed/", editoria: comercio-exterior}
+  - {nome: Blog do Caminhoneiro, url: "https://blogdocaminhoneiro.com/feed/", editoria: transporte}
+  - {nome: Google Notícias, url: "https://news.google.com/rss/search?q=log%C3%ADstica+when:1d&hl=pt-BR&gl=BR&ceid=BR:pt-419"}
+  - {nome: Google Notícias, url: "https://news.google.com/rss/search?q=%22cadeia+de+suprimentos%22+log%C3%ADstica+when:2d&hl=pt-BR&gl=BR&ceid=BR:pt-419", editoria: supply-chain}
+  - {nome: Google Notícias, url: "https://news.google.com/rss/search?q=frete+OR+transportadora+OR+%22transporte+rodovi%C3%A1rio%22+when:1d&hl=pt-BR&gl=BR&ceid=BR:pt-419", editoria: transporte}
+  - {nome: Google Notícias, url: "https://news.google.com/rss/search?q=%22centro+de+distribui%C3%A7%C3%A3o%22+OR+%22galp%C3%A3o+log%C3%ADstico%22+OR+armazenagem+when:2d&hl=pt-BR&gl=BR&ceid=BR:pt-419", editoria: armazenagem}
+  - {nome: Google Notícias, url: "https://news.google.com/rss/search?q=porto+(exporta%C3%A7%C3%B5es+OR+importa%C3%A7%C3%B5es+OR+cont%C3%AAineres)+when:1d&hl=pt-BR&gl=BR&ceid=BR:pt-419", editoria: comercio-exterior}
+  - {nome: Google Notícias, url: "https://news.google.com/rss/search?q=log%C3%ADstica+(tecnologia+OR+automa%C3%A7%C3%A3o+OR+startup)+when:2d&hl=pt-BR&gl=BR&ceid=BR:pt-419", editoria: tecnologia}
+  - {nome: Google Notícias, url: "https://news.google.com/rss/search?q=%22setor+log%C3%ADstico%22+OR+%22mercado+log%C3%ADstico%22+when:2d&hl=pt-BR&gl=BR&ceid=BR:pt-419", editoria: mercado}

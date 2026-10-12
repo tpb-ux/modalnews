@@ -1,0 +1,15 @@
+---
+titulo: "Concessionária apresenta as melhores novidades automobilísticas em logística na Feira"
+data: 2026-10-11T14:19:33-03:00
+editoria: mercado
+resumo: "Concessionária apresenta as melhores novidades automobilísticas em logística na Feira. Notícia publicada por A Crítica."
+imagem: ""
+fonte: "A Crítica"
+link: "https://news.google.com/rss/articles/CBMiwwFBVV95cUxQaElqWFhjYjVQZml5UnJtam1pYmxxaVloUUhfVUdraXc5cG81ZGx1UUpzMC1wVDM0ckJKV2ZzRm5CMUJfVVpONkhQbmlpMHlUWVZfakhtV2xna1lhWGhqSTdJNGpRcEU1Q3U2eGlDNmdJdHIyWG50QWVoczFtOTVhOThaN0VDT0MxV0piTnlEbTMzMWctRTJsNU40bEVZeGNRYVp3amtxSk1tSUdoMUVxQmdRbEpzUllKRE5uSkl5Uzh0TU3SAcMBQVVfeXFMUGhJalhYY2I1UGZpeVJybWptaWJscWlZaFFIX1VHa2l3OXBvNWRsdVFKczAtcFQzNHJCSldmc0ZuQjFCX1VaTjZIUG5paTB5VFlWX2pIbVdsZ2tZYVhoakk3STRqUXBFNUN1NnhpQzZnSXRyMlhudEFlaHMxbTk1YTk4WjdFQ09DMVdKYk55RG0zMzFnLUUybDVONGxFWXhjUWFad2prcUpNbUlHaDFFcUJnUWxKc1JZSkRObkpJeVM4dE1N?oc=5"
+gerado_por: fetch.py
+---
+Concessionária apresenta as melhores novidades automobilísticas em logística na Feira. Notícia publicada por A Crítica.
+
+**[Leia na íntegra em A Crítica →](https://news.google.com/rss/articles/CBMiwwFBVV95cUxQaElqWFhjYjVQZml5UnJtam1pYmxxaVloUUhfVUdraXc5cG81ZGx1UUpzMC1wVDM0ckJKV2ZzRm5CMUJfVVpONkhQbmlpMHlUWVZfakhtV2xna1lhWGhqSTdJNGpRcEU1Q3U2eGlDNmdJdHIyWG50QWVoczFtOTVhOThaN0VDT0MxV0piTnlEbTMzMWctRTJsNU40bEVZeGNRYVp3amtxSk1tSUdoMUVxQmdRbEpzUllKRE5uSkl5Uzh0TU3SAcMBQVVfeXFMUGhJalhYY2I1UGZpeVJybWptaWJscWlZaFFIX1VHa2l3OXBvNWRsdVFKczAtcFQzNHJCSldmc0ZuQjFCX1VaTjZIUG5paTB5VFlWX2pIbVdsZ2tZYVhoakk3STRqUXBFNUN1NnhpQzZnSXRyMlhudEFlaHMxbTk1YTk4WjdFQ09DMVdKYk55RG0zMzFnLUUybDVONGxFWXhjUWFad2prcUpNbUlHaDFFcUJnUWxKc1JZSkRObkpJeVM4dE1N?oc=5)**
+
+<small>Resumo automático a partir do feed público de A Crítica. Os direitos do conteúdo original pertencem à fonte.</small>

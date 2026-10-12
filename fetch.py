@@ -1,0 +1,118 @@
+#!/usr/bin/env python3
+"""Coleta notícias de feeds RSS (sem IA) e gera content/*.md com resumo curto e link para a fonte.
+Uso: python fetch.py [--max N] [--dry-run]"""
+import argparse, datetime as dt, html, re, socket, time, unicodedata, urllib.request
+from pathlib import Path
+import feedparser, yaml
+
+socket.setdefaulttimeout(20)
+ROOT = Path(__file__).parent; CONTENT = ROOT / "content"
+UA = "Mozilla/5.0 (compatible; ModalNewsBot/1.0; +https://modalnews.com.br)"
+BRT = dt.timezone(dt.timedelta(hours=-3))
+KW = {
+    "comercio-exterior": ["porto", "portuári", "exporta", "importa", "comex", "comércio exterior", "aduan", "alfândeg", "navio", "contêiner", "container", "cabotagem", "marítim", "antaq", "balança comercial", "tarifa"],
+    "armazenagem": ["armazé", "armazenag", "centro de distribuição", "galpão", "galpões", "condomínio logístico", "wms", "estoque", "intralogística", "empilhadeira", "picking", "fulfillment"],
+    "tecnologia": ["tecnologia", "software", "inteligência artificial", "automação", "robô", "digital", "startup", "plataforma", "aplicativo", "rastreamento", "drone", "iot", "tms"],
+    "supply-chain": ["supply chain", "cadeia de suprimentos", "suprimento", "procurement", "abastecimento", "fornecedor", "s&op"],
+    "transporte": ["transporte", "frete", "caminh", "rodovi", "ferrovi", "aéreo", "aviação", "carga", "transportadora", "motorista", "diesel", "antt", "rodovia", "última milha", "entrega", "frota"],
+}
+
+def norm(s):
+    s = unicodedata.normalize("NFKD", s or "").encode("ascii", "ignore").decode().lower()
+    return re.sub(r"[^a-z0-9]+", " ", s).strip()
+
+def slugify(s): return norm(s).replace(" ", "-")[:70].strip("-")
+
+def classify(text):
+    t = (text or "").lower(); best, score = "mercado", 0
+    for ed, words in KW.items():
+        sc = sum(t.count(w) for w in words)
+        if sc > score: best, score = ed, sc
+    return best
+
+def clean(s):
+    s = html.unescape(re.sub(r"<[^>]+>", " ", s or ""))
+    s = re.sub(r"(The post|O post)\b.*$", "", s, flags=re.S)
+    return re.sub(r"\s+", " ", s).strip()
+
+def short(s, n=260):
+    if len(s) <= n: return s
+    return s[:n].rsplit(" ", 1)[0].rstrip(",;:.-–[ ") + "…"
+
+def og_image(url):
+    if "news.google.com" in url: return None
+    try:
+        req = urllib.request.Request(url, headers={"User-Agent": UA})
+        h = urllib.request.urlopen(req, timeout=10).read(300000).decode("utf-8", "ignore")
+        m = re.search(r'<meta[^>]+property=["\']og:image["\'][^>]+content=["\']([^"\']+)', h) or \
+            re.search(r'<meta[^>]+content=["\']([^"\']+)["\'][^>]+property=["\']og:image', h)
+        return html.unescape(m.group(1)) if m and m.group(1).startswith("http") else None
+    except Exception: return None
+
+def feed_image(e):
+    for k in ("media_content", "media_thumbnail"):
+        for m in e.get(k) or []:
+            if m.get("url", "").startswith("http"): return m["url"]
+    for l in e.get("links", []):
+        if l.get("rel") == "enclosure" and l.get("type", "").startswith("image"): return l["href"]
+    m = re.search(r'<img[^>]+src=["\'](https?://[^"\']+)', (e.get("content") or [{}])[0].get("value", "") + e.get("summary", ""))
+    return m.group(1) if m else None
+
+def existing():
+    links, titles = set(), set()
+    for f in CONTENT.glob("*.md"):
+        fm = yaml.safe_load(f.read_text(encoding="utf-8").split("---", 2)[1]) or {}
+        if fm.get("link"): links.add(fm["link"])
+        titles.add(norm(fm.get("titulo", "")))
+    return links, titles
+
+def q(s): return '"' + str(s).replace("\\", "\\\\").replace('"', '\\"') + '"'
+
+def main():
+    ap = argparse.ArgumentParser(); ap.add_argument("--max", type=int); ap.add_argument("--dry-run", action="store_true")
+    a = ap.parse_args()
+    cfg = yaml.safe_load((ROOT / "feeds.yaml").read_text(encoding="utf-8"))
+    limit = a.max or cfg.get("max_por_execucao", 12); per = cfg.get("max_por_feed", 3)
+    cutoff = dt.datetime.now(dt.timezone.utc) - dt.timedelta(days=cfg.get("max_idade_dias", 3))
+    CONTENT.mkdir(exist_ok=True); links, titles = existing(); new = 0
+    for fd in cfg["feeds"]:
+        if new >= limit: break
+        try:
+            raw = urllib.request.urlopen(urllib.request.Request(fd["url"], headers={"User-Agent": UA}), timeout=20).read()
+            d = feedparser.parse(raw)
+        except Exception as ex:
+            print(f"! {fd['nome']}: erro {ex}"); continue
+        if not d.entries: print(f"! {fd['nome']}: sem itens"); continue
+        got = 0
+        for e in d.entries:
+            if got >= per or new >= limit: break
+            link, title = e.get("link", "").strip(), clean(e.get("title", ""))
+            src_name = fd["nome"]; gn = "news.google.com" in fd["url"]
+            if gn:
+                st = (e.get("source") or {}).get("title")
+                if st:
+                    src_name = st
+                    title = re.sub(r"\s+-\s+" + re.escape(st) + r"\s*$", "", title)
+            if not link or not title or link in links or norm(title) in titles: continue
+            tp = e.get("published_parsed") or e.get("updated_parsed")
+            when = dt.datetime(*tp[:6], tzinfo=dt.timezone.utc) if tp else dt.datetime.now(dt.timezone.utc)
+            if when < cutoff: continue
+            summ = "" if gn else clean(e.get("summary", ""))
+            if len(summ) < 40 or norm(summ).startswith(norm(title)[:40]):
+                summ = f"{title}. Notícia publicada por {src_name}."
+            resumo = short(summ)
+            ed = fd.get("editoria") or classify(title + " " + summ)
+            img = feed_image(e) or og_image(link) or ""
+            when = when.astimezone(BRT).replace(microsecond=0)
+            fn = CONTENT / f"{when:%Y-%m-%d}-{slugify(title)}.md"
+            if fn.exists(): continue
+            body = (f"---\ntitulo: {q(title)}\ndata: {when.isoformat()}\neditoria: {ed}\nresumo: {q(resumo)}\n"
+                    f"imagem: {q(img)}\nfonte: {q(src_name)}\nlink: {q(link)}\ngerado_por: fetch.py\n---\n"
+                    f"{resumo}\n\n**[Leia na íntegra em {src_name} →]({link})**\n\n"
+                    f"<small>Resumo automático a partir do feed público de {src_name}. Os direitos do conteúdo original pertencem à fonte.</small>\n")
+            print(f"+ [{ed}] {title[:80]} ({src_name})")
+            if not a.dry_run: fn.write_text(body, encoding="utf-8")
+            links.add(link); titles.add(norm(title)); got += 1; new += 1
+    print(f"{new} matéria(s) nova(s).")
+
+if __name__ == "__main__": main()
