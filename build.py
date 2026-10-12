@@ -47,10 +47,13 @@ def page(title, desc, path, body, og_img=None, og_type="website", jsonld=None, r
     nav = "".join(f'<a href="/{s}/">{E(n)}</a>' for s, n in EDS.items())
     nav_ed = "".join(f'<a class="{"on" if path.startswith(f"/{s}/") else ""}" href="/{s}/">{E(n)}</a>' for s, n in EDS.items())
     ref_links = "".join(f'<a href="{u}">{n}</a>' for u, n in [("/diesel/", "Preço do diesel"), ("/frete-minimo/", "Frete mínimo"), ("/portos/", "Portos"), ("/rodovias/", "Rodovias"),
-                        ("/guias/", "Guias"), ("/estados/", "Logística por estado"), ("/logistica/", "Logística por cidade"), ("/resumo-semanal/", "Resumo semanal"), ("/comparativos/", "Comparativos"), ("/veiculos/", "Veículos de carga"), ("/tipos-de-carga/", "Tipos de carga"), ("/glossario/ingles-portugues/", "Inglês × português"), ("/calculadoras/cubagem/", "Calculadora de cubagem"), ("/calculadoras/custo-diesel-viagem/", "Custo de diesel"), ("/siglas/", "Siglas")])
+                        ("/guias/", "Guias"), ("/estados/", "Logística por estado"), ("/logistica/", "Logística por cidade"), ("/resumo-semanal/", "Resumo semanal"), ("/comparativos/", "Comparativos"), ("/veiculos/", "Veículos de carga"), ("/tipos-de-carga/", "Tipos de carga"), ("/glossario/ingles-portugues/", "Inglês × português"), ("/calculadoras/cubagem/", "Calculadora de cubagem"), ("/calculadoras/custo-diesel-viagem/", "Custo de diesel"), ("/siglas/", "Siglas"), ("/aeroportos/", "Aeroportos de carga"), ("/pedagios/", "Pedágios"), ("/rotas/", "Rotas de frete"), ("/utilidades/", "Utilidades"), ("/busca/", "Buscar")])
     ld = f'<script type="application/ld+json">{json.dumps(jsonld, ensure_ascii=False)}</script>' if jsonld else ""
     ld += f'<script type="application/ld+json">{json.dumps(SITE_LD, ensure_ascii=False)}</script>'
     rb = f'<meta name="robots" content="{robots}">' if robots else ""
+    vf = CFG.get("verificacao") or {}
+    if path == "/":
+        rb += (f'<meta name="google-site-verification" content="{E(vf["google"])}">' if vf.get("google") else "") + (f'<meta name="msvalidate.01" content="{E(vf["bing"])}">' if vf.get("bing") else "")
     return f"""<!doctype html><html lang="pt-BR"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{E(title)}</title>{rb}<meta name="description" content="{E(desc)}">
@@ -74,13 +77,17 @@ var a=document.querySelector('nav.ed a.on,nav.ed a.pill');if(a&&a.scrollIntoView
 document.addEventListener('click',function(e){{var x=document.querySelector('details.dd[open]');if(x&&!x.contains(e.target))x.open=false}})}})();</script>
 <main class="wrap">{body}</main><footer><div class="wrap fgrid"><div><img src="/static/logo.svg" alt="" width="180" height="36" class="flogo"><p>{E(CFG['tagline'])}</p></div>
 <div><p class="fh">Editorias</p>{nav}</div><div><p class="fh">Referência</p><a href="/glossario/">Glossário de Logística</a><a href="/siglas/">Siglas</a><a href="/diesel/">Preço do diesel</a><a href="/frete-minimo/">Frete mínimo ANTT</a><a href="/portos/">Portos</a><a href="/rodovias/">Rodovias</a><a href="/estados/">Logística por estado</a><a href="/logistica/">Logística por cidade</a><a href="/resumo-semanal/">Resumo semanal</a><a href="/comparativos/">Comparativos</a><a href="/veiculos/">Veículos de carga</a><a href="/tipos-de-carga/">Tipos de carga</a><a href="/glossario/ingles-portugues/">Glossário inglês × português</a><a href="/guias/">Guias práticos</a><a href="/calculadoras/cubagem/">Calculadora de cubagem</a><a href="/calculadoras/custo-diesel-viagem/">Custo de diesel</a><a href="/links-uteis/">Links úteis</a></div>
-<div><p class="fh">Institucional</p><a href="/sobre/">Sobre</a><a href="/politica-editorial/">Política editorial</a><a href="/metodologia/">Metodologia</a><a href="/correcoes/">Correções</a><a href="/privacidade/">Privacidade</a><a href="/rss.xml">Feed RSS</a></div></div>
+<div><p class="fh">Institucional</p><a href="/sobre/">Sobre</a><a href="/expediente/">Expediente e contato</a><a href="/busca/">Buscar</a><a href="/politica-editorial/">Política editorial</a><a href="/metodologia/">Metodologia</a><a href="/correcoes/">Correções</a><a href="/privacidade/">Privacidade</a><a href="/rss.xml">Feed RSS</a></div></div>
 <div class="wrap fbot">© {dt.date.today().year} {E(CFG['site_name'])} · Todos os direitos reservados</div></footer></body></html>"""
 
 SITE_LD = {"@context": "https://schema.org", "@graph": [
     {"@type": "NewsMediaOrganization", "@id": BASE + "/#org", "name": CFG["site_name"], "url": BASE + "/", "logo": {"@type": "ImageObject", "url": BASE + CFG["publisher_logo"]},
      "publishingPrinciples": BASE + "/politica-editorial/", "correctionsPolicy": BASE + "/correcoes/", "actionableFeedbackPolicy": BASE + "/correcoes/",
-     **({"sameAs": CFG["redes"]} if CFG.get("redes") else {}), **({"taxID": CFG["cnpj"]} if CFG.get("cnpj") else {})},
+     **({"sameAs": [r for r in CFG.get("empresa", {}).get("redes", []) if r]} if any(CFG.get("empresa", {}).get("redes", [])) else {}),
+     **({"legalName": CFG["empresa"]["razao_social"], "taxID": CFG["empresa"]["cnpj"], "identifier": {"@type": "PropertyValue", "propertyID": "CNPJ", "value": CFG["empresa"]["cnpj"]},
+         "address": {"@type": "PostalAddress", "streetAddress": CFG["empresa"]["endereco"]["logradouro"], "addressLocality": CFG["empresa"]["endereco"]["cidade"], "addressRegion": CFG["empresa"]["endereco"]["uf"],
+                     "postalCode": CFG["empresa"]["endereco"]["cep"], "addressCountry": "BR"}} if CFG.get("empresa") else {}),
+     **({"email": CFG["empresa"]["email"]} if CFG.get("empresa", {}).get("email") else {})},
     {"@type": "WebSite", "@id": BASE + "/#site", "name": CFG["site_name"], "url": BASE + "/", "inLanguage": "pt-BR", "publisher": {"@id": BASE + "/#org"}}]}
 
 def itemlist(ps):
@@ -127,6 +134,10 @@ def main():
     hub_urls = relacionados.build(sys.modules[__name__], posts)
     import paginas3
     hub_urls += paginas3.build(sys.modules[__name__])
+    import paginas7, paginas8
+    me_ = sys.modules[__name__]
+    v1_urls = paginas7.portos(me_) + paginas7.aeroportos(me_) + paginas7.pedagios(me_) + paginas7.diesel_antt(me_) + paginas7.utilidades(me_) + paginas8.rotas(me_) + paginas8.expediente(me_)
+    paginas8.busca_page(me_)
     import paginas4
     cmp_urls = paginas4.build(sys.modules[__name__])
     import paginas5
@@ -179,6 +190,7 @@ def main():
     me = sys.modules[__name__]; me._posts = posts; me._interlink = interlink
     fm_urls, fm_lm = paginas2.frete_minimo(me); pt_urls, pt_lm = paginas2.portos(me)
     rd_urls, rd_lm = paginas2.rodovias(me); gu_urls, gu_lm = paginas2.guias(me)
+    paginas7.portos_index(me)
     ds_urls, ds_lastmod = paginas.diesel(sys.modules[__name__])
     calc_urls = paginas.calculadoras(sys.modules[__name__])
     conf_urls = paginas.confianca(sys.modules[__name__], len(terms))
@@ -193,7 +205,7 @@ def main():
     latest = max([p["data"] for p in posts], default=dt.datetime.now(dt.timezone.utc)).date().isoformat()
     files = [smfile("sitemap-paginas.xml", ["/"] + [f"/{s}/" for s in EDS] + conf_urls + calc_urls + sig_urls, {"/": latest, **{f"/{s}/": latest for s in EDS}}),
              smfile("sitemap-glossario.xml", gl_urls, gl_lastmod), smfile("sitemap-diesel.xml", ds_urls, ds_lastmod),
-             smfile("sitemap-frete-minimo.xml", fm_urls, fm_lm), smfile("sitemap-entidades.xml", pt_urls + rd_urls, {**pt_lm, **rd_lm}), smfile("sitemap-guias.xml", gu_urls, gu_lm), smfile("sitemap-estados.xml", hub_urls), smfile("sitemap-comparativos.xml", cmp_urls), smfile("sitemap-veiculos-cargas.xml", vei_urls), smfile("sitemap-resumo-semanal.xml", res_urls)]
+             smfile("sitemap-frete-minimo.xml", fm_urls, fm_lm), smfile("sitemap-entidades.xml", pt_urls + rd_urls, {**pt_lm, **rd_lm}), smfile("sitemap-guias.xml", gu_urls, gu_lm), smfile("sitemap-estados.xml", hub_urls), smfile("sitemap-comparativos.xml", cmp_urls), smfile("sitemap-veiculos-cargas.xml", vei_urls), smfile("sitemap-resumo-semanal.xml", res_urls), smfile("sitemap-infraestrutura.xml", v1_urls)]
     if own: files.append(smfile("sitemap-artigos.xml", [p["url"] for p in own], {p["url"]: p["data"].date().isoformat() for p in own}, {p["url"]: p["imagem"] for p in own}))
     (OUT / "sitemap.xml").write_text('<?xml version="1.0" encoding="UTF-8"?>\n<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
         + "".join(f"<sitemap><loc>{BASE}/{f}</loc></sitemap>" for f in files) + "</sitemapindex>", encoding="utf-8")
@@ -204,6 +216,10 @@ def main():
     paginas.extras(sys.modules[__name__], {"build": dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds"), "ultima_coleta": col.get("hora"), "feeds_com_erro": col.get("erros", []),
         "materias": len(posts), "termos": len(terms), "paginas_indexaveis": sum(len(x) for x in (gl_urls, ds_urls, calc_urls, conf_urls, sig_urls, fm_urls, pt_urls, rd_urls, gu_urls)) + 1 + len(EDS),
         "diesel_semana": max(ds_lastmod.values(), default=None)})
+    nb = paginas8.busca_index(me)
+    if CFG.get("indexnow_key"): (OUT / f"{CFG['indexnow_key']}.txt").write_text(CFG["indexnow_key"])
+    import indexnow; indexnow.diff(me)
+    print(f"Busca: {nb} páginas no índice")
     print(f"OK: {len(posts)} matérias -> {OUT}")
 
 if __name__ == "__main__": main()

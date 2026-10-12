@@ -16,3 +16,16 @@ editorias:
 # Fonte com prioridade no destaque da home (matéria com imagem própria das últimas 48h)
 destaque_prioritario: Logweb
 glossario_atualizado: 2026-10-12
+# Empresa responsável (expediente e Organization schema)
+empresa:
+  razao_social: Patini Brasil Serviços Publicidade e Propaganda
+  cnpj: 53.816.326/0001-58
+  endereco: {logradouro: "Av. Pacaembu, 1088", bairro: Pacaembu, cidade: São Paulo, uf: SP, cep: 01234-000}
+  email: ""        # placeholder: preencher quando o usuário enviar (fica oculto enquanto vazio)
+  redes: []        # placeholder: URLs das redes sociais (ficam ocultas enquanto vazias)
+# Verificação de buscadores: cole só o valor do content da meta tag
+verificacao:
+  google: ""
+  bing: ""
+# IndexNow: chave pública (arquivo /<chave>.txt é gerado no build)
+indexnow_key: "8979e07f71111ac261c735706569d229"

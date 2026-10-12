@@ -1,0 +1,699 @@
+{
+ "fonte": "https://www.gov.br/antt/pt-br/assuntos/rodovias/concessionarias/lista-de-concessoes",
+ "gerado": "2026-10-12",
+ "concessoes": {
+  "Transbrasiliana": {
+   "nome": "Rodovia Transbrasiliana - capa",
+   "url": "https://www.gov.br/antt/pt-br/assuntos/rodovias/concessionarias/lista-de-concessoes/Transbrasiliana/tarifas-de-pedagio",
+   "atualizado": null,
+   "tabelas": [
+    {
+     "titulo": "TABELAS DE TARIFAS",
+     "labels": [],
+     "cat1": [
+      10.1
+     ]
+    }
+   ]
+  },
+  "autopista-fluminense": {
+   "nome": "Autopista Fluminense - capa",
+   "url": "https://www.gov.br/antt/pt-br/assuntos/rodovias/concessionarias/lista-de-concessoes/autopista-fluminense/tarifas-de-pedagio",
+   "atualizado": null,
+   "tabelas": [
+    {
+     "titulo": "",
+     "labels": [
+      "P1",
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ],
+     "cat1": [
+      10.8,
+      10.8,
+      10.8,
+      10.8,
+      10.8
+     ]
+    }
+   ]
+  },
+  "autopista-litoral-sul": {
+   "nome": "Autopista Litoral Sul - capa",
+   "url": "https://www.gov.br/antt/pt-br/assuntos/rodovias/concessionarias/lista-de-concessoes/autopista-litoral-sul/tarifas-de-pedagios",
+   "atualizado": null,
+   "tabelas": [
+    {
+     "titulo": "",
+     "labels": [],
+     "cat1": [
+      5.9
+     ]
+    }
+   ]
+  },
+  "autopista-planalto-sul": {
+   "nome": "Autopista Planalto Sul - capa",
+   "url": "https://www.gov.br/antt/pt-br/assuntos/rodovias/concessionarias/lista-de-concessoes/autopista-planalto-sul/tarifas-de-pedagio-autopista-planalto-sul",
+   "atualizado": null,
+   "tabelas": [
+    {
+     "titulo": "Tarifas nas Praças de Pedágio P1 a P 5",
+     "labels": [],
+     "cat1": [
+      8.7
+     ]
+    }
+   ]
+  },
+  "autopista-regis-bittencourt": {
+   "nome": "Autopista Régis Bittencourt - capa",
+   "url": "https://www.gov.br/antt/pt-br/assuntos/rodovias/concessionarias/lista-de-concessoes/autopista-regis-bittencourt/tarifas-de-pedagio",
+   "atualizado": null,
+   "tabelas": [
+    {
+     "titulo": "TABELA DE TARIFAS",
+     "labels": [],
+     "cat1": [
+      4.3
+     ]
+    }
+   ]
+  },
+  "ccr-rio-sp": {
+   "nome": "CCR Rio/SP",
+   "url": "https://www.gov.br/antt/pt-br/assuntos/rodovias/concessionarias/lista-de-concessoes/ccr-rio-sp/tarifas-de-pedagio",
+   "atualizado": null,
+   "tabelas": [
+    {
+     "titulo": "",
+     "labels": [],
+     "cat1": [
+      4.5,
+      4.5,
+      4.5,
+      8.1,
+      8.1,
+      16.9,
+      14.5,
+      4.8,
+      4.8,
+      4.8,
+      7.9,
+      7.9,
+      7.9
+     ]
+    }
+   ]
+  },
+  "ccr-viacosteira": {
+   "nome": "CCR ViaCosteira - capa",
+   "url": "https://www.gov.br/antt/pt-br/assuntos/rodovias/concessionarias/lista-de-concessoes/ccr-viacosteira/tarifas-de-pedagio",
+   "atualizado": null,
+   "tabelas": [
+    {
+     "titulo": "P1 (Laguna), P2 (Tubarão), P3 (Araranguá) e P4 (São João do Sul)",
+     "labels": [],
+     "cat1": [
+      3.0
+     ]
+    }
+   ]
+  },
+  "concebra": {
+   "nome": "CONCEBRA - capa",
+   "url": "https://www.gov.br/antt/pt-br/assuntos/rodovias/concessionarias/lista-de-concessoes/concebra/tarifas-de-pedagio",
+   "atualizado": null,
+   "tabelas": [
+    {
+     "titulo": "",
+     "labels": [],
+     "cat1": [
+      7.4,
+      5.4,
+      7.9,
+      9.5,
+      8.4,
+      5.0,
+      6.9,
+      7.1,
+      7.5,
+      8.9,
+      7.4
+     ]
+    }
+   ]
+  },
+  "concer": {
+   "nome": "CONCER - capa",
+   "url": "https://www.gov.br/antt/pt-br/assuntos/rodovias/concessionarias/lista-de-concessoes/concer/tarifas-de-pedagio",
+   "atualizado": null,
+   "tabelas": [
+    {
+     "titulo": "TABELA DE TARIFAS",
+     "labels": [],
+     "cat1": [
+      14.5
+     ]
+    }
+   ]
+  },
+  "eco050": {
+   "nome": "ECO050 - capa",
+   "url": "https://www.gov.br/antt/pt-br/assuntos/rodovias/concessionarias/lista-de-concessoes/eco050/tarifas-de-pedagio",
+   "atualizado": null,
+   "tabelas": [
+    {
+     "titulo": "",
+     "labels": [],
+     "cat1": [
+      10.0,
+      10.8,
+      8.2,
+      6.3,
+      8.9,
+      6.4
+     ]
+    }
+   ]
+  },
+  "ecoponte": {
+   "nome": "Ecoponte - capa",
+   "url": "https://www.gov.br/antt/pt-br/assuntos/rodovias/concessionarias/lista-de-concessoes/ecoponte/tarifas-de-pedagio",
+   "atualizado": null,
+   "tabelas": [
+    {
+     "titulo": "",
+     "labels": [],
+     "cat1": [
+      6.6
+     ]
+    }
+   ]
+  },
+  "ecoriominas": {
+   "nome": "ECORIOMINAS - Capa",
+   "url": "https://www.gov.br/antt/pt-br/assuntos/rodovias/concessionarias/lista-de-concessoes/ecoriominas/revisoes-e-reajustes/tarifas-de-pedagios",
+   "atualizado": null,
+   "tabelas": [
+    {
+     "titulo": "Tarifas de Pedágio a partir de 22/03/2025",
+     "labels": [],
+     "cat1": [
+      17.2,
+      17.2,
+      11.0,
+      20.2,
+      21.0,
+      14.5,
+      12.8,
+      11.8,
+      9.7,
+      10.7,
+      13.2,
+      10.6
+     ]
+    }
+   ]
+  },
+  "ecovias-araguaia": {
+   "nome": "Ecovias Araguaia - capa",
+   "url": "https://www.gov.br/antt/pt-br/assuntos/rodovias/concessionarias/lista-de-concessoes/ecovias-araguaia/tarifas-de-pedagio",
+   "atualizado": null,
+   "tabelas": [
+    {
+     "titulo": "",
+     "labels": [],
+     "cat1": [
+      9.5,
+      12.4,
+      12.0,
+      11.5,
+      14.3,
+      14.3,
+      15.6,
+      14.3,
+      14.3,
+      19.0,
+      24.8,
+      24.0,
+      23.0,
+      28.6,
+      28.6,
+      31.2,
+      28.6,
+      28.6,
+      14.25,
+      18.6,
+      18.0,
+      17.25,
+      21.45,
+      21.45,
+      23.4,
+      21.45,
+      21.45,
+      28.5,
+      37.2,
+      36.0,
+      34.5,
+      42.9,
+      42.9,
+      46.8,
+      42.9,
+      42.9,
+      19.0,
+      24.8,
+      24.0,
+      23.0,
+      28.6,
+      28.6,
+      31.2,
+      28.6,
+      28.6,
+      38.0,
+      49.6,
+      48.0,
+      46.0,
+      57.2,
+      57.2,
+      62.4,
+      57.2,
+      57.2,
+      47.5,
+      62.0,
+      60.0,
+      57.5,
+      71.5,
+      71.5,
+      78.0,
+      71.5,
+      71.5,
+      57.0,
+      74.4,
+      72.0,
+      69.0,
+      85.8,
+      85.8,
+      93.6,
+      85.8,
+      85.8,
+      66.5,
+      86.8,
+      84.0,
+      80.5,
+      100.1,
+      100.1,
+      109.2,
+      100.1,
+      100.1,
+      76.0,
+      99.2,
+      96.0,
+      92.0,
+      114.4,
+      114.4,
+      124.8,
+      114.4,
+      114.4,
+      4.75,
+      6.2,
+      6.0,
+      5.75,
+      7.15,
+      7.15,
+      7.8,
+      7.15,
+      7.15
+     ]
+    },
+    {
+     "titulo": "",
+     "labels": [
+      "P1",
+      "P2",
+      "P3",
+      "P4",
+      "P5",
+      "P6",
+      "P7",
+      "P8",
+      "P9"
+     ],
+     "cat1": [
+      9.5,
+      12.4,
+      12.0,
+      11.5,
+      14.3,
+      14.3,
+      15.6,
+      14.3,
+      14.3
+     ]
+    }
+   ]
+  },
+  "ecovias-capixaba": {
+   "nome": "Ecovias 101",
+   "url": "https://www.gov.br/antt/pt-br/assuntos/rodovias/concessionarias/lista-de-concessoes/ecovias-capixaba/tarifas-de-pedagio",
+   "atualizado": null,
+   "tabelas": [
+    {
+     "titulo": "",
+     "labels": [
+      "P1",
+      "P2",
+      "P3",
+      "P4",
+      "P5",
+      "P6",
+      "P7"
+     ],
+     "cat1": [
+      5.2,
+      6.8,
+      6.4,
+      6.1,
+      6.3,
+      5.3,
+      3.0
+     ]
+    }
+   ]
+  },
+  "elovias": {
+   "nome": "Elovias - capa",
+   "url": "https://www.gov.br/antt/pt-br/assuntos/rodovias/concessionarias/lista-de-concessoes/elovias/tarifas-de-pedagio/tarifas-de-pedagio",
+   "atualizado": null,
+   "tabelas": [
+    {
+     "titulo": "",
+     "labels": [],
+     "cat1": [
+      21.0,
+      21.0,
+      21.0
+     ]
+    }
+   ]
+  },
+  "epr-litoral-pioneiro": {
+   "nome": "LitoralPioneiro",
+   "url": "https://www.gov.br/antt/pt-br/assuntos/rodovias/concessionarias/lista-de-concessoes/epr-litoral-pioneiro/tarifas-de-pedagio",
+   "atualizado": null,
+   "tabelas": [
+    {
+     "titulo": "Tarifas de Pedágio",
+     "labels": [
+      "P1",
+      "P2",
+      "P3",
+      "P5",
+      "P6",
+      "P7",
+      "P8",
+      "P9"
+     ],
+     "cat1": [
+      24.0,
+      7.7,
+      12.8,
+      12.1,
+      8.0,
+      13.8,
+      12.8,
+      12.8
+     ]
+    }
+   ]
+  },
+  "epr-via-mineira": {
+   "nome": "ViaMineira",
+   "url": "https://www.gov.br/antt/pt-br/assuntos/rodovias/concessionarias/lista-de-concessoes/epr-via-mineira/tarifas-de-pedagios-via-mineira",
+   "atualizado": null,
+   "tabelas": [
+    {
+     "titulo": "",
+     "labels": [],
+     "cat1": [
+      13.6,
+      13.6,
+      13.6
+     ]
+    }
+   ]
+  },
+  "motiva-minas-sp": {
+   "nome": "Motiva Minas SP",
+   "url": "https://www.gov.br/antt/pt-br/assuntos/rodovias/concessionarias/lista-de-concessoes/motiva-minas-sp/tarifas-de-pedagio",
+   "atualizado": null,
+   "tabelas": [
+    {
+     "titulo": "Tarifas nas Praças de Pedágio P1 a P8",
+     "labels": [],
+     "cat1": [
+      3.7
+     ]
+    }
+   ]
+  },
+  "motiva-pantanal": {
+   "nome": "Pantanal - capa",
+   "url": "https://www.gov.br/antt/pt-br/assuntos/rodovias/concessionarias/lista-de-concessoes/motiva-pantanal/tarifas-de-pedagio",
+   "atualizado": null,
+   "tabelas": [
+    {
+     "titulo": "TABELAS DE TARIFAS",
+     "labels": [
+      "P1",
+      "P2",
+      "P3",
+      "P4",
+      "P5",
+      "P6",
+      "P7",
+      "P8",
+      "P9"
+     ],
+     "cat1": [
+      9.2,
+      12.5,
+      12.6,
+      12.7,
+      14.1,
+      10.9,
+      10.7,
+      14.0,
+      10.3
+     ]
+    }
+   ]
+  },
+  "nova-364": {
+   "nome": "Nova 364",
+   "url": "https://www.gov.br/antt/pt-br/assuntos/rodovias/concessionarias/lista-de-concessoes/nova-364/tarifas-de-pedagio",
+   "atualizado": null,
+   "tabelas": [
+    {
+     "titulo": "",
+     "labels": [
+      "P1",
+      "P2",
+      "P3",
+      "P4",
+      "P5",
+      "P6",
+      "P7"
+     ],
+     "cat1": [
+      5.4,
+      37.0,
+      19.3,
+      25.0,
+      12.5,
+      10.2,
+      35.4
+     ]
+    }
+   ]
+  },
+  "nova-dutra": {
+   "nome": "Nova Dutra - capa",
+   "url": "https://www.gov.br/antt/pt-br/assuntos/rodovias/concessionarias/lista-de-concessoes/nova-dutra/tarifas-de-pedagio",
+   "atualizado": null,
+   "tabelas": [
+    {
+     "titulo": "",
+     "labels": [],
+     "cat1": [
+      1.0,
+      14.2
+     ]
+    },
+    {
+     "titulo": "",
+     "labels": [],
+     "cat1": [
+      1.0,
+      3.5
+     ]
+    },
+    {
+     "titulo": "",
+     "labels": [],
+     "cat1": [
+      1.0,
+      6.2
+     ]
+    }
+   ]
+  },
+  "rota-do-oeste": {
+   "nome": "Nova Rota do Oeste - capa",
+   "url": "https://www.gov.br/antt/pt-br/assuntos/rodovias/concessionarias/lista-de-concessoes/rota-do-oeste/tarifas-de-pedagio",
+   "atualizado": null,
+   "tabelas": [
+    {
+     "titulo": "",
+     "labels": [],
+     "cat1": [
+      6.6,
+      7.5,
+      6.0,
+      6.0,
+      8.1,
+      6.7,
+      5.4,
+      7.1,
+      10.4
+     ]
+    }
+   ]
+  },
+  "via-040": {
+   "nome": "VIA 040 - capa",
+   "url": "https://www.gov.br/antt/pt-br/assuntos/rodovias/concessionarias/lista-de-concessoes/via-040/tarifas-de-pedagio",
+   "atualizado": null,
+   "tabelas": [
+    {
+     "titulo": "",
+     "labels": [],
+     "cat1": [
+      6.3
+     ]
+    }
+   ]
+  },
+  "via-araucaria": {
+   "nome": "ViaAraucaria - capa",
+   "url": "https://www.gov.br/antt/pt-br/assuntos/rodovias/concessionarias/lista-de-concessoes/via-araucaria/tarifas-de-pedagio",
+   "atualizado": null,
+   "tabelas": [
+    {
+     "titulo": "",
+     "labels": [
+      "P1",
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ],
+     "cat1": [
+      9.8,
+      12.3,
+      11.5,
+      11.3,
+      12.9
+     ]
+    }
+   ]
+  },
+  "via-bahia": {
+   "nome": "Via Bahia - capa",
+   "url": "https://www.gov.br/antt/pt-br/assuntos/rodovias/concessionarias/lista-de-concessoes/via-bahia/tarifas-de-pedagio",
+   "atualizado": null,
+   "tabelas": [
+    {
+     "titulo": "",
+     "labels": [],
+     "cat1": [
+      3.5
+     ]
+    },
+    {
+     "titulo": "",
+     "labels": [],
+     "cat1": [
+      6.1
+     ]
+    }
+   ]
+  },
+  "via-brasil": {
+   "nome": "Via Brasil - capa",
+   "url": "https://www.gov.br/antt/pt-br/assuntos/rodovias/concessionarias/lista-de-concessoes/via-brasil/tarifas-de-pedagio",
+   "atualizado": null,
+   "tabelas": [
+    {
+     "titulo": "",
+     "labels": [],
+     "cat1": [
+      10.8,
+      10.8
+     ]
+    }
+   ]
+  },
+  "via-cristais": {
+   "nome": "Via Cristais",
+   "url": "https://www.gov.br/antt/pt-br/assuntos/rodovias/concessionarias/lista-de-concessoes/via-cristais/revisoes-e-reajustes/tarifas-de-pedagio",
+   "atualizado": null,
+   "tabelas": [
+    {
+     "titulo": "",
+     "labels": [],
+     "cat1": [
+      12.1,
+      12.2,
+      12.4,
+      12.2,
+      12.3,
+      12.5,
+      16.6
+     ]
+    }
+   ]
+  },
+  "viasul": {
+   "nome": "ViaSul - capa",
+   "url": "https://www.gov.br/antt/pt-br/assuntos/rodovias/concessionarias/lista-de-concessoes/viasul/tarifas-de-pedagio",
+   "atualizado": null,
+   "tabelas": [
+    {
+     "titulo": "",
+     "labels": [],
+     "cat1": [
+      6.9,
+      13.8,
+      10.35,
+      20.7,
+      13.8,
+      27.6,
+      34.5,
+      41.4,
+      3.45
+     ]
+    },
+    {
+     "titulo": "",
+     "labels": [],
+     "cat1": [
+      6.9
+     ]
+    }
+   ]
+  }
+ }
+}

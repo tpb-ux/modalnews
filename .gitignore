@@ -1,3 +1,6 @@
 .venv/
-public/
 __pycache__/
+data/indexnow_hashes.next.json
+data/indexnow_pendentes.txt
+data/raw/
+public/

@@ -47,6 +47,26 @@ def build(B, posts):
             rows = "".join(f"<tr><td><a href='/diesel/estado/{uf.lower()}/'>{UFN[uf]}</a></td><td>{brl(a)}</td><td>{brl(b)}</td><td>{pp(a, b)}</td></tr>" for _, uf, a, b in var[::-1])
             txt += f"<details><summary>Diesel S10 por estado (todas as UFs)</summary><div class='tblw'><table class='tbl'><thead><tr><th>UF</th><th>Semana</th><th>Anterior</th><th>Variação</th></tr></thead><tbody>{rows}</tbody></table></div></details>"
             sec.append(("Diesel", txt)); pts += 2
+            REG = {"Norte": "AC AM AP PA RO RR TO", "Nordeste": "AL BA CE MA PB PE PI RN SE", "Centro-Oeste": "DF GO MS MT", "Sudeste": "ES MG RJ SP", "Sul": "PR RS SC"}
+            def wavg(sem, ufs):
+                xs = [((sem["estados"].get(u) or {}).get("s10") or {}) for u in ufs.split()]; xs = [x for x in xs if x.get("media") and x.get("postos")]
+                return sum(x["media"] * x["postos"] for x in xs) / sum(x["postos"] for x in xs) if xs else None
+            rr = [(rn, wavg(s, ufs), wavg(prev, ufs)) for rn, ufs in REG.items()]; rr = [x for x in rr if x[1] and x[2]]
+            if rr:
+                rows = "".join(f"<tr><td>{rn}</td><td>{brl(a)}</td><td>{pp(a, b)}</td></tr>" for rn, a, b in rr)
+                mx = max(rr, key=lambda x: x[1]); mn = min(rr, key=lambda x: x[1])
+                sec.append(("Diesel por região", f"<p>O {mx[0]} teve o diesel S10 mais caro da semana, em média {brl(mx[1])}/l, e o {mn[0]} o mais barato, {brl(mn[1])}/l. As médias regionais são ponderadas pelo número de postos pesquisados pela ANP em cada estado.</p><div class='tblw'><table class='tbl'><thead><tr><th>Região</th><th>S10 médio</th><th>Variação</th></tr></thead><tbody>{rows}</tbody></table></div>")); pts += 1
+                fq.append((f"Qual região teve o diesel mais caro na semana de {dbr(s['ini'])} a {dbr(s['fim'])}?", f"O {mx[0]}, com diesel S10 a {brl(mx[1])} por litro em média, ponderada pelos postos pesquisados pela ANP. O mais barato foi o {mn[0]}, a {brl(mn[1])} por litro."))
+            cv = []
+            for kk, v in s["municipios"].items():
+                a_ = v.get("s10") or {}; b_ = ((prev["municipios"].get(kk) or {}).get("s10") or {})
+                if a_.get("media") and b_.get("media") and a_.get("postos", 0) >= 10: cv.append(((a_["media"] / b_["media"] - 1) * 100, kk, a_["media"], b_["media"]))
+            if len(cv) >= 6:
+                cv.sort(); cn = lambda kk: kk.split("|")[0].title() + " (" + kk.split("|")[1] + ")"
+                cl = lambda x: f"{E(cn(x[1]))} ({brl(x[2])}, {pp(x[2], x[3])})"
+                sec.append(("Cidades com maior variação", "<p>Entre as cidades com pelo menos 10 postos pesquisados, as maiores altas do S10 foram em " + ", ".join(cl(x) for x in cv[::-1][:3]) + "; as maiores quedas, em " + ", ".join(cl(x) for x in cv[:3]) + ".</p>")); pts += 1
+            b0 = s["brasil"]["BR"]["s10"]
+            if b0.get("min") and b0.get("max"): sec.append(("Dispersão de preços", f"<p>O menor preço de diesel S10 encontrado pela ANP no país na semana foi {brl(b0['min'])}/l e o maior, {brl(b0['max'])}/l, em {num_(b0.get('postos', 0))} postos pesquisados.</p>")); pts += 1
             fq.append((f"Quanto custou o diesel na semana de {dbr(s['ini'])} a {dbr(s['fim'])}?", f"Segundo a ANP, o diesel S10 custou em média {brl(s10)} por litro no Brasil, {pp(s10, p10)} em relação à semana anterior pesquisada." + (f" A maior alta estadual foi {em(up[0][1])} ({pp(up[0][2], up[0][3])})." if up else "") + (f" A maior queda foi {em(dn[0][1])} ({pp(dn[0][2], dn[0][3])})." if dn else "")))
         else:
             sec.append(("Diesel", f"<p>O diesel S10 teve média nacional de {brl(s10)} por litro na pesquisa da ANP.</p>")); pts += 1
@@ -81,7 +101,7 @@ def build(B, posts):
         body = f"""<article class="post data">{crumbs_html(E, cr)}<h1>{E(tit)}</h1><p class="snippet">{E(lead)}</p><p class="upd">Gerado automaticamente a partir de dados oficiais da ANP e da ANTT e das notícias publicadas no Modal News. <a href="/metodologia/">Metodologia</a>.</p>
 {''.join(f'<h2>{E(h)}</h2>{t}' for h, t in sec)}{('<h2>Perguntas frequentes</h2>' + faq_block(E, fq)) if fq else ''}{nav}
 <p class="src">Fontes: <a href="{E(s['arquivo'])}" target="_blank" rel="noopener">ANP, levantamento de preços semanal</a>; ANTT (frete mínimo e tráfego de pedágio).</p></article>"""
-        idx = pts >= 4 and len(fq) >= 2
+        idx = pts >= 5 and len(fq) >= 2
         ld = {"@context": "https://schema.org", "@graph": [
             {"@type": "Article", "headline": tit, "url": BASE + u, "datePublished": s["fim"], "dateModified": s["fim"], "inLanguage": "pt-BR", "author": {"@type": "Organization", "name": "Modal News"}, "publisher": {"@type": "Organization", "name": "Modal News"}, "description": lead},
             {"@type": "Dataset", "name": f"Preço médio do diesel por estado, semana {dbr(s['ini'])} a {dbr(s['fim'])}", "url": BASE + u, "temporalCoverage": f"{s['ini']}/{s['fim']}", "spatialCoverage": "Brasil", "isBasedOn": s["arquivo"], "license": "https://creativecommons.org/licenses/by/4.0/", "creator": {"@type": "Organization", "name": "Modal News"}}]
@@ -100,6 +120,7 @@ def build(B, posts):
     B.LAST_RESUMO = last
     return [u] + urls
 
+def num_(v): return f"{v:,.0f}".replace(",", ".")
 def B_num(v): return f"{v:,.0f}".replace(",", ".")
 
 def registrar(ROOT=None):

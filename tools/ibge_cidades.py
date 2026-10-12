@@ -20,6 +20,17 @@ def main():
     keys = {k for s in db["semanas"].values() for k in s["municipios"]}
     keys |= {f"{p['municipio']}|{p['uf']}" for r in json.loads((ROOT / "data/rodovias.json").read_text())["rodovias"].values() for p in r["pracas"]}
     keys |= {f"{p['cidade']}|{p['uf']}" for p in yaml.safe_load((ROOT / "data/portos.yaml").read_text())["portos"]}
+    import geo
+    keys |= {f"{p[2]}|{p[3]}" for p in yaml.safe_load((ROOT / "data/portos_organizados.yaml").read_text())["portos"]}
+    keys |= {f"{n}|{uf}" for uf, n in geo.CAPITAIS.items()}
+    af = ROOT / "data/aeroportos.json"
+    if af.exists(): keys |= {f"{a['municipio_servido']}|{next((k for k, v in __import__('paginas').UFN.items() if v == a['uf_servido']), '')}" for a in json.loads(af.read_text())["aeroportos"].values()}
+    rf = ROOT / "data/regic.json"
+    if rf.exists():
+        rg = json.loads(rf.read_text())["municipios"]
+        for k in list(keys):
+            n, uf = k.split("|"); c = geo.code(n, uf); pl = geo.polo_nome((rg.get(c) or {}).get("polo"))
+            if pl: keys.add(f"{pl[0]}|{pl[1]}")
     codes = {str(ibge[f"{norm(n)}|{uf}"]["ibge"]) for n, uf in (k.split("|") for k in keys) if f"{norm(n)}|{uf}" in ibge}
     out_f = ROOT / "data/ibge_cidades.json"; out = json.loads(out_f.read_text()) if out_f.exists() else {"municipios": {}}
     falt = sorted(c for c in codes if c not in out["municipios"])

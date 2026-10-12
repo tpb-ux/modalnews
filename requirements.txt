@@ -3,3 +3,5 @@ pyyaml
 feedparser
 pillow
 openpyxl
+beautifulsoup4
+lxml

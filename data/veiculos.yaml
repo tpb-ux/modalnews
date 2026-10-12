@@ -1,141 +1,275 @@
-# limites por conjunto de eixos: Resolução CONTRAN 882/2021, art. 6º. pbt = soma dos limites legais por eixo/conjunto.
 - slug: vuc
   nome: VUC (Veículo Urbano de Carga)
   curto: VUC
   eixos: 2
-  conjuntos: [["Dianteiro isolado, 2 pneus", 6], ["Traseiro isolado, 4 pneus", 10]]
-  comp: "14,00 m (limite do CTB/CONTRAN para veículo simples); municípios definem limites menores para o VUC"
+  conjuntos:
+  - - Dianteiro isolado, 2 pneus
+    - 6
+  - - Traseiro isolado, 4 pneus
+    - 10
+  comp: 14,00 m (limite do CTB/CONTRAN para veículo simples); municípios definem limites menores para o VUC
   aet: false
   rntrc_tipo: Caminhão leve
-  texto: "VUC é a sigla de Veículo Urbano de Carga, um caminhão de pequeno porte definido em regras municipais para circular em áreas com restrição a caminhões maiores. O conceito surgiu em São Paulo, que estabeleceu dimensões máximas próprias para o VUC dentro da Zona de Máxima Restrição de Circulação, e foi adotado por outras capitais com critérios locais. Pela legislação federal ele é um caminhão de dois eixos como outro qualquer; a diferença está nas dimensões reduzidas exigidas pelas prefeituras, que liberam sua circulação em horários e vias vedados a veículos maiores. É usado na distribuição urbana, abastecimento de lojas, entregas de e-commerce e serviços de last mile em centros adensados."
-  usos: [Distribuição urbana, Abastecimento de lojas e supermercados de bairro, Entregas de e-commerce]
-  gl: [last-mile, roteirizacao, carga-fracionada]
+  texto: VUC é a sigla de Veículo Urbano de Carga, um caminhão de pequeno porte definido em regras municipais para circular em áreas com restrição a caminhões maiores. O conceito surgiu em São Paulo, que estabeleceu dimensões máximas próprias para o VUC dentro da Zona de Máxima Restrição de Circulação, e foi adotado por outras capitais com critérios locais. Pela legislação federal ele é um caminhão de dois eixos como outro qualquer; a diferença está nas dimensões reduzidas exigidas pelas prefeituras, que liberam sua circulação em horários e vias vedados a veículos maiores. É usado na distribuição urbana, abastecimento de lojas, entregas de e-commerce e serviços de last mile em centros adensados.
+  usos:
+  - Distribuição urbana
+  - Abastecimento de lojas e supermercados de bairro
+  - Entregas de e-commerce
+  gl:
+  - last-mile
+  - roteirizacao
+  - carga-fracionada
   faq:
-    - ["Qual a diferença entre VUC e 3/4?", "VUC é uma categoria definida por regras municipais de circulação, com limites de comprimento e largura fixados pela prefeitura. 3/4 é um nome de mercado para caminhões leves de dois eixos. Um mesmo caminhão 3/4 pode ou não ser enquadrado como VUC, conforme as dimensões exigidas pela cidade."]
-    - ["Quem define as medidas do VUC?", "Cada prefeitura. Em São Paulo as regras de circulação de caminhões, incluindo as do VUC, são definidas por decreto e portarias municipais. Antes de planejar entregas, consulte a regra vigente da cidade de destino."]
+  - - Qual a diferença entre VUC e 3/4?
+    - VUC é uma categoria definida por regras municipais de circulação, com limites de comprimento e largura fixados pela prefeitura. 3/4 é um nome de mercado para caminhões leves de dois eixos. Um mesmo caminhão 3/4 pode ou não ser enquadrado como VUC, conforme as dimensões exigidas pela cidade.
+  - - Quem define as medidas do VUC?
+    - Cada prefeitura. Em São Paulo as regras de circulação de caminhões, incluindo as do VUC, são definidas por decreto e portarias municipais. Antes de planejar entregas, consulte a regra vigente da cidade de destino.
 - slug: tres-quartos
   nome: Caminhão 3/4
   curto: 3/4
   eixos: 2
-  conjuntos: [["Dianteiro isolado, 2 pneus", 6], ["Traseiro isolado, 4 pneus", 10]]
-  comp: "14,00 m (limite para veículo simples)"
+  conjuntos:
+  - - Dianteiro isolado, 2 pneus
+    - 6
+  - - Traseiro isolado, 4 pneus
+    - 10
+  comp: 14,00 m (limite para veículo simples)
   aet: false
   rntrc_tipo: Caminhão leve
-  texto: "Caminhão 3/4 é o nome usado no mercado para caminhões leves de dois eixos, com eixo traseiro de rodagem dupla e capacidade menor que a de um toco. A legislação federal não tem uma categoria chamada 3/4: o limite legal de peso é o mesmo de qualquer caminhão de dois eixos, mas na prática o peso bruto total é limitado pelo que o fabricante homologa para o chassi, normalmente bem abaixo do teto legal. É muito usado em distribuição regional e urbana, mudanças e entregas de cargas fracionadas, por equilibrar capacidade e agilidade."
-  usos: [Distribuição regional, Carga fracionada, Mudanças]
-  gl: [carga-fracionada, peso-cubado, cubagem]
+  texto: 'Caminhão 3/4 é o nome usado no mercado para caminhões leves de dois eixos, com eixo traseiro de rodagem dupla e capacidade menor que a de um toco. A legislação federal não tem uma categoria chamada 3/4: o limite legal de peso é o mesmo de qualquer caminhão de dois eixos, mas na prática o peso bruto total é limitado pelo que o fabricante homologa para o chassi, normalmente bem abaixo do teto legal. É muito usado em distribuição regional e urbana, mudanças e entregas de cargas fracionadas, por equilibrar capacidade e agilidade.'
+  usos:
+  - Distribuição regional
+  - Carga fracionada
+  - Mudanças
+  gl:
+  - carga-fracionada
+  - peso-cubado
+  - cubagem
   faq:
-    - ["Quanto carrega um caminhão 3/4?", "Depende do modelo: o peso bruto total é o homologado pelo fabricante e consta no documento do veículo (CRLV). A carga útil é esse PBT menos a tara do caminhão com a carroceria. O limite legal por eixo (6 t na frente e 10 t atrás) é um teto que os modelos leves normalmente não atingem."]
-    - ["Precisa de CNH C para dirigir 3/4?", "A categoria C é exigida para veículos de carga com peso bruto total acima de 3.500 kg, o que inclui os caminhões 3/4. Até 3.500 kg basta a categoria B."]
+  - - Quanto carrega um caminhão 3/4?
+    - 'Depende do modelo: o peso bruto total é o homologado pelo fabricante e consta no documento do veículo (CRLV). A carga útil é esse PBT menos a tara do caminhão com a carroceria. O limite legal por eixo (6 t na frente e 10 t atrás) é um teto que os modelos leves normalmente não atingem.'
+  - - Precisa de CNH C para dirigir 3/4?
+    - A categoria C é exigida para veículos de carga com peso bruto total acima de 3.500 kg, o que inclui os caminhões 3/4. Até 3.500 kg basta a categoria B.
 - slug: toco
   nome: Caminhão toco
   curto: Toco
   eixos: 2
-  conjuntos: [["Dianteiro isolado, 2 pneus", 6], ["Traseiro isolado, 4 pneus", 10]]
-  comp: "14,00 m (limite para veículo simples)"
+  conjuntos:
+  - - Dianteiro isolado, 2 pneus
+    - 6
+  - - Traseiro isolado, 4 pneus
+    - 10
+  comp: 14,00 m (limite para veículo simples)
   aet: false
   rntrc_tipo: Caminhão simples
-  texto: "Caminhão toco é o caminhão semipesado de dois eixos, com um eixo dianteiro direcional e um eixo traseiro simples de rodagem dupla. Pela Resolução CONTRAN 882/2021, o eixo dianteiro pode transmitir até 6 toneladas e o traseiro até 10 toneladas, o que dá um peso bruto total legal de 16 toneladas, sempre limitado também à capacidade técnica do fabricante. É usado em distribuição de bebidas, materiais de construção, cargas paletizadas e rotas regionais em que um truck seria grande demais."
-  usos: [Bebidas e alimentos, Materiais de construção, Distribuição regional]
-  gl: [paletizacao, palete-pbr, carga-lotacao]
+  texto: Caminhão toco é o caminhão semipesado de dois eixos, com um eixo dianteiro direcional e um eixo traseiro simples de rodagem dupla. Pela Resolução CONTRAN 882/2021, o eixo dianteiro pode transmitir até 6 toneladas e o traseiro até 10 toneladas, o que dá um peso bruto total legal de 16 toneladas, sempre limitado também à capacidade técnica do fabricante. É usado em distribuição de bebidas, materiais de construção, cargas paletizadas e rotas regionais em que um truck seria grande demais.
+  usos:
+  - Bebidas e alimentos
+  - Materiais de construção
+  - Distribuição regional
+  gl:
+  - paletizacao
+  - palete-pbr
+  - carga-lotacao
   faq:
-    - ["Qual a diferença entre toco e truck?", "O toco tem dois eixos (um traseiro), com peso bruto legal de 16 t. O truck tem três eixos, com dois eixos traseiros em tandem, e chega a 23 t pelo limite legal, carregando cerca de 7 t a mais."]
-    - ["Por que se chama toco?", "O nome popular vem do eixo traseiro único, mais curto em relação ao conjunto duplo do truck. É um termo de mercado, não uma categoria legal."]
+  - - Qual a diferença entre toco e truck?
+    - O toco tem dois eixos (um traseiro), com peso bruto legal de 16 t. O truck tem três eixos, com dois eixos traseiros em tandem, e chega a 23 t pelo limite legal, carregando cerca de 7 t a mais.
+  - - Por que se chama toco?
+    - O nome popular vem do eixo traseiro único, mais curto em relação ao conjunto duplo do truck. É um termo de mercado, não uma categoria legal.
 - slug: truck
   nome: Caminhão truck
   curto: Truck
   eixos: 3
-  conjuntos: [["Dianteiro isolado, 2 pneus", 6], ["Tandem duplo traseiro", 17]]
-  comp: "14,00 m (limite para veículo simples)"
+  conjuntos:
+  - - Dianteiro isolado, 2 pneus
+    - 6
+  - - Tandem duplo traseiro
+    - 17
+  comp: 14,00 m (limite para veículo simples)
   aet: false
   rntrc_tipo: Caminhão simples
-  texto: "Caminhão truck é o caminhão de três eixos: um dianteiro direcional e dois traseiros em tandem. Pela Resolução CONTRAN 882/2021 o conjunto tandem duplo pode transmitir até 17 toneladas, o que, somado às 6 toneladas do eixo dianteiro, leva o peso bruto total legal a 23 toneladas. É um dos veículos mais versáteis do transporte rodoviário brasileiro, usado com baú, sider, graneleiro, basculante e tanque em rotas regionais e de média distância."
-  usos: [Carga geral em baú ou sider, Grãos em graneleiro, Construção com basculante]
-  gl: [carga-lotacao, frete, vale-pedagio]
+  texto: 'Caminhão truck é o caminhão de três eixos: um dianteiro direcional e dois traseiros em tandem. Pela Resolução CONTRAN 882/2021 o conjunto tandem duplo pode transmitir até 17 toneladas, o que, somado às 6 toneladas do eixo dianteiro, leva o peso bruto total legal a 23 toneladas. É um dos veículos mais versáteis do transporte rodoviário brasileiro, usado com baú, sider, graneleiro, basculante e tanque em rotas regionais e de média distância.'
+  usos:
+  - Carga geral em baú ou sider
+  - Grãos em graneleiro
+  - Construção com basculante
+  gl:
+  - carga-lotacao
+  - frete
+  - vale-pedagio
   faq:
-    - ["Quanto carrega um truck?", "O peso bruto total legal é 23 t. A carga útil é esse valor menos a tara do caminhão e da carroceria, que varia conforme o implemento. Consulte o CRLV para o PBT homologado do seu veículo."]
-    - ["Truck paga pedágio por quantos eixos?", "Pelos eixos em contato com o solo: um truck vazio com eixo suspenso pode ser cobrado por menos eixos nas rodovias que adotam essa regra, conforme a Lei 13.103/2015."]
+  - - Quanto carrega um truck?
+    - O peso bruto total legal é 23 t. A carga útil é esse valor menos a tara do caminhão e da carroceria, que varia conforme o implemento. Consulte o CRLV para o PBT homologado do seu veículo.
+  - - Truck paga pedágio por quantos eixos?
+    - 'Pelos eixos em contato com o solo: um truck vazio com eixo suspenso pode ser cobrado por menos eixos nas rodovias que adotam essa regra, conforme a Lei 13.103/2015.'
 - slug: bitruck
   nome: Caminhão bitruck
   curto: Bitruck
   eixos: 4
-  conjuntos: [["Dois eixos direcionais", 12], ["Tandem duplo traseiro", 17]]
-  comp: "14,00 m (limite para veículo simples)"
+  conjuntos:
+  - - Dois eixos direcionais
+    - 12
+  - - Tandem duplo traseiro
+    - 17
+  comp: 14,00 m (limite para veículo simples)
   aet: false
   rntrc_tipo: Caminhão simples
-  texto: "Bitruck é o caminhão de quatro eixos, com dois eixos dianteiros direcionais e dois traseiros em tandem. A Resolução CONTRAN 882/2021 limita o conjunto de dois eixos direcionais a 12 toneladas e o tandem duplo traseiro a 17 toneladas, e fixa em 29 toneladas o peso bruto total de caminhões, o que coincide com a soma dos eixos. É o maior caminhão sem reboque e atende quem precisa de mais capacidade sem usar carreta, em especial em grãos, bebidas e cargas de construção."
-  usos: [Grãos e farelos, Bebidas, Cargas de construção]
-  gl: [carga-lotacao, frete-minimo, cubagem]
+  texto: Bitruck é o caminhão de quatro eixos, com dois eixos dianteiros direcionais e dois traseiros em tandem. A Resolução CONTRAN 882/2021 limita o conjunto de dois eixos direcionais a 12 toneladas e o tandem duplo traseiro a 17 toneladas, e fixa em 29 toneladas o peso bruto total de caminhões, o que coincide com a soma dos eixos. É o maior caminhão sem reboque e atende quem precisa de mais capacidade sem usar carreta, em especial em grãos, bebidas e cargas de construção.
+  usos:
+  - Grãos e farelos
+  - Bebidas
+  - Cargas de construção
+  gl:
+  - carga-lotacao
+  - frete-minimo
+  - cubagem
   faq:
-    - ["Bitruck carrega mais que truck?", "Sim. O limite legal do bitruck é 29 t contra 23 t do truck, graças ao segundo eixo dianteiro, que adiciona 6 t ao conjunto direcional."]
-    - ["Bitruck precisa de CNH E?", "Não. A categoria E é para combinações com unidade acoplada acima de 6 t. Como o bitruck é um veículo simples, a categoria C é suficiente."]
+  - - Bitruck carrega mais que truck?
+    - Sim. O limite legal do bitruck é 29 t contra 23 t do truck, graças ao segundo eixo dianteiro, que adiciona 6 t ao conjunto direcional.
+  - - Bitruck precisa de CNH E?
+    - Não. A categoria E é para combinações com unidade acoplada acima de 6 t. Como o bitruck é um veículo simples, a categoria C é suficiente.
 - slug: carreta-cinco-eixos
   nome: Carreta de 5 eixos (cavalo 4x2 + semirreboque de 3 eixos)
   curto: Carreta 5 eixos
   eixos: 5
-  conjuntos: [["Dianteiro do cavalo, 2 pneus", 6], ["Traseiro do cavalo, 4 pneus", 10], ["Tandem triplo do semirreboque", 25.5]]
-  comp: "18,60 m (caminhão-trator com semirreboque)"
+  conjuntos:
+  - - Dianteiro do cavalo, 2 pneus
+    - 6
+  - - Traseiro do cavalo, 4 pneus
+    - 10
+  - - Tandem triplo do semirreboque
+    - 25.5
+  comp: 18,60 m (caminhão-trator com semirreboque)
   aet: false
   rntrc_tipo: Caminhão-trator + semirreboque
-  texto: "A carreta de cinco eixos é a combinação de um caminhão-trator (cavalo mecânico) 4x2, com dois eixos, e um semirreboque de três eixos em tandem. Pela Resolução CONTRAN 882/2021, o eixo dianteiro do cavalo transmite até 6 t, o traseiro até 10 t e o tandem triplo do semirreboque até 25,5 t, somando 41,5 t. O comprimento máximo do conjunto é de 18,60 m. É a configuração mais comum no transporte rodoviário de longa distância no Brasil."
-  usos: [Longa distância, Carga paletizada, Contêineres]
-  gl: [carga-lotacao, frete-minimo, vale-pedagio]
+  texto: A carreta de cinco eixos é a combinação de um caminhão-trator (cavalo mecânico) 4x2, com dois eixos, e um semirreboque de três eixos em tandem. Pela Resolução CONTRAN 882/2021, o eixo dianteiro do cavalo transmite até 6 t, o traseiro até 10 t e o tandem triplo do semirreboque até 25,5 t, somando 41,5 t. O comprimento máximo do conjunto é de 18,60 m. É a configuração mais comum no transporte rodoviário de longa distância no Brasil.
+  usos:
+  - Longa distância
+  - Carga paletizada
+  - Contêineres
+  gl:
+  - carga-lotacao
+  - frete-minimo
+  - vale-pedagio
   faq:
-    - ["Quanto pesa uma carreta de 5 eixos carregada?", "O limite legal é 41,5 t somando os eixos (6 + 10 + 25,5), respeitado o PBTC homologado do cavalo e do implemento. A carga útil depende da tara do conjunto."]
-    - ["Qual a diferença para a carreta LS?", "A carreta LS usa cavalo trucado (6x2 ou 6x4), com tandem duplo de 17 t no lugar do eixo simples de 10 t, totalizando seis eixos e 48,5 t de limite somado."]
+  - - Quanto pesa uma carreta de 5 eixos carregada?
+    - O limite legal é 41,5 t somando os eixos (6 + 10 + 25,5), respeitado o PBTC homologado do cavalo e do implemento. A carga útil depende da tara do conjunto.
+  - - Qual a diferença para a carreta LS?
+    - A carreta LS usa cavalo trucado (6x2 ou 6x4), com tandem duplo de 17 t no lugar do eixo simples de 10 t, totalizando seis eixos e 48,5 t de limite somado.
 - slug: carreta-ls
   nome: Carreta LS de 6 eixos (cavalo trucado + semirreboque de 3 eixos)
   curto: Carreta LS
   eixos: 6
-  conjuntos: [["Dianteiro do cavalo, 2 pneus", 6], ["Tandem duplo do cavalo", 17], ["Tandem triplo do semirreboque", 25.5]]
-  comp: "18,60 m (caminhão-trator com semirreboque)"
+  conjuntos:
+  - - Dianteiro do cavalo, 2 pneus
+    - 6
+  - - Tandem duplo do cavalo
+    - 17
+  - - Tandem triplo do semirreboque
+    - 25.5
+  comp: 18,60 m (caminhão-trator com semirreboque)
   aet: false
   rntrc_tipo: Caminhão-trator + semirreboque
-  texto: "A carreta LS (de seis eixos) combina um caminhão-trator trucado, com dois eixos traseiros em tandem, e um semirreboque de três eixos. Pela Resolução CONTRAN 882/2021, os limites são 6 t no eixo dianteiro, 17 t no tandem duplo do cavalo e 25,5 t no tandem triplo do semirreboque, somando 48,5 t, e o comprimento máximo é 18,60 m. A configuração aumenta a capacidade em relação à carreta de cinco eixos sem exigir autorização especial de trânsito."
-  usos: [Granéis sólidos, Carga pesada de longa distância, Aço e bobinas]
-  gl: [carga-lotacao, frete-minimo, modal-rodoviario]
+  texto: A carreta LS (de seis eixos) combina um caminhão-trator trucado, com dois eixos traseiros em tandem, e um semirreboque de três eixos. Pela Resolução CONTRAN 882/2021, os limites são 6 t no eixo dianteiro, 17 t no tandem duplo do cavalo e 25,5 t no tandem triplo do semirreboque, somando 48,5 t, e o comprimento máximo é 18,60 m. A configuração aumenta a capacidade em relação à carreta de cinco eixos sem exigir autorização especial de trânsito.
+  usos:
+  - Granéis sólidos
+  - Carga pesada de longa distância
+  - Aço e bobinas
+  gl:
+  - carga-lotacao
+  - frete-minimo
+  - modal-rodoviario
   faq:
-    - ["Por que se chama LS?", "É um nome de mercado associado a cavalos com eixo traseiro duplo; não é uma categoria definida na legislação, que trata o conjunto pelos limites de cada eixo."]
-    - ["Carreta LS precisa de AET?", "Não, desde que respeite os limites de peso por eixo, o PBTC aplicável e o comprimento de 18,60 m previstos na Resolução CONTRAN 882/2021."]
+  - - Por que se chama LS?
+    - É um nome de mercado associado a cavalos com eixo traseiro duplo; não é uma categoria definida na legislação, que trata o conjunto pelos limites de cada eixo.
+  - - Carreta LS precisa de AET?
+    - Não, desde que respeite os limites de peso por eixo, o PBTC aplicável e o comprimento de 18,60 m previstos na Resolução CONTRAN 882/2021.
 - slug: bitrem
   nome: Bitrem (7 eixos)
   curto: Bitrem
   eixos: 7
-  conjuntos: [["Dianteiro do cavalo, 2 pneus", 6], ["Tandem duplo do cavalo", 17], ["Tandem duplo do 1º semirreboque", 17], ["Tandem duplo do 2º semirreboque", 17]]
-  comp: "19,80 m (CVC com mais de duas unidades, sem AET)"
+  conjuntos:
+  - - Dianteiro do cavalo, 2 pneus
+    - 6
+  - - Tandem duplo do cavalo
+    - 17
+  - - Tandem duplo do 1º semirreboque
+    - 17
+  - - Tandem duplo do 2º semirreboque
+    - 17
+  comp: 19,80 m (CVC com mais de duas unidades, sem AET)
   aet: false
   rntrc_tipo: Combinação de veículos de carga (CVC)
-  texto: "Bitrem é a combinação de um caminhão-trator com dois semirreboques ligados por quinta roda, normalmente com sete eixos. A Resolução CONTRAN 882/2021 permite PBTC de até 57 t para CVC com mais de duas unidades sem autorização especial, desde que tenha no máximo sete eixos, comprimento entre 17,5 m e 19,8 m, unidade tratora do tipo caminhão-trator, freios conjugados e acoplamentos conforme as normas técnicas. É muito usado no transporte de grãos, combustíveis e madeira."
-  usos: [Grãos, Combustíveis, Madeira e celulose]
-  gl: [carga-lotacao, frete-minimo, modal-rodoviario]
+  texto: Bitrem é a combinação de um caminhão-trator com dois semirreboques ligados por quinta roda, normalmente com sete eixos. A Resolução CONTRAN 882/2021 permite PBTC de até 57 t para CVC com mais de duas unidades sem autorização especial, desde que tenha no máximo sete eixos, comprimento entre 17,5 m e 19,8 m, unidade tratora do tipo caminhão-trator, freios conjugados e acoplamentos conforme as normas técnicas. É muito usado no transporte de grãos, combustíveis e madeira.
+  usos:
+  - Grãos
+  - Combustíveis
+  - Madeira e celulose
+  gl:
+  - carga-lotacao
+  - frete-minimo
+  - modal-rodoviario
   faq:
-    - ["Quanto carrega um bitrem?", "O PBTC legal é de até 57 t sem AET. A carga útil típica depende da tara dos três veículos e do tipo de implemento (graneleiro, tanque, florestal)."]
-    - ["Bitrem precisa de AET?", "Não, se respeitar 57 t de PBTC, no máximo 7 eixos e comprimento de 17,5 m a 19,8 m. Acima disso a Resolução CONTRAN 882/2021 exige Autorização Especial de Trânsito."]
+  - - Quanto carrega um bitrem?
+    - O PBTC legal é de até 57 t sem AET. A carga útil típica depende da tara dos três veículos e do tipo de implemento (graneleiro, tanque, florestal).
+  - - Bitrem precisa de AET?
+    - Não, se respeitar 57 t de PBTC, no máximo 7 eixos e comprimento de 17,5 m a 19,8 m. Acima disso a Resolução CONTRAN 882/2021 exige Autorização Especial de Trânsito.
 - slug: rodotrem
   nome: Rodotrem (9 eixos)
   curto: Rodotrem
   eixos: 9
-  conjuntos: [["Dianteiro do cavalo, 2 pneus", 6], ["Tandem duplo do cavalo", 17], ["Tandem duplo do 1º semirreboque", 17], ["Tandem duplo do dolly", 17], ["Tandem duplo do 2º semirreboque", 17]]
-  comp: "25,00 m a 30,00 m com AET (PBTC acima de 57 t)"
+  conjuntos:
+  - - Dianteiro do cavalo, 2 pneus
+    - 6
+  - - Tandem duplo do cavalo
+    - 17
+  - - Tandem duplo do 1º semirreboque
+    - 17
+  - - Tandem duplo do dolly
+    - 17
+  - - Tandem duplo do 2º semirreboque
+    - 17
+  comp: 25,00 m a 30,00 m com AET (PBTC acima de 57 t)
   aet: true
   rntrc_tipo: Combinação de veículos de carga (CVC)
-  texto: "Rodotrem é a combinação de um caminhão-trator com dois semirreboques unidos por um dolly, chegando a nove eixos. Por ter PBTC acima de 57 t, só pode circular com Autorização Especial de Trânsito (AET), com PBTC de até 74 t e comprimento entre 25 m e 30 m, conforme a Resolução CONTRAN 882/2021. É usado em rotas de alta demanda, como escoamento de grãos, cana-de-açúcar e celulose, onde reduz o número de viagens e o custo por tonelada."
-  usos: [Grãos em corredores de exportação, Cana-de-açúcar, Celulose]
-  gl: [frete-minimo, carga-lotacao, custo-logistico]
+  texto: Rodotrem é a combinação de um caminhão-trator com dois semirreboques unidos por um dolly, chegando a nove eixos. Por ter PBTC acima de 57 t, só pode circular com Autorização Especial de Trânsito (AET), com PBTC de até 74 t e comprimento entre 25 m e 30 m, conforme a Resolução CONTRAN 882/2021. É usado em rotas de alta demanda, como escoamento de grãos, cana-de-açúcar e celulose, onde reduz o número de viagens e o custo por tonelada.
+  usos:
+  - Grãos em corredores de exportação
+  - Cana-de-açúcar
+  - Celulose
+  gl:
+  - frete-minimo
+  - carga-lotacao
+  - custo-logistico
   faq:
-    - ["Qual a diferença entre bitrem e rodotrem?", "O bitrem liga dois semirreboques por quinta roda e chega a 57 t sem AET. O rodotrem usa um dolly entre os semirreboques, tem até nove eixos e 74 t, e precisa de AET."]
-    - ["Quem emite a AET?", "O órgão com jurisdição sobre a via: o DNIT nas rodovias federais, ou a ANTT/concessionária conforme o caso, e os DERs nas rodovias estaduais."]
+  - - Qual a diferença entre bitrem e rodotrem?
+    - O bitrem liga dois semirreboques por quinta roda e chega a 57 t sem AET. O rodotrem usa um dolly entre os semirreboques, tem até nove eixos e 74 t, e precisa de AET.
+  - - Quem emite a AET?
+    - 'O órgão com jurisdição sobre a via: o DNIT nas rodovias federais, ou a ANTT/concessionária conforme o caso, e os DERs nas rodovias estaduais.'
 - slug: cegonha
   nome: Cegonha (transporte de veículos)
   curto: Cegonha
   eixos: 0
   conjuntos: []
-  comp: "Conforme a configuração (18,60 m para cavalo + semirreboque); dimensões especiais dependem de AET"
+  comp: Conforme a configuração (18,60 m para cavalo + semirreboque); dimensões especiais dependem de AET
   aet: false
   rntrc_tipo: Caminhão-trator + semirreboque ou caminhão + reboque
-  texto: "Cegonha é o nome popular do veículo de transporte de automóveis, com estrutura em dois andares e rampas para carregar carros novos ou usados. Pode ser um caminhão-trator com semirreboque ou um caminhão com reboque, e segue os mesmos limites de peso por eixo e de comprimento da Resolução CONTRAN 882/2021 para a configuração adotada; composições fora desses limites precisam de Autorização Especial de Trânsito. Na tabela de frete mínimo da ANTT, o transporte de veículos entra como carga geral, e o valor depende do número de eixos do conjunto."
-  usos: [Distribuição de veículos das montadoras, Transporte de carros usados, Leilões e locadoras]
-  gl: [carga-lotacao, frete-minimo, seguro-de-carga]
+  texto: Cegonha é o nome popular do veículo de transporte de automóveis, com estrutura em dois andares e rampas para carregar carros novos ou usados. Pode ser um caminhão-trator com semirreboque ou um caminhão com reboque, e segue os mesmos limites de peso por eixo e de comprimento da Resolução CONTRAN 882/2021 para a configuração adotada; composições fora desses limites precisam de Autorização Especial de Trânsito. Na tabela de frete mínimo da ANTT, o transporte de veículos entra como carga geral, e o valor depende do número de eixos do conjunto. Como qualquer veículo de carga, a cegonha deve respeitar a largura máxima de 2,60 m e a altura máxima de 4,40 m previstas na Resolução CONTRAN 882/2021; a altura costuma ser o limite mais crítico, por causa do andar superior carregado. Na operação, o motorista amarra cada veículo com cintas nas rodas, verifica a folga para viadutos e passarelas e confere avarias na carga e na descarga, registrando o estado dos carros em vistoria. O seguro de carga
+    e a responsabilidade por avarias seguem as regras gerais do transporte rodoviário de cargas, com RCTR-C obrigatório para o transportador.
+  usos:
+  - Distribuição de veículos das montadoras
+  - Transporte de carros usados
+  - Leilões e locadoras
+  gl:
+  - carga-lotacao
+  - frete-minimo
+  - seguro-de-carga
   faq:
-    - ["Quantos carros cabem numa cegonha?", "Depende do tamanho dos veículos e do implemento; a quantidade é limitada pelos pesos por eixo e pelas dimensões máximas da configuração, não por um número fixo em lei."]
-    - ["Cegonha paga frete mínimo?", "Sim, quando contratada como lotação por terceiros. Aplica-se o coeficiente da ANTT para o tipo de carga e o número de eixos do conjunto."]
+  - - Quantos carros cabem numa cegonha?
+    - Depende do tamanho dos veículos e do implemento; a quantidade é limitada pelos pesos por eixo e pelas dimensões máximas da configuração, não por um número fixo em lei.
+  - - Cegonha paga frete mínimo?
+    - Sim, quando contratada como lotação por terceiros. Aplica-se o coeficiente da ANTT para o tipo de carga e o número de eixos do conjunto.
+  - - Qual a altura máxima de uma cegonha?
+    - A Resolução CONTRAN 882/2021 limita a altura de qualquer veículo de carga a 4,40 m e a largura a 2,60 m. Composições que excedam esses limites só podem circular com Autorização Especial de Trânsito emitida pelo órgão com jurisdição sobre a via.
+  - - Que seguro a cegonha precisa ter?
+    - O transportador rodoviário de cargas deve contratar o seguro obrigatório de responsabilidade civil (RCTR-C), que cobre danos à carga em caso de acidente com o veículo transportador. Coberturas para roubo e outros riscos dependem de contratação adicional.
