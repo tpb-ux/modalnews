@@ -4,10 +4,9 @@ data: 2026-10-09T00:30:00-03:00
 editoria: transporte
 resumo: "Para assegurar o fluxo de mercadorias e a estabilidade da cadeia produtiva diante dos severos impactos climáticos, o Super Terminais iniciou no dia 2 de outubro uma das etapas mais cruciais da Operação Seca 2026: o transporte fluvial de uma estrutura modular…"
 imagem: "/static/img/2026-10-09-operacao-seca-2026-super-terminais-transfere-infraestrutura-flutuante.webp"
-imagem_w: 1024
-imagem_h: 682
-imagem_credito: "Logweb"
-imagem_origem: "https://logweb.com.br/wp-content/uploads/2026/10/Operacao-Seca-2026-Super-Terminais-1-1024x682.jpeg"
+imagem_w: 1200
+imagem_h: 630
+imagem_card: true
 fonte: "Logweb"
 link: "https://logweb.com.br/operacao-seca-2026-super-terminais-transfere-infraestrutura-flutuante-para-itacoatiara-e-blinda-o-polo-industrial-de-manaus/"
 gerado_por: fetch.py

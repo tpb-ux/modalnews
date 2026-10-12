@@ -5,9 +5,8 @@ editoria: transporte
 resumo: "Multiplicador por eixo sobe de duas para três vezes a tarifa básica nas novas concessões federais; ANUT estima impacto adicional de R$ 42 bilhões"
 imagem: "/static/img/2026-10-09-novo-calculo-de-pedagio-pode-elevar-custos-dos-caminhoes.webp"
 imagem_w: 1200
-imagem_h: 801
-imagem_credito: "Transporte Moderno"
-imagem_origem: "https://storage.transportemoderno.com.br/uploads/2023/09/Scania-Caminhao-a-gas-Lots.jpg"
+imagem_h: 630
+imagem_card: true
 fonte: "Transporte Moderno"
 link: "https://transportemoderno.com.br/2026/10/09/novo-calculo-de-pedagio-pode-elevar-custos-dos-caminhoes/"
 gerado_por: fetch.py

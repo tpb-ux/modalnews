@@ -5,9 +5,8 @@ editoria: transporte
 resumo: "O preço médio nacional do diesel S10 subiu 5,1% nos primeiros 15 dias de setembro, passando de R$ 6,43 para"
 imagem: "/static/img/2026-10-09-diesel-s10-sobe-5-1-em-15-dias-e-chega-a-r-6-76-na-media-nacional.webp"
 imagem_w: 1200
-imagem_h: 800
-imagem_credito: "Blog do Caminhoneiro"
-imagem_origem: "https://blogdocaminhoneiro.com/wp-content/uploads/2026/03/diesel-valor-do-diesel.jpg"
+imagem_h: 630
+imagem_card: true
 fonte: "Blog do Caminhoneiro"
 link: "https://blogdocaminhoneiro.com/2026/10/diesel-s10-sobe-51-em-15-dias-e-chega-a-r-676-na-media-nacional/"
 gerado_por: fetch.py

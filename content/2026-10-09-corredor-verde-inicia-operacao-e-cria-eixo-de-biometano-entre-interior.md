@@ -5,9 +5,8 @@ editoria: transporte
 resumo: "A TransJordano inaugurou, nesta quarta-feira (7), em Sumaré (SP), o Corredor Verde, projeto criado para ampliar a utilização do biometano"
 imagem: "/static/img/2026-10-09-corredor-verde-inicia-operacao-e-cria-eixo-de-biometano-entre-interior.webp"
 imagem_w: 1200
-imagem_h: 801
-imagem_credito: "Blog do Caminhoneiro"
-imagem_origem: "https://blogdocaminhoneiro.com/wp-content/uploads/2026/10/transjordano.jpg"
+imagem_h: 630
+imagem_card: true
 fonte: "Blog do Caminhoneiro"
 link: "https://blogdocaminhoneiro.com/2026/10/corredor-verde-inicia-operacao-e-cria-eixo-de-biometano-entre-interior-paulista-e-porto-de-santos/"
 gerado_por: fetch.py

@@ -126,8 +126,53 @@ def editoria_image(ed):
 
 def img_fm(info, src_name):
     out = [f"imagem: {q(info['imagem'])}", f"imagem_w: {info['imagem_w']}", f"imagem_h: {info['imagem_h']}"]
-    if info.get("imagem_origem"): out += [f"imagem_credito: {q(src_name)}", f"imagem_origem: {q(info['imagem_origem'])}"]
+    if info.get("imagem_card"): out.append("imagem_card: true")
+    elif info.get("imagem_origem"): out += [f"imagem_credito: {q(info.get('credito') or src_name)}", f"imagem_origem: {q(info['imagem_origem'])}"]
     return "\n".join(out)
+
+# ------------------------------------------------------------------ política de imagem
+# Só fica foto da fonte quando a licença foi confirmada na documentação oficial do veículo
+# (feeds.yaml: licencas_imagem: {Nome da fonte: "texto do crédito/licença"}). Nos demais casos a matéria
+# ganha um card próprio gerado com Pillow (sem IA), gravado no mesmo caminho /static/img/<slug>.webp.
+CARD_COR = {"cor": "#F04E23", "escuro": "#2E333D"}
+
+def card_image(title, ed, src_name, when, stem):
+    import cards, yaml as _y
+    eds = {e["slug"]: e["nome"] for e in _y.safe_load((ROOT / "config.yaml").read_text(encoding="utf-8"))["editorias"]}
+    w, h = cards.card(IMG / stem, title, marca="Modal News", editoria=eds.get(ed, ""), rodape=f"Resumo de {src_name} · {when:%d/%m/%Y} · ilustração do Modal News", **CARD_COR)
+    return {"imagem": f"/static/img/{stem}.webp", "imagem_w": w, "imagem_h": h, "imagem_card": True}
+
+def licenca(cfg, src_name):
+    return (cfg.get("licencas_imagem") or {}).get(src_name)
+
+def migrar_cards(cfg=None):
+    """Idempotente: troca fotos de terceiros sem licença confirmada por card próprio no MESMO caminho
+    (as URLs de página e de imagem continuam válidas). Roda em todo build."""
+    cfg = cfg or yaml.safe_load((ROOT / "feeds.yaml").read_text(encoding="utf-8")); n = 0
+    for f in sorted(CONTENT.glob("*.md")):
+        raw = f.read_text(encoding="utf-8"); _, fm_txt, body = raw.split("---", 2)
+        fm = yaml.safe_load(fm_txt) or {}
+        im = str(fm.get("imagem", ""))
+        if fm.get("imagem_card") or not im.startswith("/static/img/") or im.startswith("/static/img/editoria/"): continue
+        if not (fm.get("imagem_origem") or fm.get("imagem_credito")) or licenca(cfg, fm.get("fonte", "")): continue
+        d = fm["data"] if isinstance(fm["data"], dt.datetime) else dt.datetime.fromisoformat(str(fm["data"]))
+        info = card_image(fm["titulo"], fm["editoria"], fm.get("fonte", ""), d, im.rsplit("/", 1)[1][:-5])
+        lines = [l for l in fm_txt.strip("\n").split("\n") if not l.startswith("imagem")]
+        lines.insert(4, img_fm(info, fm.get("fonte", "")))
+        f.write_text("---\n" + "\n".join(lines) + "\n---" + body, encoding="utf-8"); n += 1
+    # fotos órfãs (matérias removidas): viram card genérico no mesmo caminho, para a URL da imagem seguir válida
+    import cards
+    usados = {str((yaml.safe_load(f.read_text(encoding="utf-8").split("---", 2)[1]) or {}).get("imagem", "")).rsplit("/", 1)[-1] for f in CONTENT.glob("*.md")}
+    reg = IMG / ".cards"; feitos = set(reg.read_text().split()) if reg.exists() else set()
+    for im in sorted(IMG.glob("*.webp")):
+        if im.name.endswith("-480.webp") or im.name in usados or im.name in feitos: continue
+        cards.card(IMG / im.stem, "Notícias de logística, transporte e supply chain", marca="Modal News", editoria="", rodape="modalnews.com.br", **CARD_COR)
+        feitos.add(im.name); n += 1
+    for f in CONTENT.glob("*.md"):
+        fm = yaml.safe_load(f.read_text(encoding="utf-8").split("---", 2)[1]) or {}
+        if fm.get("imagem_card"): feitos.add(str(fm.get("imagem", "")).rsplit("/", 1)[-1])
+    reg.write_text("\n".join(sorted(feitos)) + "\n")
+    return n
 
 def migrar():
     """Converte matérias antigas (imagem remota/vazia) para WebP local ou imagem da editoria."""
@@ -199,7 +244,12 @@ def main():
             when = when.astimezone(BRT).replace(microsecond=0)
             fn = CONTENT / f"{when:%Y-%m-%d}-{slugify(title)}.md"
             if fn.exists(): continue
-            info = None if a.dry_run else save_image(feed_image(e) or og_image(link), fn.stem)
+            src_img = None if a.dry_run else (feed_image(e) or og_image(link))
+            if src_img and licenca(cfg, src_name):
+                info = save_image(src_img, fn.stem)
+                if info: info["credito"] = licenca(cfg, src_name)
+            else:  # sem licença confirmada: card próprio (a exigência de foto na fonte continua como filtro de qualidade)
+                info = card_image(title, ed, src_name, when, fn.stem) if src_img else None
             if not info and not a.dry_run:  # só notícias com foto própria da fonte
                 print(f"  - sem foto: {title[:60]}"); st_["descartadas_sem_foto"] += 1; continue
             body = (f"---\ntitulo: {q(title)}\ndata: {when.isoformat()}\neditoria: {ed}\nresumo: {q(resumo)}\n"

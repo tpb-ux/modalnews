@@ -5,6 +5,9 @@ from paginas import UFN, brl, dbr, norm, crumbs_html, crumbs_ld, faq_block, faq_
 import geo, tarifas
 num = lambda v, d=0: (f"{v:,.{d}f}".replace(",", "X").replace(".", ",").replace("X", "."))
 INV = {v: k for k, v in UFN.items()}
+try:
+    WD_AER = __import__("json").loads((__import__("pathlib").Path(__file__).parent / "data" / "wikidata_aeroportos.json").read_text(encoding="utf-8"))["itens"]
+except Exception: WD_AER = {}
 
 def _ctx(B):
     ROOT = B.ROOT; sys.path.insert(0, str(ROOT / "tools")); import osrm
@@ -141,7 +144,7 @@ def aeroportos(B):
 {uf_html}{('<h2>Acesso rodoviário</h2>' + nb) if nb else ''}<h2>Perguntas frequentes</h2>{faq_block(E, fq)}
 <p class="src">Fontes: ANAC — <a href="{A['fonte_movimento']}" target="_blank" rel="noopener">Dados Estatísticos do Transporte Aéreo</a> e <a href="{A['fonte_cadastro']}" target="_blank" rel="noopener">cadastro de aeródromos públicos</a>. Valores somam carga paga e correio, embarcados e desembarcados.</p></article>"""
         idx = t >= 1000 and len(serie) >= 6
-        ld = {"@context": "https://schema.org", "@graph": [{"@type": "Airport", "name": nome, "icaoCode": k, "url": BASE + u, "geo": {"@type": "GeoCoordinates", "latitude": a["lat"], "longitude": a["lon"]}, "address": {"@type": "PostalAddress", "addressLocality": a["municipio_servido"], "addressRegion": uf, "addressCountry": "BR"}},
+        ld = {"@context": "https://schema.org", "@graph": [{"@type": "Airport", "name": nome, "icaoCode": k, "url": BASE + u, **({"sameAs": [WD_AER[k]]} if k in WD_AER else {}), "geo": {"@type": "GeoCoordinates", "latitude": a["lat"], "longitude": a["lon"]}, "address": {"@type": "PostalAddress", "addressLocality": a["municipio_servido"], "addressRegion": uf, "addressCountry": "BR"}},
               {"@type": "Dataset", "name": f"Carga aérea mensal do aeroporto {k}", "url": BASE + u, "temporalCoverage": f"{per[0]}/{per[1]}", "isBasedOn": A["fonte_movimento"], "creator": {"@type": "Organization", "name": "Modal News"}, "license": "https://creativecommons.org/licenses/by/4.0/"}, faq_ld(fq), crumbs_ld(BASE, cr)]}
         B.write(u, B.page(f"Aeroporto {k} ({a['municipio_servido']}): carga aérea em toneladas"[:65], lead[:155].rsplit(" ", 1)[0] + "…", u, body, jsonld=ld, robots=None if idx else "noindex,follow"))
         B.REL[u] = [("/aeroportos/", "Ranking de aeroportos de carga"), (f"/estados/{uf.lower()}/", f"Logística em {UFN[uf]}"), ("/glossario/modal-aereo/", "O que é modal aéreo"), ("/glossario/awb/", "O que é AWB")] + [(f"/aeroportos/{x.lower()}/", f"Aeroporto {x}") for x, _ in lst[max(0, rk - 3):rk + 2] if x != k]

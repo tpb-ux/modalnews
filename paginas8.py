@@ -26,7 +26,7 @@ def rotas(B):
         lk = lambda u, t: f"<a href='{u}'>{t}</a>" if (B.OUT / u.strip("/") / "index.html").exists() else t
         rows = "".join(f"<tr><td>{lk('/rodovias/' + p['br'].lower() + '/', p['br'])}</td><td>{E(p['nome'])}</td><td>{E(p['mun'])}/{p['uf']}</td><td>{E(p['conc'].title())}</td><td>{brl(t * 5) if t else lk('/pedagios/' + B.slugify(p['conc']) + '/', 'ver tarifa')}</td></tr>" for p, t in ts)
         ped_html = (f"<p>No traçado calculado há <strong>{len(pr)} praça(s) de pedágio federais</strong> (ANTT)" + (f", que somam {brl(ped5)} para uma carreta de 5 eixos" + ("" if allk else " nas praças com tarifa identificada") if known else "") + ".</p><div class='tblw'><table class='tbl'><thead><tr><th>Rodovia</th><th>Praça</th><th>Município</th><th>Concessão</th><th>5 eixos</th></tr></thead><tbody>" + rows + "</tbody></table></div>") if pr else "<p>O traçado calculado não passa por praças de pedágio de rodovias federais concedidas (ANTT).</p>"
-        ped_html += "<p class='src'>Só praças federais (ANTT), a até 250 m do traçado; pedágios estaduais à parte.</p>"
+        ped_html += "<p class='src'>Praças federais (ANTT).</p>"
         brs = ", ".join(f"<a href='/rodovias/{x.lower()}/'>{x}</a>" if (B.OUT / "rodovias" / x.lower()).exists() else x for x, _ in r.get("brs", [])[:5])
         lead = f"De {orig} a {dest} são cerca de {num(km_)} km por estrada ({hr(r['min'])} de direção estimada, sem paradas). O piso de frete ANTT para carga geral em carreta de 5 eixos é {brl(f5)}" + (f", e as praças federais no caminho somam {brl(ped5)} para 5 eixos." if known and allk else ".")
         fq = [(f"Qual a distância de {a['nome']} a {b.get('porto_nome') or b['nome']} por estrada?", f"Cerca de {num(km_)} km entre os centros dos municípios, pelo cálculo de rota OSRM com dados do OpenStreetMap; em linha reta são {num(r['linha_reta'])} km. O tempo estimado é de {hr(r['min'])} sem paradas, e caminhões levam mais por limites de velocidade e jornada."),
@@ -64,16 +64,16 @@ def rotas(B):
         cr = [("Início", "/"), ("Rotas", "/rotas/"), (f"{a['nome']} × {b.get('porto_nome') or b['nome']}", u)]
         body = f"""<article class="post data">{crumbs_html(E, cr)}<h1>Frete {E(a['nome'])} × {E(b.get('porto_nome') or b['nome'])}: distância, pedágios e frete mínimo</h1><p class="snippet">{E(lead)}</p>
 <dl class="deflist"><dt>Distância por estrada*</dt><dd>{num(km_)} km</dd><dt>Tempo estimado*</dt><dd>{hr(r['min'])}</dd><dt>Linha reta</dt><dd>{num(r['linha_reta'])} km</dd>{f"<dt>Principais rodovias</dt><dd>{brs}</dd>" if brs else ''}</dl>
-<p class="src">*{E(R['fonte'])}. Tempo do roteador para automóvel, sem paradas.</p>
+<p class="src">*Rota OSRM, © colaboradores do OpenStreetMap (ODbL). <a href="/metodologia/">Método</a>.</p>
 <h2>Frete mínimo ANTT (carga geral, lotação)</h2><div class="tblw"><table class="tbl"><thead><tr><th>Veículo</th><th>Piso para {num(km_)} km</th></tr></thead><tbody><tr><td><a href="/veiculos/carreta-cinco-eixos/">Carreta 5 eixos</a></td><td>{brl(f5)}</td></tr><tr><td><a href="/veiculos/carreta-ls/">Carreta LS 6 eixos</a></td><td>{brl(f6)}</td></tr><tr><td><a href="/veiculos/bitrem/">Bitrem 7 eixos</a></td><td>{brl(f7)}</td></tr></tbody></table></div>
-<p class="src">{E(ato['nome'])}, Tabela A. Cálculo: km × CCD + CC. Outros tipos de carga na <a href="/frete-minimo/">calculadora de frete mínimo</a>.</p>
+<p class="src">{E(ato['nome'])}, Tabela A.</p>
 {perfil_html}{outras_html}
 <h2>Pedágios federais no trajeto</h2>{ped_html}
-<h2>Custo estimado de diesel</h2><p>{num(litros)} litros a 2,5 km/l × {brl(dm)}/l (S10, média de origem e destino, ANP) ≈ <strong>{brl(custo_d)}</strong>. Simule com o seu consumo na <a href="/calculadoras/custo-diesel-viagem/">calculadora de custo de diesel</a>.</p>
+<h2>Custo estimado de diesel</h2><p>{num(litros)} l × {brl(dm)}/l (S10, ANP) ≈ <strong>{brl(custo_d)}</strong>.</p>
 {dz_html}{mo_html}
 <h2>Perguntas frequentes</h2>{faq_block(E, fq)}</article>"""
         has_a = (B.OUT / "logistica" / sa).exists()
-        idx = km_ > 0 and has_a
+        idx = km_ > 0 and has_a and len(pr) >= 1  # consolidação: só rota com dado próprio de pedágio no traçado fica indexável
         ld = {"@context": "https://schema.org", "@graph": [{"@type": "WebPage", "name": f"Frete {a['nome']} × {b['nome']}", "url": BASE + u, "about": [{"@type": "City", "name": a["nome"]}, {"@type": "City", "name": b["nome"]}], "dateModified": cur["fim"]},
               {"@type": "Dataset", "name": f"Distância, pedágios e frete mínimo {a['nome']}–{b['nome']}", "url": BASE + u, "isBasedOn": ["https://www.openstreetmap.org/copyright", ato["url"], "https://dados.antt.gov.br/"], "creator": {"@type": "Organization", "name": "Modal News"}}, faq_ld(fq), crumbs_ld(BASE, cr)]}
         B.write(u, B.page(f"Frete {a['nome']} × {b.get('porto_nome') or b['nome']}: km, pedágio e piso ANTT"[:65], lead[:155].rsplit(" ", 1)[0] + "…", u, body, jsonld=ld, robots=None if idx else "noindex,follow"))

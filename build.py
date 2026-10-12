@@ -70,8 +70,31 @@ def fit_title(t, n=65):
 def fit_desc(d, n=160):
     return d if len(d) <= n else d[:n - 1].rsplit(" ", 1)[0].rstrip(",;:") + "…"
 
+FAQ_PSEO = ("/diesel/", "/logistica/", "/rotas/", "/aeroportos/", "/portos/", "/pedagios/", "/rodovias/", "/estados/")
+FAQ_HUBS = ("/estados/", "/diesel/estado/")  # hubs por estado mantêm o FAQ completo
+FAQ_MAX_PSEO = 3  # regra de FAQ: nas pSEO só ficam até 3 perguntas cuja resposta traz dado da página (número); hubs e glossário mantêm ≥5
+FAQ_STATS = {"pseo_paginas": 0, "pseo_faqs": 0, "pseo_removidas": 0}
+_DET = re.compile(r'<details class="faq"[^>]*><summary><h3>(.*?)</h3></summary>.*?</details>', re.S)
+
+def _faq_pseo(path, body, jsonld):
+    if not (path.startswith(FAQ_PSEO) and path.count("/") >= 3) or path.startswith(FAQ_HUBS) or not jsonld: return body, jsonld
+    graph = jsonld.get("@graph") if "@graph" in jsonld else [jsonld]
+    fq = next((g for g in graph if isinstance(g, dict) and g.get("@type") == "FAQPage"), None)
+    if not fq: return body, jsonld
+    qs = fq["mainEntity"]; keep = [q for q in qs if re.search(r"\d", q["acceptedAnswer"]["text"])][:FAQ_MAX_PSEO]
+    names = {E(q["name"]) for q in keep} | {q["name"] for q in keep}
+    FAQ_STATS["pseo_paginas"] += 1; FAQ_STATS["pseo_faqs"] += len(keep); FAQ_STATS["pseo_removidas"] += len(qs) - len(keep)
+    body = _DET.sub(lambda m: m.group(0) if m.group(1) in names else "", body)
+    if keep: fq["mainEntity"] = keep
+    else:
+        body = re.sub(r'<h2[^>]*>Perguntas frequentes[^<]*</h2>', "", body)
+        if "@graph" in jsonld: jsonld = {**jsonld, "@graph": [g for g in graph if g is not fq]}
+        else: jsonld = None
+    return body, jsonld
+
 def page(title, desc, path, body, og_img=None, og_type="website", jsonld=None, robots=None):
     body, jsonld = _inject_faq(path, body, jsonld)
+    body, jsonld = _faq_pseo(path, body, jsonld)
     title, desc = fit_title(title), fit_desc(desc)
     if jsonld:  # Article/NewsArticle sem imagem: usa a imagem social da página (rich results exigem image)
         for it in (jsonld.get("@graph") or [jsonld]):
@@ -88,7 +111,8 @@ def page(title, desc, path, body, og_img=None, og_type="website", jsonld=None, r
                         ("/guias/", "Guias"), ("/estados/", "Logística por estado"), ("/logistica/", "Logística por cidade"), ("/resumo-semanal/", "Resumo semanal"), ("/comparativos/", "Comparativos"), ("/veiculos/", "Veículos de carga"), ("/tipos-de-carga/", "Tipos de carga"), ("/glossario/ingles-portugues/", "Inglês × português"), ("/calculadoras/cubagem/", "Calculadora de cubagem"), ("/calculadoras/custo-diesel-viagem/", "Custo de diesel"), ("/siglas/", "Siglas"), ("/aeroportos/", "Aeroportos de carga"), ("/pedagios/", "Pedágios"), ("/rotas/", "Rotas de frete"), ("/utilidades/", "Utilidades"), ("/busca/", "Buscar")])
     ld = f'<script type="application/ld+json">{json.dumps(jsonld, ensure_ascii=False)}</script>' if jsonld else ""
     ld += f'<script type="application/ld+json">{json.dumps(SITE_LD, ensure_ascii=False)}</script>'
-    rb = f'<meta name="robots" content="{robots}">' if robots else ""
+    import qualidade
+    rb = f'<meta name="robots" content="{robots or qualidade.INDEX_ROBOTS}">'
     vf = CFG.get("verificacao") or {}
     if path == "/":
         rb += (f'<meta name="google-site-verification" content="{E(vf["google"])}">' if vf.get("google") else "") + (f'<meta name="msvalidate.01" content="{E(vf["bing"])}">' if vf.get("bing") else "")
@@ -161,7 +185,13 @@ def write(path, txt):
     f.parent.mkdir(parents=True, exist_ok=True); f.write_text(txt, encoding="utf-8")
 
 def main():
-    posts = load()
+    import fetch, extras_seo, qualidade as Q
+    nmig = fetch.migrar_cards()
+    if nmig: print(f"Imagens: {nmig} foto(s) de terceiros sem licença confirmada trocadas por card próprio (mesmo caminho)")
+    AUT = extras_seo.autores(sys.modules[__name__])
+    posts = [p for p in load() if extras_seo.publicavel(p, AUT)]
+    for p in posts:
+        if p.get("tipo") == "analise": p["url"] = f"/analises/{p['slug']}/"
     if OUT.exists(): shutil.rmtree(OUT)
     shutil.copytree(ROOT / "static", OUT / "static")
     shutil.copy(ROOT / "static" / "favicon.ico", OUT / "favicon.ico")
@@ -202,23 +232,25 @@ def main():
         ps = [p for p in posts if p["editoria"] == s]
         inner = "".join(card(p, h="h2") for p in ps) or "<p>Nenhuma matéria ainda.</p>"
         fts = sorted({p.get("fonte", "") for p in ps if p.get("fonte")})
-        dsc = f"Notícias de {n.lower()} na logística: resumos de {', '.join(fts[:3]) if fts else 'portais do setor'} com link para a fonte, atualizados a cada 3 horas."
+        dsc = f"Notícias de {n.lower()} na logística: resumos de {', '.join(fts[:3]) if fts else 'portais do setor'} com link para a fonte, atualizados a cada 30 minutos."
         write(f"/{s}/", page(f"Notícias de {n} na logística | {CFG['site_name']}", dsc[:160], f"/{s}/",
                              f'<section class="blk">{sec("Editoria", n, tag="h1")}<div class="grid">{inner}</div></section>', jsonld=itemlist(ps)))
     import glossario
     gl_urls, interlink, gl_lastmod, terms = glossario.build(sys.modules["__main__"] if "__main__" in sys.modules and hasattr(sys.modules["__main__"], "page") else sys.modules[__name__], posts)
+    me0 = sys.modules[__name__]
     for p in posts:
         if p.get("html"):  # links para o glossário no texto da matéria (fora do link da fonte)
             head, sep, tail = p["html"].partition("<p><strong>")
             p["html"] = interlink(head, budget=3) + sep + tail
         ld = {"@context": "https://schema.org", "@type": "NewsArticle", "headline": p["titulo"][:110],
               "description": p.get("resumo", ""), "image": [{"@type": "ImageObject", "url": BASE + p["imagem"], "width": p.get("imagem_w", 1200), "height": p.get("imagem_h", 630)}],
-              "datePublished": p["data"].isoformat(), "dateModified": p["data"].isoformat(),
+              "datePublished": p["data"].isoformat(), "dateModified": (p.get("atualizado") or p["data"]).isoformat() if hasattr(p.get("atualizado") or p["data"], "isoformat") else str(p.get("atualizado")),
               "articleSection": EDS[p["editoria"]], "mainEntityOfPage": BASE + p["url"],
-              "author": {"@type": "Organization", "name": CFG["site_name"]},
+              "author": extras_seo.person(me0, AUT[p["autor"]]) if p.get("autor") in AUT else {"@type": "Organization", "name": CFG["site_name"], "url": BASE + "/"},
+              **({"editor": extras_seo.person(me0, AUT[p["revisado_por"]])} if p.get("revisado_por") in AUT else {}),
               "publisher": {**org, "logo": {"@type": "ImageObject", "url": BASE + CFG["publisher_logo"]}}}
         b = f"""<article class="post"><div class="kick"><a href="/{p['editoria']}/">{E(EDS[p['editoria']])}</a></div>
-<h1>{E(p['titulo'])}</h1><p class="meta">Publicado em <time datetime="{p['data'].isoformat()}">{fmt(p['data'])}</time>
+<h1>{E(p['titulo'])}</h1><p class="meta">{('Por <a href="/autores/' + p['autor'] + '/">' + E(AUT[p['autor']]['nome']) + '</a> · ') if p.get('autor') in AUT else ''}Publicado em <time datetime="{p['data'].isoformat()}">{fmt(p['data'])}</time>{(' · Atualizado em ' + fmt(p['atualizado'])) if isinstance(p.get('atualizado'), dt.datetime) else ''}
 {(' · Fonte: ' + E(p['fonte'])) if p.get('fonte') else ''}</p>{'' if p.get('gerado_por') else '<p><strong>' + E(p.get('resumo','')) + '</strong></p>'}
 <figure class="cover">{img(p, "cover", "(max-width: 800px) 100vw, 760px", True)}{f'<figcaption>Imagem: {E(p["imagem_credito"])}</figcaption>' if p.get("imagem_credito") else ''}</figure>{p['html']}</article>"""
         write(p["url"], page(f"{p['titulo']} — {CFG['site_name']}", p.get("resumo", ""), p["url"], b,
@@ -237,6 +269,13 @@ def main():
     calc_urls = paginas.calculadoras(sys.modules[__name__])
     conf_urls = paginas.confianca(sys.modules[__name__], len(terms))
     sig_urls = paginas.siglas(sys.modules[__name__], terms)
+    me_x = sys.modules[__name__]
+    dados_urls, dados_lm = extras_seo.dados(me_x); aut_urls = extras_seo.paginas_autores(me_x)
+    an = [p for p in posts if p.get("tipo") == "analise"]
+    if an:
+        write("/analises/", page(f"Análises | {CFG['site_name']}", "Análises próprias do Modal News com dados oficiais de diesel, frete, rotas e infraestrutura, assinadas e revisadas.", "/analises/",
+                                 f'<section class="blk">{sec("Conteúdo próprio", "Análises", tag="h1")}<div class="grid">{"".join(card(x, h="h2") for x in an)}</div></section>', jsonld=itemlist(an)))
+    conf_urls = conf_urls + dados_urls + aut_urls + (["/analises/"] if an else [])
     own = [p for p in posts if not p.get("gerado_por")]
     today = dt.date.today().isoformat()
     def smfile(name, urls, lastmod={}, images=None):
@@ -254,12 +293,39 @@ def main():
         + "".join(f"<sitemap><loc>{BASE}/{f}</loc></sitemap>" for f in files) + "</sitemapindex>", encoding="utf-8")
     items = "".join(f"<item><title>{E(p['titulo'])}</title><link>{BASE}{p['url']}</link><guid>{BASE}{p['url']}</guid><pubDate>{format_datetime(p['data'])}</pubDate><category>{E(EDS[p['editoria']])}</category><description>{E(p.get('resumo',''))}</description></item>" for p in posts[:30])
     (OUT / "rss.xml").write_text(f'<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0"><channel><title>{E(CFG["site_name"])}</title><link>{BASE}/</link><description>{E(CFG["tagline"])}</description><language>pt-br</language>{items}</channel></rss>', encoding="utf-8")
-    (OUT / "robots.txt").write_text(f"User-agent: *\nAllow: /\nDisallow: /saude.json\nDisallow: /*?utm_\n\nSitemap: {BASE}/sitemap.xml\n")
+    (OUT / "robots.txt").write_text(Q.robots_txt(BASE, disallow=("/saude.json", "/*?utm_")))
+    nnews = extras_seo.sitemap_noticias(me_x, posts)
+    if nnews: files.append("sitemap-noticias.xml")
+    # ---- unicidade: páginas pSEO com pouco texto próprio saem do índice e do sitemap
+    qc = CFG.get("qualidade") or {}
+    fams = {}; cand = set()
+    for f in OUT.rglob("index.html"):
+        u = "/" + f.parent.relative_to(OUT).as_posix() + "/"
+        if not (u.startswith(THIN_FAMILIAS) and u.count("/") >= 3): continue
+        h = f.read_text(encoding="utf-8")
+        if 'content="noindex' not in h: cand.add(u)
+        fams.setdefault(u.split("/")[1], {})[u] = h
+    qstats, abaixo = Q.unicidade(fams, corte=qc.get("corte_unicidade", 0.15), cortes=qc.get("cortes_unicidade"), avaliar=cand)
+    for u in abaixo:
+        f = OUT / u.strip("/") / "index.html"; f.write_text(Q.set_robots(f.read_text(encoding="utf-8"), "noindex,follow"), encoding="utf-8"); THIN.add(u)
+    for sm in OUT.glob("sitemap-*.xml"):
+        t = sm.read_text(encoding="utf-8"); t2 = re.sub(r"<url><loc>" + re.escape(BASE) + r"(/[^<]*)</loc>.*?</url>", lambda m: "" if m.group(1) in abaixo else m.group(0), t)
+        if t2 != t: sm.write_text(t2, encoding="utf-8")
+    (OUT / "sitemap.xml").write_text('<?xml version="1.0" encoding="UTF-8"?>\n<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
+        + "".join(f"<sitemap><loc>{BASE}/{f}</loc></sitemap>" for f in files) + "</sitemapindex>", encoding="utf-8")
+    fams_all = {k: v for k, v in fams.items()}
+    sim = Q.similaridade({k: {u: h for u, h in v.items() if u in cand and u not in abaixo} for k, v in fams_all.items()})
+    erros_rede, pct_rede = Q.anti_rede(OUT, CFG.get("rede_dominios") or [])
+    if erros_rede:
+        for e in erros_rede: print("ERRO:", e)
+        sys.exit("ERRO: regra anti-rede violada")
+    me_x._qualidade = {"unicidade": qstats, "noindex_por_unicidade": len(abaixo), "similaridade_jaccard5": sim, "faq_pseo": dict(FAQ_STATS), "rede_links_pct": pct_rede, "sitemap_noticias": nnews}
+    print(f"Unicidade: {len(abaixo)} página(s) abaixo do corte em noindex · similaridade média por família: " + ", ".join(f"{k}={v}" for k, v in sorted(sim.items())))
     col = json.loads((ROOT / "data" / "saude_coleta.json").read_text()) if (ROOT / "data" / "saude_coleta.json").exists() else {}
     paginas.extras(sys.modules[__name__], {"build": dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds"), "ultima_coleta": col.get("hora"), "feeds_com_erro": col.get("erros", []),
         "materias": len(posts), "termos": len(terms), "paginas_indexaveis": sum(len(x) for x in (gl_urls, ds_urls, calc_urls, conf_urls, sig_urls, fm_urls, pt_urls, rd_urls, gu_urls)) + 1 + len(EDS),
         "diesel_semana": max(ds_lastmod.values(), default=None)})
-    gen_llms()
+    gen_llms(); extras_seo.llms(me_x, ["/diesel/", "/logistica/", "/rotas/", "/frete-minimo/", "/portos/", "/aeroportos/", "/rodovias/", "/pedagios/", "/estados/", "/glossario/", "/siglas/", "/comparativos/", "/veiculos/", "/tipos-de-carga/", "/guias/", "/calculadoras/cubagem/", "/calculadoras/custo-diesel-viagem/", "/resumo-semanal/", "/utilidades/"])
     nb = paginas8.busca_index(me)
     if CFG.get("indexnow_key"): (OUT / f"{CFG['indexnow_key']}.txt").write_text(CFG["indexnow_key"])
     import indexnow; indexnow.diff(me)

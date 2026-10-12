@@ -17,7 +17,7 @@ def build(B, posts):
         (f"O que é o {site}?", f"Um portal de notícias e dados de logística, transporte, supply chain e comércio exterior, com curadoria automática de {nf} fontes do setor e páginas de referência baseadas em dados oficiais."),
         ("Qual o preço médio do diesel no Brasil nesta semana?", f"Na semana de {per}, o diesel S10 custou em média {brl(br10)} por litro, segundo o levantamento da ANP. Veja por estado e cidade na página de diesel."),
         ("De onde vêm as notícias?", f"De feeds RSS públicos de portais especializados, como {fontes}. Cada notícia traz resumo curto, crédito e link para o original."),
-        ("Com que frequência o site é atualizado?", "As notícias são coletadas a cada 3 horas; diesel, tarifas de pedágio e frete mínimo são atualizados quando ANP e ANTT publicam novos dados."),
+        ("Com que frequência o site é atualizado?", "As notícias são coletadas a cada 30 minutos; diesel, tarifas de pedágio e frete mínimo são atualizados quando ANP e ANTT publicam novos dados."),
         ("Que ferramentas gratuitas o portal oferece?", f"Glossário de logística, calculadoras de cubagem, custo de diesel e frete mínimo ANTT, além de {len(rot)} rotas entre cidades e portos com distância, pedágios e piso de frete."),
     ]
     agora = dt.datetime.now(dt.timezone.utc)
@@ -29,7 +29,7 @@ def build(B, posts):
             (f"Quais fontes aparecem em {nome}?", (", ".join(src) + "." if src else "Portais especializados do setor listados na política editorial.") + " A lista completa de fontes está no repositório do site."),
             ("As notícias são reescritas pelo portal?", "Não. Publicamos o título original, um resumo curto do feed e o link \"Leia na íntegra\" para a fonte."),
             ("Como as notícias são classificadas nesta editoria?", "Pela editoria definida para a fonte ou, quando a fonte é geral, por palavras-chave do título e do resumo; itens fora do tema são filtrados."),
-            ("Com que frequência a editoria é atualizada?", "A coleta roda a cada 3 horas; a página é regenerada a cada coleta."),
+            ("Com que frequência a editoria é atualizada?", "A coleta roda a cada 30 minutos; a página é regenerada a cada coleta."),
         ]
     H["/veiculos/"] = [("Quantos tipos de veículo de carga o guia cobre?", f"{len(V)} configurações: " + ", ".join(v["curto"] for v in V) + "."),
         ("Qual veículo de carga tem mais eixos no guia?", (lambda m: f"{m['curto']}, com {m['eixos']} eixos.")(max(V, key=lambda v: v.get("eixos", 0)))),

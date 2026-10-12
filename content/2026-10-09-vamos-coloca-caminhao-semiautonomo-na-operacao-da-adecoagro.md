@@ -4,10 +4,9 @@ data: 2026-10-09T15:00:05-03:00
 editoria: transporte
 resumo: "Desenvolvido pela BMB Mode Center, Agronomous utiliza georreferenciamento para aumentar a precisão do transbordo de cana-de-açúcar e reduzir danos à lavoura"
 imagem: "/static/img/2026-10-09-vamos-coloca-caminhao-semiautonomo-na-operacao-da-adecoagro.webp"
-imagem_w: 454
-imagem_h: 283
-imagem_credito: "Transporte Moderno"
-imagem_origem: "https://storage.transportemoderno.com.br/uploads/2026/10/Vamos.jpg"
+imagem_w: 1200
+imagem_h: 630
+imagem_card: true
 fonte: "Transporte Moderno"
 link: "https://transportemoderno.com.br/2026/10/09/vamos-coloca-caminhao-semiautonomo-na-operacao-da-adecoagro/"
 gerado_por: fetch.py

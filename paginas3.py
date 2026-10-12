@@ -58,21 +58,20 @@ def build(B):
         if pib: perfil.append((f"PIB a preços correntes ({g['pib_mil_ano']})", f"R$ {dec(pib / 1e6, 2)} bilhões"))
         if pop and pib: perfil.append((f"PIB per capita (cálculo: PIB {g['pib_mil_ano']} ÷ população 2022)", brl(pib * 1000 / pop)))
         perfil.append(("Área territorial", f"{dec(g['area_km2'])} km²"))
-        perfil_html = "<dl class='deflist'>" + "".join(f"<dt>{E(a)}</dt><dd>{E(b)}</dd>" for a, b in perfil) + "</dl><p class='src'>Fonte: IBGE (Censo Demográfico 2022, PIB dos Municípios e Malhas Territoriais), via API oficial servicodados.ibge.gov.br.</p>"
+        perfil_html = "<dl class='deflist'>" + "".join(f"<dt>{E(a)}</dt><dd>{E(b)}</dd>" for a, b in perfil) + "</dl><p class='src'>Fonte: IBGE.</p>"
         dz = f"<p>Na semana de {dbr(cur['ini'])} a {dbr(cur['fim'])}, a ANP pesquisou {postos} postos em {E(disp)}." + (f" O diesel S10 custou em média <strong>{brl(s10)}/l</strong>" if s10 else "") + (f" e o S500, {brl(s500)}/l" if s500 else "") + \
              f". Preços mínimos, máximos e histórico semanal estão na página <a href='{dsl}'>preço do diesel em {E(disp)}</a>.</p>"
         if s10:
             l = 100 / 2.5 * s10
-            dz += f"<p>Para referência de custo: um caminhão pesado com consumo de 2,5 km/l gasta cerca de {brl(l)} de diesel S10 a cada 100 km ao preço médio da cidade (cálculo ilustrativo; use a <a href='/calculadoras/custo-diesel-viagem/'>calculadora de custo de diesel</a> com o seu consumo).</p>"
         if prox:
             rows = "".join(f"<tr><td><a href='/rodovias/{p['br'].lower()}/'>{p['br']}</a></td><td>{E(p['nome'])}</td><td>{E(p['municipio'])} ({p['uf']}), km {dec(p['km'])}</td><td>{E(p['concessionaria'].title())}</td><td>{dec(d, 0)} km</td><td>{num(p['com']) if p['com'] else '—'}{(' (' + p['mes'] + ')') if p['com'] else ''}</td></tr>" for d, p in prox)
-            rd = f"<p>Há {len(prox)} praça(s) de pedágio de rodovias federais concedidas num raio de 100 km (em linha reta) de {E(disp)}, nas rodovias {', '.join(brs)}.</p><div class='tblw'><table class='tbl'><thead><tr><th>Rodovia</th><th>Praça</th><th>Local</th><th>Concessionária</th><th>Distância em linha reta*</th><th>Veículos comerciais no mês</th></tr></thead><tbody>{rows}</tbody></table></div><p class='src'>*Distância em linha reta entre os centros (centroides IBGE) dos municípios, não é a distância rodoviária. Praças e volumes: ANTT, dados abertos.</p>"
+            rd = f"<p>Há {len(prox)} praça(s) de pedágio de rodovias federais concedidas num raio de 100 km (em linha reta) de {E(disp)}, nas rodovias {', '.join(brs)}.</p><div class='tblw'><table class='tbl'><thead><tr><th>Rodovia</th><th>Praça</th><th>Local</th><th>Concessionária</th><th>Distância em linha reta*</th><th>Veículos comerciais no mês</th></tr></thead><tbody>{rows}</tbody></table></div><p class='src'>*Linha reta entre centroides IBGE. Fonte: ANTT.</p>"
         else:
             rd = f"<p>Não há praças de pedágio de rodovias federais concedidas num raio de 100 km (em linha reta) de {E(disp)} no cadastro da ANTT. Rodovias estaduais e federais não concedidas não entram nesta lista.</p>"
         hr = lambda m: f"{m // 60}h{m % 60:02d}" if m else "—"
         pt = "<div class='tblw'><table class='tbl'><thead><tr><th>Porto organizado</th><th>Por estrada*</th><th>Tempo estimado*</th><th>Linha reta</th></tr></thead><tbody>" + "".join(f"<tr><td><a href='/portos/{p['slug']}/'>{E(p['nome'])}</a> ({E(p['cidade'])}, {p['uf']})</td><td>{num(R(h)[0]) + ' km' if R(h) else '—'}</td><td>{hr(R(h)[1]) if R(h) else '—'}</td><td>{num(d)} km</td></tr>" for d, p, h in pts3) + "</tbody></table></div>"
         aer = "<div class='tblw'><table class='tbl'><thead><tr><th>Aeroporto</th><th>Carga em 12 meses (ANAC)</th><th>Por estrada*</th><th>Linha reta</th></tr></thead><tbody>" + "".join(f"<tr><td><a href='/aeroportos/{k2.lower()}/'>{E(a['nome_oficial'].title())} ({k2})</a>, {E(a['municipio_servido'])}</td><td>{num(a['dom'] + a['int'])} t</td><td>{num(R(a)[0]) + ' km' if R(a) else '—'}</td><td>{num(d)} km</td></tr>" for d, k2, a in ae2) + "</tbody></table></div>"
-        nota = f"<p class='src'>*{E(osrm.FONTE)}. O tempo é estimativa do roteador para automóvel, sem paradas; caminhões levam mais. Linha reta: entre centroides IBGE.</p>"
+        nota = "<p class='src'>*Rota OSRM, © colaboradores do OpenStreetMap (ODbL). <a href='/metodologia/'>Método</a>.</p>"
         pt += aer + nota
         polo = ""
         if r0:
@@ -83,9 +82,9 @@ def build(B):
                 polo += f" Sua região de influência imediata é a de " + (f"<a href='{plk}'>{E(pl[0])} ({pl[1]})</a>" if has else f"{E(pl[0])} ({pl[1]})") + (f", a {num(R(plg)[0])} km por estrada" if plg and R(plg) else "") + "."
             if len(sb) > 1: polo += f" {len(sb)} municípios têm {E(disp if not r0.get('arranjo') else r0['arranjo'])} como centro de referência imediato para compras, serviços e deslocamentos."
             if cap and cap is not g and R(cap): polo += f" A capital, {E(geo.CAPITAIS[uf])}, fica a {num(R(cap)[0])} km por estrada."
-            polo += "</p><p class='src'>Fonte: IBGE, Regiões de Influência das Cidades 2018 (REGIC). Os polos indicam centralidade urbana e de serviços, usada como referência para planejamento de distribuição.</p>"
+            polo += "</p><p class='src'>Fonte: IBGE, REGIC 2018.</p>"
         ex = [(x, x * cg["ccd"]["5"] + cg["cc"]["5"]) for x in (100, 300, 500)]
-        fr = f"<p>O piso de frete da ANTT vale para todo o país e depende da distância, do tipo de carga e do número de eixos, não da cidade. Referência para carga geral, lotação, 5 eixos (Tabela A, {E(ato['nome'])}): " + "; ".join(f"{x} km = {brl(vv)}" for x, vv in ex) + ". Pedágio é pago à parte. Calcule a sua rota na <a href='/frete-minimo/'>calculadora de frete mínimo</a>.</p>"
+        fr = "<p>O piso de frete da ANTT não varia por cidade: veja a <a href='/frete-minimo/'>calculadora de frete mínimo</a>.</p>"
         # ---- FAQ
         fq = []
         if s10: fq.append((f"Quanto custa o diesel para caminhão em {cidade}?", f"Na semana de {dbr(cur['ini'])} a {dbr(cur['fim'])}, o diesel S10 custou em média {brl(s10)} por litro em {disp}, segundo a pesquisa da ANP em {postos} postos. O preço muda toda semana; a página de diesel da cidade mostra mínimo, máximo e histórico."))
@@ -93,10 +92,9 @@ def build(B):
         if pts3 and R(pts3[0][2]): fq.append((f"Qual o porto mais próximo de {disp}?", f"Entre os 35 portos organizados do país (lista da ANTAQ), o mais próximo por estrada é o {pts3[0][1]['nome']}, a cerca de {num(R(pts3[0][2])[0])} km, segundo cálculo de rota com OSRM e dados do OpenStreetMap entre os centros dos municípios."))
         elif pts: fq.append((f"Qual o porto mais próximo de {disp}?", f"Entre os portos organizados, o mais próximo é o {pts[0][1]['nome']}, a cerca de {num(pts[0][0])} km em linha reta entre os centros dos municípios (IBGE)."))
         if ae2: fq.append((f"Qual o aeroporto de carga mais próximo de {disp}?", f"O aeroporto com movimento de carga mais próximo é {ae2[0][2]['nome_oficial'].title()} ({ae2[0][1]}), em {ae2[0][2]['municipio_servido']}, que movimentou {num(ae2[0][2]['dom'] + ae2[0][2]['int'])} toneladas de carga e correio em 12 meses, segundo a ANAC" + (f", a {num(R(ae2[0][2])[0])} km por estrada." if R(ae2[0][2]) else ".")))
-        fq.append((f"Qual o frete mínimo saindo de {disp}?", f"O piso da ANTT não muda por cidade: é calculado pela distância da viagem, tipo de carga e número de eixos. Para carga geral com 5 eixos, uma viagem de 300 km tem piso de {brl(ex[1][1])}, sem pedágio. Use a calculadora para a sua rota."))
         if pop and pib: fq.append((f"Qual o tamanho da economia de {disp}?", f"Pelo IBGE, {disp} tinha {num(pop)} habitantes no Censo 2022 e PIB de R$ {dec(pib / 1e6, 2)} bilhões em {g['pib_mil_ano']}, o que dá cerca de {brl(pib * 1000 / pop)} por habitante (PIB do ano dividido pela população do Censo)."))
         dp = (1 if any(road) else 0) + (1 if r0 else 0) + (1 if s10 else 0) + (1 if s500 else 0) + (1 if pop else 0) + (1 if pib else 0) + min(len(prox), 4) + (1 if pts and pts[0][0] <= 400 else 0)
-        idx = dp >= 5 and postos >= 3 and len(fq) >= 5
+        idx = dp >= 5 and postos >= 3 and len(fq) >= 4
         lg = []
         if pts3 and R(pts3[0][2]):
             kp = R(pts3[0][2])[0]

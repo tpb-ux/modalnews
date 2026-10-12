@@ -31,3 +31,8 @@ verificacao:
   bing: ""
 # IndexNow: chave pública (arquivo /<chave>.txt é gerado no build)
 indexnow_key: "8979e07f71111ac261c735706569d229"
+# Regra anti-rede: portais da mesma empresa não se linkam no layout (cabeçalho/rodapé/menu) nem em massa.
+rede_dominios: [estrato.com.br, tpb-ux.github.io/estrato]
+qualidade:
+  corte_unicidade: 0.15        # fração mínima de texto próprio (5-gramas raros na família) para uma pSEO ficar indexável
+  cortes_unicidade: {frete-minimo: 0.08}   # tabelas oficiais distintas por tipo de carga: texto curto por natureza

@@ -4,10 +4,9 @@ data: 2026-10-09T00:02:00-03:00
 editoria: transporte
 resumo: "O ciclo do El Niño previsto para 2026-2027 promete colocar empresas brasileiras de diversos setores diante de severos riscos operacionais e financeiros. Considerado um dos eventos mais intensos das últimas décadas, o fenômeno climático tem potencial para…"
 imagem: "/static/img/2026-10-09-impactos-do-super-el-nino-o-que-o-fenomeno-climatico-reserva-para-empr.webp"
-imagem_w: 1024
-imagem_h: 576
-imagem_credito: "Logweb"
-imagem_origem: "https://logweb.com.br/wp-content/uploads/2026/10/Contraste-Climatico-entre-Porto-e-Rodovia-1024x576.png"
+imagem_w: 1200
+imagem_h: 630
+imagem_card: true
 fonte: "Logweb"
 link: "https://logweb.com.br/impactos-do-super-el-nino-o-que-o-fenomeno-climatico-reserva-para-empresas-de-logistica-e-transporte/"
 gerado_por: fetch.py

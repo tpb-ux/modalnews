@@ -34,6 +34,7 @@ def build(B, posts):
         },
         "coleta": {"ultima_execucao": col.get("hora"), "evento": col.get("evento"), "run_id": col.get("run_id"), "novas_na_ultima": col.get("novas"),
                    "ultima_execucao_automatica_ok": ultima_auto, "ultima_execucao_agendada_ok": ult.get("schedule"), "por_evento": ult},
+        "qualidade": getattr(B, "_qualidade", None),
         "site": {"paginas_indexaveis": idx, "links_internos_quebrados": 0, "build": os.environ.get("GITHUB_RUN_ID") or "local"},
     }
     txt = json.dumps(data, ensure_ascii=False, indent=1)
