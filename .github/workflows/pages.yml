@@ -25,6 +25,8 @@ jobs:
       - name: IBGE (municípios novos)
         if: github.event_name != 'push'
         run: python tools/ibge_cidades.py || echo "IBGE indisponível; mantendo dados anteriores"
+      - name: Registrar meses de pedágio (resumo semanal)
+        run: python paginas6.py
       - name: Commitar conteúdo novo
         if: github.event_name != 'push'
         run: |
