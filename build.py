@@ -30,7 +30,8 @@ def load():
         if d.tzinfo is None: d = d.replace(tzinfo=dt.timezone(dt.timedelta(hours=-3)))
         if m["editoria"] not in EDS: raise SystemExit(f"{f.name}: editoria inválida {m['editoria']}")
         slug = m.get("slug") or slugify(f.stem)
-        if not m.get("imagem"): m["imagem"] = BASE + "/static/og-default.png"
+        if not str(m.get("imagem", "")).startswith("/static/img/"):
+            m.update(imagem=f"/static/img/editoria/{m['editoria']}.webp", imagem_w=1200, imagem_h=630); m.pop("imagem_credito", None)
         posts.append(dict(m, data=d, slug=slug, url=f"/{m['editoria']}/{slug}/",
                           html=markdown.markdown(body, extensions=["extra"])))
     return sorted(posts, key=lambda p: p["data"], reverse=True)
@@ -57,16 +58,23 @@ def page(title, desc, path, body, og_img=None, og_type="website", jsonld=None):
 <div><h4>Editorias</h4>{nav}</div><div><h4>Assine</h4><a href="/glossario/">Glossário de Logística</a><a href="/rss.xml">Feed RSS</a><a href="/sitemap.xml">Mapa do site</a></div></div>
 <div class="wrap fbot">© {dt.date.today().year} {E(CFG['site_name'])} · Todos os direitos reservados</div></footer></body></html>"""
 
+def img(p, cls="", sizes="(max-width: 760px) 100vw, 300px", priority=False):
+    src = p["imagem"]; w, h = p.get("imagem_w", 1200), p.get("imagem_h", 630)
+    thumb = src[:-5] + "-480.webp"
+    load = 'fetchpriority="high" decoding="async"' if priority else 'loading="lazy" decoding="async"'
+    return (f'<img{f" class={chr(34)}{cls}{chr(34)}" if cls else ""} src="{src}" srcset="{PREFIX}{thumb} 480w, {PREFIX}{src} {w}w" '
+            f'sizes="{sizes}" width="{w}" height="{h}" alt="{E(p["titulo"])}" {load}>')
+
 def card(p, cls="", h="h3"):
-    return f"""<div class="card {cls}"><a href="{p['url']}"><div class="thumb"><img src="{E(p.get('imagem',''))}" alt="" loading="lazy"><span class="badge">{E(EDS[p['editoria']])}</span></div>
+    return f"""<div class="card {cls}"><a href="{p['url']}"><div class="thumb">{img(p)}<span class="badge">{E(EDS[p['editoria']])}</span></div>
 <div class="in"><{h}>{E(p['titulo'])}</{h}><p>{E(p.get('resumo',''))}</p><span class="more">Ler na íntegra</span></div></a></div>"""
 
 def hero(p):
     return f"""<a class="hero-main" href="{p['url']}"><div class="htxt"><div class="kick">Destaque <span>• {p['data'].strftime('%d/%m/%Y')}</span></div>
-<h2>{E(p['titulo'])}</h2><p>{E(p.get('resumo',''))}</p></div><img src="{E(p.get('imagem',''))}" alt=""></a>"""
+<h2>{E(p['titulo'])}</h2><p>{E(p.get('resumo',''))}</p></div>{img(p, sizes="(max-width: 860px) 100vw, 660px", priority=True)}</a>"""
 
 def mini(p):
-    return f"""<a class="mini" href="{p['url']}"><img src="{E(p.get('imagem',''))}" alt="" loading="lazy"><div><span class="kick">{E(EDS[p['editoria']])}</span><h3>{E(p['titulo'])}</h3></div></a>"""
+    return f"""<a class="mini" href="{p['url']}">{img(p, sizes="96px")}<div><span class="kick">{E(EDS[p['editoria']])}</span><h3>{E(p['titulo'])}</h3></div></a>"""
 
 def sec(title_small, title_big, link=None):
     t = f'<span>{E(title_small)}</span><strong>{E(title_big)}</strong>'
@@ -131,7 +139,7 @@ def main():
     if OUT.exists(): shutil.rmtree(OUT)
     shutil.copytree(ROOT / "static", OUT / "static")
     if CFG.get("cname"): (OUT / "CNAME").write_text(CFG["cname"].strip() + "\n")
-    own = lambda p: p.get("imagem") and not p["imagem"].endswith("/static/og-default.png")
+    own = lambda p: not p["imagem"].startswith("/static/img/editoria/")
     dest = [p for p in posts if p.get("destaque")] or [p for p in posts if own(p)][:1] or posts[:1]
     body = ""
     if dest:
@@ -150,7 +158,7 @@ def main():
                              f'<section class="blk">{sec("Editoria", n)}<div class="grid">{inner}</div></section>'))
     for p in posts:
         ld = {"@context": "https://schema.org", "@type": "NewsArticle", "headline": p["titulo"][:110],
-              "description": p.get("resumo", ""), "image": [p.get("imagem")] if p.get("imagem") else [],
+              "description": p.get("resumo", ""), "image": [{"@type": "ImageObject", "url": BASE + p["imagem"], "width": p.get("imagem_w", 1200), "height": p.get("imagem_h", 630)}],
               "datePublished": p["data"].isoformat(), "dateModified": p["data"].isoformat(),
               "articleSection": EDS[p["editoria"]], "mainEntityOfPage": BASE + p["url"],
               "author": {"@type": "Organization", "name": CFG["site_name"]},
@@ -158,13 +166,18 @@ def main():
         b = f"""<article class="post"><div class="kick"><a href="/{p['editoria']}/">{E(EDS[p['editoria']])}</a></div>
 <h1>{E(p['titulo'])}</h1><p class="meta">Publicado em <time datetime="{p['data'].isoformat()}">{fmt(p['data'])}</time>
 {(' · Fonte: ' + E(p['fonte'])) if p.get('fonte') else ''}</p>{'' if p.get('gerado_por') else '<p><strong>' + E(p.get('resumo','')) + '</strong></p>'}
-{f'<img class="cover" src="{E(p["imagem"])}" alt="">' if p.get('imagem') else ''}{p['html']}</article>"""
+<figure class="cover">{img(p, "cover", "(max-width: 800px) 100vw, 760px", True)}{f'<figcaption>Imagem: {E(p["imagem_credito"])}</figcaption>' if p.get("imagem_credito") else ''}</figure>{p['html']}</article>"""
         write(p["url"], page(f"{p['titulo']} — {CFG['site_name']}", p.get("resumo", ""), p["url"], b,
-                             p.get("imagem"), "article", ld))
+                             BASE + p["imagem"], "article", ld))
     now = dt.datetime.now(dt.timezone.utc)
     urls = ["/"] + [f"/{s}/" for s in EDS] + [p["url"] for p in posts] + build_glossary()
-    (OUT / "sitemap.xml").write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
-        + "".join(f"<url><loc>{BASE}{u}</loc></url>" for u in urls) + "</urlset>", encoding="utf-8")
+    imgs = {p["url"]: p for p in posts}
+    def sm(u):
+        p = imgs.get(u)
+        im = f"<image:image><image:loc>{BASE}{p['imagem']}</image:loc></image:image>" if p else ""
+        return f"<url><loc>{BASE}{u}</loc>{im}</url>"
+    (OUT / "sitemap.xml").write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">'
+        + "".join(sm(u) for u in urls) + "</urlset>", encoding="utf-8")
     recent = [p for p in posts if now - p["data"] < dt.timedelta(days=2)] or posts[:1]
     (OUT / "news-sitemap.xml").write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">'
         + "".join(f"<url><loc>{BASE}{p['url']}</loc><news:news><news:publication><news:name>{E(CFG['site_name'])}</news:name><news:language>pt</news:language></news:publication><news:publication_date>{p['data'].isoformat()}</news:publication_date><news:title>{E(p['titulo'])}</news:title></news:news></url>" for p in recent)

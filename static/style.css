@@ -44,3 +44,5 @@ footer{background:var(--d);color:#c9cbd0;margin-top:48px;font-size:.88rem}
 .az{margin:22px 0}.az h2{color:var(--a);font-size:1.4rem;border-bottom:1px solid var(--b);padding-bottom:4px;margin:0 0 8px}
 .az ul{list-style:none;padding:0;margin:0;columns:3 240px;column-gap:24px}.az li{padding:5px 0;break-inside:avoid}.az li a:hover strong{color:var(--a)}.az li a{color:var(--m);font-size:.9rem}.az li strong{color:var(--t)}
 article.post p a{color:var(--a)}
+figure.cover{margin:14px 0}figure.cover img{width:100%;height:auto;border-radius:6px;display:block}figure.cover figcaption{font-size:.75rem;color:var(--m);margin-top:4px}
+.card img,.mini img,.hero-main img{height:auto}

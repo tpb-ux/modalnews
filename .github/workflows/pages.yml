@@ -21,7 +21,7 @@ jobs:
         run: |
           git config user.name "modalnews-bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add content
+          git add content static/img data
           git diff --cached --quiet || (git commit -m "Coleta automática $(date -u +%Y-%m-%dT%H:%MZ)" && git push)
       - run: python build.py
       - uses: actions/configure-pages@v5

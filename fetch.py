@@ -3,7 +3,9 @@
 Uso: python fetch.py [--max N] [--dry-run]"""
 import argparse, datetime as dt, html, re, socket, time, unicodedata, urllib.request
 from pathlib import Path
+import io
 import feedparser, yaml
+from PIL import Image
 
 socket.setdefaulttimeout(20)
 ROOT = Path(__file__).parent; CONTENT = ROOT / "content"
@@ -91,6 +93,44 @@ def feed_image(e):
 
 REMOVED = ROOT / "data" / "removidos.txt"   # links rejeitados/removidos: nunca reimportar
 
+IMG = ROOT / "static" / "img"
+
+def save_image(url, slug):
+    """Baixa a imagem, converte para WebP (1200px e 480px). Retorna dict de front matter ou None."""
+    if not url or not url.startswith("http"): return None
+    try:
+        req = urllib.request.Request(url, headers={"User-Agent": UA, "Referer": url})
+        data = urllib.request.urlopen(req, timeout=20).read(15_000_000)
+        im = Image.open(io.BytesIO(data)); im.load()
+        if im.width < 300: return None
+        im = im.convert("RGB"); IMG.mkdir(parents=True, exist_ok=True)
+        big = im if im.width <= 1200 else im.resize((1200, round(im.height * 1200 / im.width)), Image.LANCZOS)
+        big.save(IMG / f"{slug}.webp", "WEBP", quality=80, method=6)
+        im.resize((480, round(im.height * 480 / im.width)), Image.LANCZOS).save(IMG / f"{slug}-480.webp", "WEBP", quality=78, method=6)
+        return {"imagem": f"/static/img/{slug}.webp", "imagem_w": big.width, "imagem_h": big.height, "imagem_origem": url}
+    except Exception as ex:
+        print(f"  ! imagem falhou ({url[:60]}): {ex}"); return None
+
+def editoria_image(ed):
+    return {"imagem": f"/static/img/editoria/{ed}.webp", "imagem_w": 1200, "imagem_h": 630}
+
+def img_fm(info, src_name):
+    out = [f"imagem: {q(info['imagem'])}", f"imagem_w: {info['imagem_w']}", f"imagem_h: {info['imagem_h']}"]
+    if info.get("imagem_origem"): out += [f"imagem_credito: {q(src_name)}", f"imagem_origem: {q(info['imagem_origem'])}"]
+    return "\n".join(out)
+
+def migrar():
+    """Converte matérias antigas (imagem remota/vazia) para WebP local ou imagem da editoria."""
+    for f in sorted(CONTENT.glob("*.md")):
+        raw = f.read_text(encoding="utf-8"); _, fm_txt, body = raw.split("---", 2)
+        fm = yaml.safe_load(fm_txt) or {}
+        if str(fm.get("imagem", "")).startswith("/static/img/"): continue
+        info = save_image(fm.get("imagem", ""), f.stem) or editoria_image(fm["editoria"])
+        lines = [l for l in fm_txt.strip("\n").split("\n") if not l.startswith("imagem")]
+        lines.insert(4, img_fm(info, fm.get("fonte", "")))
+        f.write_text("---\n" + "\n".join(lines) + "\n---" + body, encoding="utf-8")
+        print(f"~ {f.name}: {info['imagem']}")
+
 def existing():
     links, titles = set(), set()
     if REMOVED.exists(): links |= {l.strip() for l in REMOVED.read_text(encoding="utf-8").splitlines() if l.strip() and not l.startswith("#")}
@@ -104,10 +144,12 @@ def q(s): return '"' + str(s).replace("\\", "\\\\").replace('"', '\\"') + '"'
 
 def main():
     ap = argparse.ArgumentParser(); ap.add_argument("--max", type=int); ap.add_argument("--dry-run", action="store_true")
+    ap.add_argument("--migrar-imagens", action="store_true")
     ap.add_argument("--revisar", action="store_true", help="lista matérias publicadas que violam os filtros")
     ap.add_argument("--remover", action="store_true", help="com --revisar, apaga essas matérias")
     a = ap.parse_args()
     cfg = yaml.safe_load((ROOT / "feeds.yaml").read_text(encoding="utf-8"))
+    if a.migrar_imagens: return migrar()
     if a.revisar: return revisar(cfg, a.remover)
     limit = a.max or cfg.get("max_por_execucao", 12); per = cfg.get("max_por_feed", 3)
     cutoff = dt.datetime.now(dt.timezone.utc) - dt.timedelta(days=cfg.get("max_idade_dias", 3))
@@ -142,12 +184,13 @@ def main():
             if why: print(f"  x {title[:70]} ({src_name}): {why}"); continue
             resumo = short(summ)
             ed = fd.get("editoria") or classify(title + " " + summ)
-            img = feed_image(e) or og_image(link) or ""
             when = when.astimezone(BRT).replace(microsecond=0)
             fn = CONTENT / f"{when:%Y-%m-%d}-{slugify(title)}.md"
             if fn.exists(): continue
+            info = None if a.dry_run else save_image(feed_image(e) or og_image(link), fn.stem)
+            info = info or editoria_image(ed)
             body = (f"---\ntitulo: {q(title)}\ndata: {when.isoformat()}\neditoria: {ed}\nresumo: {q(resumo)}\n"
-                    f"imagem: {q(img)}\nfonte: {q(src_name)}\nlink: {q(link)}\ngerado_por: fetch.py\n---\n"
+                    f"{img_fm(info, src_name)}\nfonte: {q(src_name)}\nlink: {q(link)}\ngerado_por: fetch.py\n---\n"
                     f"{resumo}\n\n**[Leia na íntegra em {src_name} →]({link})**\n\n"
                     f"<small>Resumo automático a partir do feed público de {src_name}. Os direitos do conteúdo original pertencem à fonte.</small>\n")
             print(f"+ [{ed}] {title[:80]} ({src_name})")

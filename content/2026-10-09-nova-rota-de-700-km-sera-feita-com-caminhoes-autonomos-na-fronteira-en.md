@@ -3,7 +3,11 @@ titulo: "Nova rota de 700 km será feita com caminhões autônomos na fronteira 
 data: 2026-10-09T10:24:05-03:00
 editoria: transporte
 resumo: "A empresa de transporte Charger USA, que atende rotas nos Estados Unidos e no México, irá começar a operar caminhões"
-imagem: "https://blogdocaminhoneiro.com/wp-content/uploads/2026/10/kodiak-autonomo.jpg"
+imagem: "/static/img/2026-10-09-nova-rota-de-700-km-sera-feita-com-caminhoes-autonomos-na-fronteira-en.webp"
+imagem_w: 1200
+imagem_h: 800
+imagem_credito: "Blog do Caminhoneiro"
+imagem_origem: "https://blogdocaminhoneiro.com/wp-content/uploads/2026/10/kodiak-autonomo.jpg"
 fonte: "Blog do Caminhoneiro"
 link: "https://blogdocaminhoneiro.com/2026/10/nova-rota-de-700-km-sera-feita-com-caminhoes-autonomos-na-fronteira-entre-eua-e-mexico/"
 gerado_por: fetch.py

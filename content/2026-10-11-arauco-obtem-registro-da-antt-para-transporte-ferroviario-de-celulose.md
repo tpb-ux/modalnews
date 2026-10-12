@@ -3,7 +3,9 @@ titulo: "Arauco obtém registro da ANTT para transporte ferroviário de celulose
 data: 2026-10-11T22:34:00-03:00
 editoria: transporte
 resumo: "Arauco obtém registro da ANTT para transporte ferroviário de celulose até Santos. Notícia publicada por Notícias do Cerrado."
-imagem: ""
+imagem: "/static/img/editoria/transporte.webp"
+imagem_w: 1200
+imagem_h: 630
 fonte: "Notícias do Cerrado"
 link: "https://news.google.com/rss/articles/CBMixAFBVV95cUxONU1QQW5rUDFLMHBLLWVFdHdHbnJvUGZ4U3puaUdQWERzM2kxUVpvcWZRVFNmZ0hLVTVsdWxCcFFMbmlNaEJiTlpDU0RDem44RE9wdmstWVJ5TVpBVjFnVVhoQUtrQ2NHTFdIRjlmeDQwdWhQUU1QclZ0N2VJRFJxWHRkMEZRcDlKZUNWODE2UGJqRUF5enpOdm9YZXI0UzFGZk5NNjhZWkNlV0d4TkpqUW1UOHlROWFYeXdKZEhMZmZhVXE0?oc=5"
 gerado_por: fetch.py
