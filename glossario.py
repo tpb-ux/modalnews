@@ -34,6 +34,7 @@ def build(B, posts):
     terms = yaml.safe_load((root / "data" / "glossario.yaml").read_text(encoding="utf-8"))
     load = lambda n: (yaml.safe_load((root / "data" / n).read_text(encoding="utf-8")) or {}) if (root / "data" / n).exists() else {}
     refs, imgs = load("glossario_refs.yaml"), load("glossario_imagens.yaml")
+    manual = load("glossario_faq_manual.yaml")  # FAQs escritas à mão: prioridade sobre as geradas
     upd = str(CFG.get("glossario_atualizado", "2026-10-12"))
     upd_br = "/".join(reversed(upd.split("-")))
     for t in terms: t["slug"] = B.slugify(t["t"])
@@ -94,7 +95,7 @@ def build(B, posts):
         T, url, ed = t["t"], f"{G}{t['slug']}/", t.get("ed", "mercado")
         rel = [by[r] for r in t.get("rel", []) if r in by]
         snippet = fit(t["d"][0], t["d"][1] if len(t["d"]) > 1 else "", 30, 60)
-        fq = faqs(t)
+        fq = [(x["q"], x["a"]) for x in manual[t["slug"]]] if t["slug"] in manual else faqs(t)
         rp = related_posts(t)
         im = imgs.get(t["slug"]) or {"arquivo": f"static/img/editoria/{ed}.webp", "largura": 1200, "altura": 630, "proprio": True,
                                       "titulo_original": f"ilustração da editoria {EDS.get(ed, ed)}", "busca": ""}
@@ -185,5 +186,5 @@ def build(B, posts):
 <h2 id="faq">Perguntas frequentes sobre o glossário</h2>{ifaq_html}</article>"""
     B.write(G, B.page(f"Glossário de Logística: {n} termos explicados | {CFG['site_name']}",
                       f"Glossário de logística de A a Z com {n} termos: cross docking, WMS, TMS, Incoterms, FOB, CIF, CT-e, MDF-e, last mile e mais, com exemplos e FAQ.", G, body, jsonld=ld))
-    print(f"Glossário: {n} termos, {sum(1 for t in terms if t['slug'] in imgs)} com foto livre (demais com ilustração própria), {sum(1 for t in terms if t['slug'] in refs)} com referências")
+    print(f"Glossário: {n} termos, {sum(1 for t in terms if t['slug'] in imgs)} com foto livre (demais com ilustração própria), {sum(1 for t in terms if t['slug'] in refs)} com referências, {sum(1 for t in terms if t['slug'] in manual)} com FAQ manual")
     return [G] + urls, interlink
