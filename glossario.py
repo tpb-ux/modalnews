@@ -41,33 +41,24 @@ def build(B, posts):
     for t in terms: t["slug"] = B.slugify(t["t"])
     by = {t["t"]: t for t in terms}
     terms.sort(key=lambda t: B.slugify(t["t"]))
-    # termos linkáveis (evita siglas de 2 letras e palavras muito genéricas)
-    # formas linkáveis: termo + aliases (nome por extenso). Termo mais longo vence; siglas curtas só em MAIÚSCULAS exatas.
-    forms = []
+    # autolink com as regras do portal-core (autolink.py): palavra inteira, sinônimos e plurais, termo mais longo vence,
+    # siglas só em maiúsculas exatas, 1ª ocorrência, nunca em títulos/links/código/legendas, sem autolink.
+    from autolink import Autolink, plural_expr
+    def _is_sigla(nm): return nm.replace("-", "").replace("&", "").isupper() and len(nm) <= 5
+    _al_terms = []
     for t in terms:
         names = [t["t"]] + [a for a in ([t["n"]] if t.get("n") else []) + t.get("aliases", []) if len(a) >= 5 and "(" not in a]
-        for nm in names:
-            if len(nm) < 3: continue
-            sigla = nm.replace("-", "").replace("&", "").isupper() and len(nm) <= 5
-            forms.append((t, nm, re.compile(r"(?<![\w>/-])(" + re.escape(nm) + r")(?![\w-])", 0 if sigla else re.I)))
-    forms.sort(key=lambda x: -len(x[1]))
-    linkable = forms
+        sig = [nm for nm in names if _is_sigla(nm) and len(nm) >= 3]
+        exts = [nm for nm in names if not _is_sigla(nm) and len(nm) >= 3]
+        forms = list(dict.fromkeys(exts + [plural_expr(x) for x in exts]))
+        _al_terms.append({"slug": t["slug"], "termo": t["t"], "autolink": forms, "sigla": sig[0] if sig else None})
+    _AL = Autolink(_al_terms, base=G, maximo=10, ignorar=[CFG.get("site_name", "Modal News"), "Modal News"])
 
     def interlink(html, skip=None, budget=6, prefix_target=""):
-        """Linka a 1ª menção de termos do glossário (e aliases) fora de tags/links. Um link por termo, sem autolink."""
-        done = set(); n = 0
-        for t, nm, pat in linkable:
-            if n >= budget: break
-            if t["slug"] == skip or t["slug"] in done: continue
-            parts = re.split(r"(<a\b.*?</a>|<h[1-6].*?</h[1-6]>|<[^>]+>)", html, flags=re.S)
-            for i, part in enumerate(parts):
-                if part.startswith("<"): continue
-                m = pat.search(part)
-                if m:
-                    link = f'<a class="gl-link" href="{G}{t["slug"]}/" title="O que é {E(t["t"])}?">{m.group(1)}</a>'
-                    parts[i] = part[:m.start()] + link + part[m.end():]
-                    html = "".join(parts); done.add(t["slug"]); n += 1; break
-        return html
+        """Linka a 1ª menção de termos do glossário (e aliases), até `budget` links (máx. 10) por trecho."""
+        _AL.maximo = min(int(budget), 10)
+        out, _ = _AL.aplicar("<main>" + html + "</main>", f"{G}{skip}/" if skip else "/")
+        return out[len("<main>"):-len("</main>")]
 
     def related_posts(t, k=3):
         keys = [t["t"].lower()] + ([t["n"].lower()] if t.get("n") and len(t["n"]) > 3 else [])
