@@ -30,6 +30,37 @@ def classify(text):
         if sc > score: best, score = ed, sc
     return best
 
+LOGI = sorted({w for ws in KW.values() for w in ws} | {"logístic", "logistic", "supply", "armazen", "operador logístico", "e-commerce", "distribuição", "expedição", "embarcador", "terminal", "ferrovia", "hidrovia", "aeroporto"})
+
+def score(title, summ):
+    t, s = (title or "").lower(), (summ or "").lower()
+    return sum(3 for w in LOGI if w in t) + sum(1 for w in LOGI if w in s)
+
+def blocked(cfg, src, link, title, summ, trusted=False):
+    hay_src = f"{src} {link}".lower(); txt = f"{title} {summ}".lower()
+    for b in cfg.get("bloqueio_fontes", []):
+        if b.lower() in hay_src: return f"fonte bloqueada ({b})"
+    for b in cfg.get("bloqueio_palavras", []):
+        if b.lower() in txt: return f"palavra bloqueada ({b})"
+    if trusted: return None
+    sc = score(title, summ)
+    if sc < cfg.get("nota_minima", 3): return f"nota {sc} < {cfg.get('nota_minima', 3)}"
+    return None
+
+def revisar(cfg, remove=False):
+    """Reaplica os filtros nas matérias já publicadas pelo coletor."""
+    n = 0; trusted = {fd["nome"] for fd in cfg["feeds"] if fd.get("confiavel")}
+    for f in sorted(CONTENT.glob("*.md")):
+        fm = yaml.safe_load(f.read_text(encoding="utf-8").split("---", 2)[1]) or {}
+        if fm.get("gerado_por") != "fetch.py": continue
+        why = blocked(cfg, fm.get("fonte", ""), fm.get("link", ""), fm.get("titulo", ""), fm.get("resumo", ""), fm.get("fonte") in trusted)
+        if why:
+            n += 1; print(f"- {f.name}: {why}")
+            if remove:
+                f.unlink()
+                with REMOVED.open("a", encoding="utf-8") as r: r.write(fm.get("link", "") + "\n")
+    print(f"{n} matéria(s) fora dos filtros{' removida(s)' if remove else ''}.")
+
 def clean(s):
     s = html.unescape(re.sub(r"<[^>]+>", " ", s or ""))
     s = re.sub(r"(The post|O post)\b.*$", "", s, flags=re.S)
@@ -58,8 +89,11 @@ def feed_image(e):
     m = re.search(r'<img[^>]+src=["\'](https?://[^"\']+)', (e.get("content") or [{}])[0].get("value", "") + e.get("summary", ""))
     return m.group(1) if m else None
 
+REMOVED = ROOT / "data" / "removidos.txt"   # links rejeitados/removidos: nunca reimportar
+
 def existing():
     links, titles = set(), set()
+    if REMOVED.exists(): links |= {l.strip() for l in REMOVED.read_text(encoding="utf-8").splitlines() if l.strip() and not l.startswith("#")}
     for f in CONTENT.glob("*.md"):
         fm = yaml.safe_load(f.read_text(encoding="utf-8").split("---", 2)[1]) or {}
         if fm.get("link"): links.add(fm["link"])
@@ -70,8 +104,11 @@ def q(s): return '"' + str(s).replace("\\", "\\\\").replace('"', '\\"') + '"'
 
 def main():
     ap = argparse.ArgumentParser(); ap.add_argument("--max", type=int); ap.add_argument("--dry-run", action="store_true")
+    ap.add_argument("--revisar", action="store_true", help="lista matérias publicadas que violam os filtros")
+    ap.add_argument("--remover", action="store_true", help="com --revisar, apaga essas matérias")
     a = ap.parse_args()
     cfg = yaml.safe_load((ROOT / "feeds.yaml").read_text(encoding="utf-8"))
+    if a.revisar: return revisar(cfg, a.remover)
     limit = a.max or cfg.get("max_por_execucao", 12); per = cfg.get("max_por_feed", 3)
     cutoff = dt.datetime.now(dt.timezone.utc) - dt.timedelta(days=cfg.get("max_idade_dias", 3))
     CONTENT.mkdir(exist_ok=True); links, titles = existing(); new = 0
@@ -93,6 +130,7 @@ def main():
                 if st:
                     src_name = st
                     title = re.sub(r"\s+-\s+" + re.escape(st) + r"\s*$", "", title)
+            if len(title) < 25 or title.endswith("|"): continue
             if not link or not title or link in links or norm(title) in titles: continue
             tp = e.get("published_parsed") or e.get("updated_parsed")
             when = dt.datetime(*tp[:6], tzinfo=dt.timezone.utc) if tp else dt.datetime.now(dt.timezone.utc)
@@ -100,6 +138,8 @@ def main():
             summ = "" if gn else clean(e.get("summary", ""))
             if len(summ) < 40 or norm(summ).startswith(norm(title)[:40]):
                 summ = f"{title}. Notícia publicada por {src_name}."
+            why = blocked(cfg, src_name, link, title, "" if summ.startswith(title) else summ, fd.get("confiavel", False))
+            if why: print(f"  x {title[:70]} ({src_name}): {why}"); continue
             resumo = short(summ)
             ed = fd.get("editoria") or classify(title + " " + summ)
             img = feed_image(e) or og_image(link) or ""

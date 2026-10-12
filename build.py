@@ -131,7 +131,8 @@ def main():
     if OUT.exists(): shutil.rmtree(OUT)
     shutil.copytree(ROOT / "static", OUT / "static")
     if CFG.get("cname"): (OUT / "CNAME").write_text(CFG["cname"].strip() + "\n")
-    dest = [p for p in posts if p.get("destaque")] or posts[:1]
+    own = lambda p: p.get("imagem") and not p["imagem"].endswith("/static/og-default.png")
+    dest = [p for p in posts if p.get("destaque")] or [p for p in posts if own(p)][:1] or posts[:1]
     body = ""
     if dest:
         main_p = dest[0]; side = [p for p in posts if p is not main_p][:4]
