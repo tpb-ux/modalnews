@@ -93,7 +93,7 @@ def page(title, desc, path, body, og_img=None, og_type="website", jsonld=None, r
     if path == "/":
         rb += (f'<meta name="google-site-verification" content="{E(vf["google"])}">' if vf.get("google") else "") + (f'<meta name="msvalidate.01" content="{E(vf["bing"])}">' if vf.get("bing") else "")
     return f"""<!doctype html><html lang="pt-BR"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>{E(title)}</title>{rb}<meta name="description" content="{E(desc)}">
 <link rel="canonical" href="{canon}"><link rel="stylesheet" href="/static/style.css?v={CSSV}">
 <link rel="alternate" type="application/rss+xml" title="{E(CFG['site_name'])}" href="/rss.xml">

@@ -58,7 +58,7 @@ article.post h2{scroll-margin-top:70px;margin-top:28px}.faq{border-bottom:1px so
 .calc-out{border-left:4px solid var(--a);background:#fdf0eb;padding:10px 16px;border-radius:4px;font-size:1.05rem}.calc-out p{margin:6px 0}
 .deflist{list-style:none;padding:0}.deflist li{padding:8px 0;border-bottom:1px solid var(--b);color:var(--m);font-size:.92rem}.deflist li strong{color:var(--t)}
 .chips.small .chip{font-size:.75rem;padding:3px 9px}.refbox .chips{margin-top:4px}
-.fgrid{grid-template-columns:2fr 1fr 1fr 1fr}
+.fgrid{grid-template-columns:2fr 1fr 1fr 1fr}.fgrid>*{min-width:0}@media(max-width:860px){.fgrid{grid-template-columns:1fr 1fr}.fgrid>div:first-child{grid-column:1/-1}}@media(max-width:480px){.fgrid{grid-template-columns:1fr}}
 .keypts{background:#f4f6f8;border-left:4px solid var(--a);padding:6px 18px 10px;margin:16px 0;border-radius:4px}.keypts h2{font-size:1.05rem;margin:10px 0 6px}.keypts ul{margin:0;padding-left:20px}.keypts li{margin:4px 0}
 .steps{counter-reset:s;list-style:none;padding:0}.steps>li{counter-increment:s;position:relative;padding:0 0 14px 44px}.steps>li:before{content:counter(s);position:absolute;left:0;top:0;width:30px;height:30px;border-radius:50%;background:var(--a);color:#fff;font-weight:700;display:flex;align-items:center;justify-content:center}
 .warn{background:#fff6e5;border:1px solid #f0c36d;padding:10px 14px;border-radius:4px;font-size:.9rem}
@@ -85,3 +85,12 @@ nav.ed a{scroll-snap-align:start;flex:0 0 auto}nav.ed .dd,nav.ed a[href="/glossa
 
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 h1.st{font-size:inherit}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}html,body{max-width:100%;overflow-x:clip}
+img,video,iframe,svg,canvas,embed,object{max-width:100%;height:auto}iframe{border:0}
+main,article,section,aside,.wrap>*{min-width:0}
+main p,main li,main td,main th,main dd,main h1,main h2,main h3,footer p{overflow-wrap:anywhere;-webkit-hyphens:auto;hyphens:auto}main a{overflow-wrap:anywhere}
+pre,code{white-space:pre-wrap;overflow-wrap:anywhere}pre{max-width:100%;overflow-x:auto}
+.tw{max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}main table{max-width:100%}
+details summary{overflow-wrap:anywhere}
+.wrap{padding-left:max(16px,env(safe-area-inset-left));padding-right:max(16px,env(safe-area-inset-right))}
+footer{padding-bottom:env(safe-area-inset-bottom)}
