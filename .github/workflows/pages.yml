@@ -1,105 +1,21 @@
-name: Coletar e publicar
+name: Verificar build
+# O Modal News é coletado e publicado só pela VPS (git pull do main + cron 7,37).
+# Este workflow apenas valida cada push: o build falha se houver link interno quebrado.
+# Sem agendamento, sem commit e sem deploy para o GitHub Pages / IndexNow (feitos pela VPS).
 on:
   push: {branches: [main]}
-  schedule: [{cron: "7,37 * * * *"}]   # a cada 30 min (o GitHub pode atrasar/pular; ver saude.json > coleta.por_evento)
-  repository_dispatch: {types: [coleta]}  # disparo externo (ex.: cron-job.org) — ver README/skill
+  pull_request:
   workflow_dispatch:
-permissions: {contents: write, pages: write, id-token: write, issues: write}
-concurrency: {group: pages, cancel-in-progress: false}
+permissions: {contents: read}
+concurrency: {group: verificar-${{ github.ref }}, cancel-in-progress: true}
 jobs:
   build:
     runs-on: ubuntu-latest
-    timeout-minutes: 25
-    env: {COLETA: "${{ github.event_name != 'push' }}"}
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with: {python-version: "3.12", cache: pip}
       - run: pip install -r requirements.txt
-      # Coletores: uma falha não derruba a publicação (dados anteriores são mantidos),
-      # mas fica registrada e vira alerta/issue no passo "Alertas".
-      - name: Planejar (dados oficiais só a cada 6 h; notícias a cada execução)
-        run: |
-          H=$(date -u +%H); M=$(date -u +%M)
-          if [ "${{ github.event_name }}" = workflow_dispatch ] || { [ $((10#$H % 6)) -eq 0 ] && [ $((10#$M)) -lt 30 ]; }; then echo "DADOS=true" >> $GITHUB_ENV; else echo "DADOS=false" >> $GITHUB_ENV; fi
-      - {id: fetch, name: Coletar notícias (fetch.py), if: env.COLETA == 'true', continue-on-error: true, run: python fetch.py}
-      - {id: anp, name: Diesel ANP (semanal), if: env.COLETA == 'true' && env.DADOS == 'true', continue-on-error: true, run: python tools/anp_diesel.py}
-      - {id: antt, name: Rodovias ANTT (semanal), if: env.COLETA == 'true' && env.DADOS == 'true', continue-on-error: true, run: python tools/antt_rodovias.py}
-      - {id: ibge, name: IBGE municípios, if: env.COLETA == 'true' && env.DADOS == 'true', continue-on-error: true, run: python tools/ibge_cidades.py}
-      - {id: tarifas, name: Tarifas de pedágio ANTT, if: env.COLETA == 'true' && env.DADOS == 'true', continue-on-error: true, run: python tools/antt_tarifas.py}
-      - {id: osrm, name: Distâncias OSRM (cache), if: env.COLETA == 'true' && env.DADOS == 'true', continue-on-error: true, run: timeout 900 python tools/osrm.py}
-      - name: Registrar meses de pedágio (resumo semanal)
-        run: python paginas6.py
       - name: Build (falha se houver link interno quebrado)
         run: python build.py
-      - name: Commitar conteúdo novo
-        if: env.COLETA == 'true'
-        run: |
-          git config user.name "modalnews-bot"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add content static/img data
-          git diff --cached --quiet && exit 0
-          git commit -m "Coleta automática $(date -u +%Y-%m-%dT%H:%MZ) [skip ci]"
-          # rebase só com -X theirs para o arquivo de hashes do IndexNow, que é regravado a cada execução
-          for i in 1 2 3; do git pull --rebase -X theirs -q && git push && exit 0; sleep $((i * 5)); done; exit 1
-      - name: Guardar lista do IndexNow
-        run: mkdir -p inx && cp data/indexnow_pendentes.txt data/indexnow_hashes.next.json inx/ 2>/dev/null || true
-      - uses: actions/upload-artifact@v4
-        with: {name: indexnow, path: inx, if-no-files-found: ignore, retention-days: 3}
-      - uses: actions/configure-pages@v5
-      - uses: actions/upload-pages-artifact@v3
-        with: {path: public}
-      - name: Alertas (matéria parada >24 h, feeds e passos com erro)
-        if: always() && env.COLETA == 'true'
-        env: {GH_TOKEN: "${{ github.token }}"}
-        run: |
-          F=""
-          for s in fetch:${{ steps.fetch.outcome }} anp:${{ steps.anp.outcome }} antt:${{ steps.antt.outcome }} ibge:${{ steps.ibge.outcome }} tarifas:${{ steps.tarifas.outcome }} osrm:${{ steps.osrm.outcome }}; do
-            [ "${s#*:}" = failure ] && F="$F ${s%%:*}"
-          done
-          python tools/alerta.py "$F"
-          T="Alerta automático: coleta do Modal News"
-          N=$(gh issue list --state open --search "\"$T\" in:title" --json number --jq '.[0].number')
-          if [ ! -s alerta.md ]; then
-            [ -n "$N" ] && gh issue close "$N" --comment "Normalizado em $(date -u +%Y-%m-%dT%H:%MZ)."; exit 0
-          fi
-          cat alerta.md >> "$GITHUB_STEP_SUMMARY"
-          # Uma issue aberta por vez; atualiza o corpo em vez de comentar a cada 3 h.
-          if [ -n "$N" ]; then gh issue edit "$N" --body-file alerta.md; else gh issue create --title "$T" --body-file alerta.md; fi
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment: {name: github-pages, url: "${{ steps.d.outputs.page_url }}"}
-    steps:
-      - id: d
-        uses: actions/deploy-pages@v4
-  indexnow:
-    needs: deploy
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with: {python-version: "3.12", cache: pip}
-      - run: pip install -r requirements.txt
-      - uses: actions/download-artifact@v4
-        continue-on-error: true
-        with: {name: indexnow, path: inx}
-      - name: Notificar IndexNow (lista gerada no build, sem rebuild)
-        run: |
-          cp inx/* data/ 2>/dev/null || true
-          sleep 60 && python indexnow.py ping
-      - name: Guardar hashes enviados
-        run: |
-          git config user.name "modalnews-bot"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          [ -f data/indexnow_hashes.json ] || { echo "sem hashes para guardar"; exit 0; }
-          cp data/indexnow_hashes.json /tmp/enviados.json
-          # Outra execução pode ter gravado hashes antes: parte sempre do main atual e mescla (sem conflito de rebase).
-          for i in 1 2 3 4 5; do
-            git fetch -q origin main && git reset -q --hard origin/main
-            python -c "import json,pathlib as p; f=p.Path('data/indexnow_hashes.json'); r=json.loads(f.read_text()) if f.exists() else {}; r.update(json.load(open('/tmp/enviados.json'))); f.write_text(json.dumps(r, separators=(',', ':')))"
-            git add -- data/indexnow_hashes.json
-            git diff --cached --quiet && exit 0
-            git commit -qm "IndexNow: hashes [skip ci]" && git push -q && exit 0
-            sleep $((i * 5))
-          done; exit 1
