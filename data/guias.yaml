@@ -1,0 +1,216 @@
+- slug: como-emitir-cte
+  titulo: Como emitir CT-e
+  seo_title: 'Como emitir CT-e: passo a passo do Conhecimento de Transporte'
+  descricao: 'Passo a passo para emitir o CT-e (modelo 57): credenciamento na Sefaz, certificado digital, preenchimento, autorização, DACTE, correção e cancelamento.'
+  atualizado: '2026-10-12'
+  resumo: Para emitir o CT-e, a transportadora precisa estar credenciada na Sefaz do seu estado, ter certificado digital ICP-Brasil e usar um software emissor. O documento é preenchido com os dados da prestação, assinado, transmitido e só vale depois de autorizado. O DACTE impresso acompanha a carga.
+  requisitos:
+  - Inscrição estadual ativa e credenciamento como emissor de CT-e na Sefaz da sua UF
+  - Certificado digital ICP-Brasil do CNPJ (tipo A1 ou A3)
+  - Software emissor de CT-e (próprio, de mercado ou integrado ao TMS/ERP)
+  - RNTRC ativo na ANTT, no caso de transporte rodoviário remunerado
+  - Chaves de acesso das NF-e da carga e dados do tomador do serviço
+  passos:
+  - nome: Faça o credenciamento na Sefaz
+    texto: Solicite à Secretaria da Fazenda do seu estado o credenciamento como emissor de CT-e. Algumas UFs credenciam automaticamente empresas com atividade de transporte; outras exigem pedido no portal da Sefaz. Antes de emitir em produção, use o ambiente de homologação para testar a comunicação do software.
+  - nome: Instale o certificado digital e o emissor
+    texto: Instale o certificado digital ICP-Brasil do CNPJ no computador ou servidor que vai assinar os documentos. Configure o software emissor com os dados da empresa, a série do CT-e, a numeração inicial e o ambiente de produção.
+  - nome: Preencha os dados da prestação
+    texto: Informe remetente, destinatário, expedidor e recebedor quando houver, e o tomador do serviço, que é quem paga o frete. Indique o modal, a origem e o destino da prestação, o valor do frete com seus componentes, a tributação do ICMS e as chaves de acesso das NF-e transportadas. No rodoviário, informe o RNTRC.
+  - nome: Assine e transmita para autorização
+    texto: O emissor gera o arquivo XML, assina com o certificado digital e transmite à Sefaz. A Sefaz valida o leiaute e as regras de negócio e devolve a autorização de uso com um número de protocolo, ou uma rejeição com o código do erro que deve ser corrigido.
+  - nome: Imprima o DACTE e inicie o transporte
+    texto: Com o CT-e autorizado, imprima o DACTE, documento auxiliar que traz a chave de acesso e acompanha a carga. O transporte só deve começar depois da autorização. Envie o XML ao tomador e guarde os arquivos pelo prazo exigido na legislação.
+  - nome: Emita o MDF-e quando for obrigatório
+    texto: Se a operação exigir, emita o MDF-e vinculando as chaves dos CT-e carregados no veículo. O manifesto deve ser encerrado ao fim do percurso.
+  - nome: Corrija ou cancele quando necessário
+    texto: Erros em campos permitidos podem ser corrigidos com a Carta de Correção Eletrônica (CC-e). Valores, tributos e dados que alterem remetente, destinatário ou tomador não podem ser corrigidos por CC-e. Se o serviço não for prestado, peça o cancelamento dentro do prazo previsto na legislação da sua UF e no manual do CT-e.
+  secoes:
+  - h2: Quem precisa emitir o CT-e
+    p:
+    - 'O CT-e é emitido pela empresa que presta serviço de transporte de cargas, em qualquer modal: rodoviário, aéreo, aquaviário, ferroviário ou dutoviário. Ele substituiu os conhecimentos em papel e documenta a prestação para fins fiscais, servindo de base para o ICMS sobre o frete.'
+    - O transportador autônomo (TAC) em geral não emite CT-e próprio; a regra varia por estado e pela forma de contratação. Quando o autônomo é contratado por uma transportadora, é ela quem documenta a operação. Consulte a Sefaz da sua UF para o seu caso.
+  - h2: Erros mais comuns na emissão
+    p:
+    - Os problemas mais frequentes são CFOP e tributação de ICMS incompatíveis com a origem e o destino, tomador informado de forma errada, chave de NF-e digitada incorretamente e certificado digital vencido. Um TMS integrado ao ERP reduz a digitação manual e, com ela, as rejeições.
+    - Também é comum esquecer de encerrar o MDF-e vinculado, o que impede a emissão de um novo manifesto para o mesmo veículo. Crie uma rotina diária de conferência de documentos em aberto.
+  faq:
+  - q: Qual o modelo do CT-e?
+    a: O CT-e é o modelo 57 de documento fiscal eletrônico. Existe também o CT-e OS, modelo 67, usado para transporte de pessoas, valores e excesso de bagagem. O CT-e de carga foi instituído pelo Ajuste SINIEF 09/2007.
+  - q: O DACTE substitui o CT-e?
+    a: Não. O documento fiscal válido é o arquivo XML autorizado pela Sefaz. O DACTE é só uma representação impressa que acompanha a carga e permite consultar o CT-e pela chave de acesso de 44 dígitos.
+  - q: Posso emitir CT-e sem certificado digital?
+    a: Não. Todo CT-e precisa ser assinado digitalmente com certificado ICP-Brasil do emitente antes da transmissão. Sem a assinatura válida, a Sefaz rejeita o documento e a operação fica sem cobertura fiscal.
+  - q: O que fazer quando a Sefaz está fora do ar?
+    a: O manual do CT-e prevê modalidades de contingência, que permitem emitir o documento e transmiti-lo depois que a comunicação voltar. Siga as regras de contingência da sua UF e registre o motivo para evitar autuações.
+  - q: Qual a diferença entre CT-e e MDF-e?
+    a: O CT-e documenta cada prestação de serviço de transporte para um tomador. O MDF-e reúne num só manifesto todos os documentos fiscais carregados em um veículo durante a viagem, facilitando a fiscalização no trânsito.
+  fontes:
+  - nome: Portal Nacional do CT-e
+    url: https://www.cte.fazenda.gov.br/portal/
+  - nome: ANTT — Registro Nacional de Transportadores Rodoviários de Cargas (RNTRC)
+    url: https://www.gov.br/antt/pt-br
+- slug: como-emitir-mdfe
+  titulo: Como emitir MDF-e
+  seo_title: 'Como emitir MDF-e: passo a passo e encerramento'
+  descricao: 'Como emitir o MDF-e (modelo 58): dados obrigatórios, autorização, DAMDFE, inclusão de condutor e encerramento ao fim da viagem.'
+  atualizado: '2026-10-12'
+  resumo: O MDF-e é emitido antes da viagem, reunindo as chaves dos CT-e ou NF-e carregados no veículo, os dados do veículo, do condutor e do percurso. Depois de autorizado pela Sefaz, o DAMDFE acompanha a carga, e o manifesto deve ser encerrado quando a viagem termina.
+  requisitos:
+  - Credenciamento como emissor de MDF-e e certificado digital ICP-Brasil
+  - Chaves de acesso dos CT-e (transportadora) ou das NF-e (carga própria)
+  - Placa, RENAVAM e tara do veículo e dos reboques
+  - Nome e CPF do condutor
+  - Dados do seguro da carga e do vale-pedágio, quando exigidos
+  passos:
+  - nome: Confira se o MDF-e é obrigatório
+    texto: O MDF-e é exigido em operações interestaduais e em outras hipóteses previstas na legislação de cada UF, tanto para transportadoras quanto para empresas que levam carga própria em veículo próprio. Verifique as regras da sua Sefaz antes de montar a viagem.
+  - nome: Reúna os documentos da carga
+    texto: Separe as chaves de acesso de todos os CT-e emitidos para a viagem. Quem transporta mercadoria própria informa as chaves das NF-e. Agrupe os documentos por município de descarregamento, porque o MDF-e é organizado assim.
+  - nome: Informe veículo, condutor e percurso
+    texto: Preencha placa, RENAVAM e tara do veículo de tração e dos reboques, nome e CPF do condutor, a UF de carregamento, a UF de descarregamento e as UFs de passagem na ordem do trajeto. No rodoviário, inclua o RNTRC e, quando aplicável, o CIOT e o vale-pedágio.
+  - nome: Assine, transmita e imprima o DAMDFE
+    texto: O emissor assina o XML com o certificado digital e transmite à Sefaz. Com a autorização de uso, imprima o DAMDFE, que viaja com o veículo e permite à fiscalização consultar o manifesto pela chave de acesso.
+  - nome: Registre eventos durante a viagem
+    texto: Se houver troca de motorista, registre o evento de inclusão de condutor. Se novos documentos forem carregados no caminho, siga o procedimento previsto no manual, como a inclusão de DF-e quando permitido.
+  - nome: Encerre o MDF-e ao fim da viagem
+    texto: Quando a carga for entregue, registre o evento de encerramento informando a data e o município de encerramento. Um MDF-e em aberto impede a emissão de novo manifesto para o mesmo veículo e a mesma UF de carregamento e descarregamento.
+  secoes:
+  - h2: Para que serve o MDF-e
+    p:
+    - O Manifesto Eletrônico de Documentos Fiscais, modelo 58, foi instituído pelo Ajuste SINIEF 21/2010. Ele vincula a um único documento todos os conhecimentos e notas carregados num veículo, o que agiliza a passagem por postos fiscais e permite acompanhar a carga em tempo real.
+    - 'Para o transportador, o MDF-e também organiza a viagem: com ele, a fiscalização sabe quais entregas estão previstas em cada município e quais documentos devem estar a bordo.'
+  - h2: Cuidados para evitar multas
+    p:
+    - Os erros mais comuns são esquecer de encerrar o manifesto, informar UFs de percurso fora de ordem, deixar de registrar troca de motorista e transportar documentos que não constam no MDF-e. Defina no TMS uma rotina automática de encerramento a partir da confirmação de entrega.
+  - h2: 'MDF-e, CT-e e CIOT: como se relacionam'
+    p:
+    - Na viagem rodoviária de uma transportadora, cada entrega gera um CT-e, e o MDF-e agrupa todos os CT-e que estão no mesmo veículo. Quando a transportadora subcontrata um transportador autônomo, a operação também exige o Código Identificador da Operação de Transporte (CIOT), gerado por uma instituição de pagamento eletrônico de frete habilitada pela ANTT, que deve ser informado no manifesto.
+    - Essa amarração permite que a Sefaz e a ANTT cruzem informações fiscais e de transporte. Por isso, divergências entre placa, RNTRC, CIOT e documentos vinculados costumam aparecer rapidamente em fiscalizações. Manter cadastros de veículos e motoristas atualizados no TMS é a forma mais simples de evitar rejeições na emissão e problemas no trânsito.
+  faq:
+  - q: Qual o prazo para encerrar o MDF-e?
+    a: O manifesto deve ser encerrado ao término do trajeto. Manifestos esquecidos em aberto bloqueiam novos MDF-e para o mesmo veículo e o mesmo par de UFs e podem gerar autuação. A Sefaz também pode encerrar de ofício após o prazo previsto.
+  - q: Quem transporta carga própria precisa emitir MDF-e?
+    a: Sim, nas hipóteses previstas na legislação. Nesse caso, o emitente da NF-e que transporta a mercadoria em veículo próprio ou arrendado emite o MDF-e, informando as chaves das notas fiscais em vez de CT-e.
+  - q: O que é o DAMDFE?
+    a: É o Documento Auxiliar do MDF-e, a representação impressa do manifesto. Ele acompanha o veículo e traz a chave de acesso e o código de barras para consulta. O documento válido é o arquivo autorizado pela Sefaz.
+  - q: Posso trocar o motorista depois de emitir o MDF-e?
+    a: Sim. Basta registrar o evento de inclusão de condutor, informando nome e CPF do novo motorista. Não é necessário cancelar o manifesto nem emitir outro para a mesma viagem.
+  - q: Quando posso cancelar o MDF-e?
+    a: O cancelamento só é aceito em prazo curto após a autorização e antes do início da viagem, conforme o manual do MDF-e. Se o transporte já começou, o procedimento correto é o encerramento, não o cancelamento.
+  fontes:
+  - nome: Portal do MDF-e (SVRS)
+    url: https://dfe-portal.svrs.rs.gov.br/Mdfe
+  - nome: Portal Nacional do CT-e
+    url: https://www.cte.fazenda.gov.br/portal/
+- slug: como-calcular-frete-minimo-antt
+  titulo: Como calcular o frete mínimo da ANTT
+  seo_title: 'Como calcular o frete mínimo da ANTT: fórmula e exemplo'
+  descricao: 'Passo a passo para calcular o piso mínimo de frete da ANTT: escolha da tabela, tipo de carga, eixos, distância, fórmula CCD e CC e exemplo com a tabela vigente.'
+  atualizado: '2026-10-12'
+  resumo: O frete mínimo da ANTT é calculado multiplicando a distância em km pelo coeficiente de deslocamento (CCD) e somando o coeficiente de carga e descarga (CC). Os coeficientes dependem da tabela (A, B, C ou D), do tipo de carga e do número de eixos carregados. O pedágio é pago à parte.
+  requisitos:
+  - A tabela de coeficientes vigente publicada pela ANTT
+  - O tipo de carga (granel sólido, carga geral, frigorificada etc.)
+  - O número de eixos carregados do veículo combinado
+  - A distância da viagem em quilômetros
+  - 'A forma de contratação: veículo completo ou só a unidade de tração'
+  passos:
+  - nome: Confirme o ato vigente da ANTT
+    texto: Os coeficientes mudam a cada revisão e sempre que o diesel varia mais de 5%. Confira no ANTTlegis qual portaria ou resolução está em vigor na data do contrato. A tabela publicada no Modal News indica o ato e a data de vigência.
+  - nome: Escolha a tabela certa
+    texto: Use a Tabela A quando contratar a composição veicular completa ou o caminhão simples, e a Tabela B quando contratar só o cavalo mecânico. As Tabelas C e D valem para operações de alto desempenho, conforme a definição da resolução.
+  - nome: Identifique o tipo de carga
+    texto: 'Enquadre a carga em uma das categorias da tabela: granel sólido, granel líquido, frigorificada ou aquecida, conteinerizada, carga geral, neogranel, perigosa nas suas variações ou granel pressurizada.'
+  - nome: Conte os eixos carregados
+    texto: Conte os eixos do veículo combinado que efetivamente levam carga, incluindo o cavalo e os reboques. As tabelas trazem coeficientes para 2, 3, 4, 5, 6, 7 e 9 eixos. Algumas combinações não existem para certos tipos de carga.
+  - nome: Aplique a fórmula
+    texto: 'Calcule distância em km multiplicada pelo CCD e some o CC. Exemplo com a tabela A vigente desde 30/09/2026: carga geral em veículo de 5 eixos tem CCD de R$ 6,8284 por km e CC de R$ 657,56. Para 1.000 km, o piso é 1.000 × 6,8284 + 657,56 = R$ 7.485,96.'
+  - nome: Some o pedágio à parte e documente
+    texto: O piso não inclui pedágio, que deve ser antecipado pelo contratante como vale-pedágio. Registre no contrato e nos documentos da viagem o valor do frete, que não pode ficar abaixo do piso calculado.
+  secoes:
+  - h2: Por que existe o piso mínimo de frete
+    p:
+    - A Política Nacional de Pisos Mínimos do Transporte Rodoviário de Cargas foi criada pela Lei 13.703/2018, após a greve dos caminhoneiros de maio de 2018. A ANTT ficou responsável por publicar os coeficientes, que refletem custos como diesel, pneus, manutenção, depreciação, salário do motorista e tributos.
+    - O piso vale para o transporte rodoviário remunerado de carga lotação. Contratar abaixo dele sujeita o contratante às penalidades previstas na lei e nas resoluções da ANTT.
+  - h2: Erros comuns no cálculo
+    p:
+    - Os erros mais frequentes são usar uma tabela desatualizada, aplicar a Tabela A quando só o cavalo mecânico foi contratado, contar eixos suspensos como carregados e incluir o pedágio dentro do frete. Use sempre o ato vigente e guarde a memória de cálculo da viagem.
+    - Regras específicas, como a de retorno vazio, estão na resolução da ANTT e não são cobertas pela fórmula básica. Para essas situações, consulte o texto oficial.
+  - h2: Exemplo comparando forma de contratação
+    p:
+    - Na mesma viagem de 1.000 km com granel sólido em veículo de 5 eixos, a Tabela A vigente indica CCD de R$ 6,8548 por km e CC de R$ 664,83, o que resulta em piso de R$ 7.519,63. Se o contratante alugar apenas o cavalo mecânico, vale a Tabela B, com CCD de R$ 6,0900 e CC de R$ 594,62, e o piso cai para R$ 6.684,62. A diferença reflete o custo do implemento rodoviário, que fica por conta de quem contrata só a tração.
+    - Use a calculadora do Modal News para repetir esse cálculo com qualquer tipo de carga, número de eixos e distância. Guarde a memória de cálculo junto com o contrato e o CT-e da viagem, porque ela é o registro de que o frete respeitou o piso em vigor.
+  faq:
+  - q: O frete mínimo vale para carga fracionada?
+    a: A tabela de pisos mínimos foi desenhada para o transporte rodoviário de carga lotação, em que o veículo é contratado para um único embarque. Para carga fracionada, valem as tabelas comerciais das transportadoras, sem os coeficientes da ANTT.
+  - q: De onde vem a distância usada no cálculo?
+    a: Use a distância rodoviária real do trajeto contratado, da origem ao destino. Registre no contrato a rota considerada. A ANTT indica a distância em quilômetros como base de cálculo do coeficiente de deslocamento.
+  - q: Com que frequência a tabela muda?
+    a: A ANTT revisa os coeficientes periodicamente e publica nova tabela sempre que o preço médio do diesel varia mais de 5% em relação ao valor de referência, como prevê o § 3º do art. 5º da Lei 13.703/2018.
+  - q: O frete mínimo inclui o pedágio?
+    a: Não. O pedágio é pago à parte pelo contratante, por meio do vale-pedágio obrigatório previsto na Lei 10.209/2001. O valor do frete não pode ser reduzido para compensar o custo dos pedágios da rota.
+  - q: Existe calculadora oficial do frete mínimo?
+    a: A ANTT divulga os coeficientes no ato oficial publicado no ANTTlegis e no Diário Oficial. O Modal News oferece uma calculadora gratuita com a tabela vigente, mas o ato oficial sempre prevalece em caso de divergência.
+  fontes:
+  - nome: Portaria SUROC/ANTT nº 22/2026 (ANTTlegis)
+    url: https://anttlegis.antt.gov.br/action/ActionDatalegis.php?acao=abrirTextoAto&cod_menu=9230&cod_modulo=623&numeroAto=00000022&orgao=SUROC%2FANTT%2FMT&seqAto=000&tipo=POR&valorAno=2026
+  - nome: Lei nº 13.703/2018
+    url: https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13703.htm
+- slug: como-exportar
+  titulo: Como exportar pelo Brasil
+  seo_title: 'Como exportar: passo a passo da exportação no Brasil'
+  descricao: 'Passo a passo para exportar: habilitação no Radar, classificação NCM, Incoterm, NF-e de exportação, DU-E no Portal Único Siscomex, despacho e embarque.'
+  atualizado: '2026-10-12'
+  resumo: Para exportar, a empresa precisa estar habilitada no Siscomex, classificar a mercadoria na NCM, negociar o Incoterm com o comprador, emitir a NF-e de exportação e registrar a Declaração Única de Exportação (DU-E) no Portal Único Siscomex. Depois do despacho aduaneiro, a carga é embarcada e a exportação é averbada.
+  requisitos:
+  - CNPJ ativo e habilitação no Siscomex (Radar) na Receita Federal
+  - Classificação fiscal correta da mercadoria na NCM
+  - Contrato ou pedido do comprador com Incoterm definido
+  - Fatura comercial (commercial invoice) e romaneio (packing list)
+  - Despachante aduaneiro ou representante habilitado, se a empresa não fizer o despacho por conta própria
+  passos:
+  - nome: Habilite a empresa no Siscomex
+    texto: Peça a habilitação no Radar pela Receita Federal. A modalidade define limites de operação; muitas empresas exportadoras se enquadram em modalidades simplificadas. Sem a habilitação, não é possível registrar a declaração de exportação.
+  - nome: Classifique a mercadoria na NCM
+    texto: Defina o código NCM de oito dígitos do produto. A classificação determina tratamento administrativo, eventuais licenças e benefícios fiscais, e precisa ser igual na nota fiscal e na declaração de exportação.
+  - nome: Negocie as condições com o comprador
+    texto: Combine preço, moeda, forma de pagamento e o Incoterm, que define até onde vão os custos e riscos do exportador. Em FOB, por exemplo, o exportador entrega a carga a bordo do navio; em EXW, entrega no seu estabelecimento.
+  - nome: Emita a NF-e de exportação
+    texto: Emita a nota fiscal eletrônica de exportação com CFOP de operação com o exterior, dados do importador e a NCM. A chave da NF-e é usada para registrar a DU-E.
+  - nome: Registre a DU-E no Portal Único Siscomex
+    texto: Registre a Declaração Única de Exportação informando a NF-e, o enquadramento da operação, o local de despacho e o local de embarque. A DU-E reúne as informações aduaneiras, administrativas e comerciais da exportação.
+  - nome: Entregue a carga e acompanhe o despacho
+    texto: Leve a mercadoria ao recinto alfandegado indicado, como porto, aeroporto ou porto seco. A Receita Federal faz a parametrização em canais de conferência; em canal verde, a carga é liberada sem conferência documental ou física.
+  - nome: Embarque e averbe a exportação
+    texto: Com o desembaraço, a carga é embarcada e o transportador emite o conhecimento internacional, como o BL no marítimo ou o AWB no aéreo. Após o embarque, a DU-E é averbada, comprovando a exportação para fins fiscais.
+  secoes:
+  - h2: Documentos usados na exportação
+    p:
+    - Os documentos mais comuns são a fatura comercial, o romaneio de carga, a NF-e de exportação, a DU-E e o conhecimento de embarque. Dependendo do produto e do destino, podem ser exigidos certificado de origem, certificados sanitários ou fitossanitários e licenças de órgãos anuentes.
+    - Conferir os dados entre todos esses documentos evita retenções no despacho. Divergências de NCM, peso ou valor estão entre as causas mais comuns de exigência fiscal.
+  - h2: Custos logísticos que entram na conta
+    p:
+    - Além do frete internacional, entram no custo o frete interno até o porto ou aeroporto, a armazenagem no recinto alfandegado, as taxas de terminal, o despachante e o seguro, conforme o Incoterm. Em contêiner, atrasos na devolução podem gerar cobrança de demurrage.
+  - h2: Prazos e planejamento logístico
+    p:
+    - O tempo total de uma exportação depende da disponibilidade de espaço no navio ou no avião, do prazo de entrega da carga no terminal (o chamado deadline), do canal de parametrização e de eventuais licenças. Reserve o espaço com antecedência pelo agente de carga ou diretamente com o armador e confira as datas limite de entrega de carga e de documentos informadas pelo terminal.
+    - Planeje também o transporte interno até o porto ou aeroporto, considerando janelas de agendamento do terminal e restrições de circulação nas cidades portuárias. Atrasos nessa etapa podem fazer a carga perder o navio e gerar custos extras de armazenagem e de novo embarque.
+  faq:
+  - q: Pessoa física pode exportar?
+    a: A legislação permite exportações por pessoa física em situações específicas e com limites, mas a operação comercial regular é feita por empresas com CNPJ e habilitação no Siscomex. Consulte as regras atualizadas da Receita Federal para o seu caso.
+  - q: O que é a DU-E?
+    a: É a Declaração Única de Exportação, registrada no Portal Único Siscomex. Ela substituiu os antigos registro de exportação e declaração de exportação e reúne num só documento as informações aduaneiras, administrativas e comerciais.
+  - q: Exportação paga ICMS?
+    a: Não. A Constituição garante imunidade de ICMS nas operações que destinam mercadorias ao exterior. A exportação também não sofre incidência de IPI, PIS e Cofins, desde que a saída para o exterior seja comprovada pela averbação da DU-E.
+  - q: Preciso de despachante aduaneiro para exportar?
+    a: Não é obrigatório. A própria empresa pode fazer o despacho por meio de representante legal habilitado no Siscomex. Na prática, muitas empresas contratam despachante pela experiência com documentos, órgãos anuentes e prazos.
+  - q: Qual Incoterm escolher na primeira exportação?
+    a: Exportadores iniciantes costumam usar FCA ou FOB, porque entregam a carga no país de origem e deixam o frete internacional com o comprador. EXW transfere quase tudo ao comprador, mas pode complicar o desembaraço de exportação, que é feito no Brasil.
+  fontes:
+  - nome: Portal Siscomex
+    url: https://www.gov.br/siscomex/pt-br
+  - nome: Receita Federal — Aduana e Comércio Exterior
+    url: https://www.gov.br/receitafederal/pt-br/assuntos/aduana-e-comercio-exterior
+  - nome: ICC — Incoterms rules
+    url: https://iccwbo.org/business-solutions/incoterms-rules/

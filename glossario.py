@@ -34,6 +34,7 @@ def build(B, posts):
     terms = yaml.safe_load((root / "data" / "glossario.yaml").read_text(encoding="utf-8"))
     load = lambda n: (yaml.safe_load((root / "data" / n).read_text(encoding="utf-8")) or {}) if (root / "data" / n).exists() else {}
     refs, imgs = load("glossario_refs.yaml"), load("glossario_imagens.yaml")
+    pontos = load("glossario_pontos.yaml") or {}; legal = load("glossario_base_legal.yaml") or {}
     manual = load("glossario_faq_manual.yaml")  # FAQs escritas à mão: prioridade sobre as geradas
     upd = str(CFG.get("glossario_atualizado", "2026-10-12"))
     upd_br = "/".join(reversed(upd.split("-")))
@@ -133,12 +134,14 @@ def build(B, posts):
 <div class="kick"><a href="/{ed}/">{E(EDS.get(ed, ed))}</a></div>
 <h1>O que é {E(T)}?</h1>{f'<p class="meta">{E(t["n"])}</p>' if t.get('n') else ''}
 <p class="snippet"><strong>{E(T)}</strong> — {E(lower_first(snippet) if snippet.startswith(T) is False else snippet[len(T):].lstrip(" ,"))}</p>
+{('<div class="keypts"><h2 id="pontos-chave">Pontos-chave</h2><ul>' + "".join(f"<li>{E(x)}</li>" for x in pontos[t['slug']]) + '</ul></div>') if pontos.get(t['slug']) else ''}
 <p class="meta">Atualizado em <time datetime="{upd}">{upd_br}</time> · Glossário de Logística {E(CFG['site_name'])}</p>
 {fig}
 <nav class="toc"><strong>Neste artigo</strong><ol>{"".join(f'<li><a href="#{a}">{E(n)}</a></li>' for a, n in toc)}</ol></nav>
 <h2 id="definicao">O que significa {E(T)}</h2>{defs}
 <h2 id="como-funciona">Como funciona {E(T)}</h2>{how}
 <h2 id="exemplo">Exemplo prático de {E(T)}</h2><div class="exbox"><p>{interlink(E(t['ex']), t['slug'], 2)}</p></div>
+{('<h2 id="base-legal">Base legal</h2><ul class="refs">' + "".join(f'<li><a href="{x["url"]}" target="_blank" rel="noopener">{E(x["titulo"])}</a></li>' for x in legal[t['slug']]) + '</ul>') if legal.get(t['slug']) else ''}
 <h2 id="faq">Perguntas frequentes sobre {E(T)}</h2>{faq_html}
 {f'<h2 id="noticias">Notícias relacionadas</h2><ul class="rel-news">{rp_html}</ul>' if rp else ''}
 {f'<h2 id="relacionados">Termos relacionados</h2><div class="chips">{rel_html}</div>' if rel else ''}

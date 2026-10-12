@@ -304,6 +304,11 @@ def extras(B, info):
 - [Preço do diesel no Brasil]({BASE}/diesel/): S10 e S500 por estado e por cidade, semanal, fonte ANP
 - [Metodologia]({BASE}/metodologia/)
 
+- [Frete mínimo ANTT]({BASE}/frete-minimo/): tabela vigente e calculadora
+- [Portos brasileiros]({BASE}/portos/): movimentação oficial (ANTAQ, MPor)
+- [Rodovias federais concedidas]({BASE}/rodovias/): pedágios e tráfego de caminhões (ANTT)
+- [Guias práticos]({BASE}/guias/): CT-e, MDF-e, frete mínimo, exportação
+
 ## Ferramentas
 - [Calculadora de cubagem]({BASE}/calculadoras/cubagem/)
 - [Calculadora de custo de diesel por viagem]({BASE}/calculadoras/custo-diesel-viagem/)

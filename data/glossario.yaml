@@ -836,3 +836,48 @@
     - "No Brasil, o transporte é a maior parcela do custo, influenciado por diesel, pedágios e infraestrutura."
   ex: "Uma indústria calcula que gasta 9% do faturamento em logística, sendo 60% desse valor com transporte."
   rel: [Frete, Giro de estoque, Operador logístico]
+- t: Drop shipping
+  aliases: [dropshipping]
+  ed: supply-chain
+  d:
+    - "Drop shipping é um modelo de venda em que a loja anuncia e vende o produto, mas não o mantém em estoque. Quando o pedido é fechado, a loja repassa a compra ao fornecedor, que separa, embala e envia a mercadoria diretamente ao consumidor final."
+    - "Para o lojista, o modelo reduz o capital parado em estoque e o custo de armazenagem. Em troca, ele perde controle sobre prazo de despacho, embalagem e qualidade do envio, que passam a depender do fornecedor."
+    - "No Brasil, a operação precisa respeitar as regras fiscais: a nota fiscal deve refletir quem vende e quem remete a mercadoria, e o consumidor continua protegido pelo Código de Defesa do Consumidor perante a loja onde comprou."
+  ex: "Uma loja virtual de utilidades domésticas vende um liquidificador. O pedido é enviado automaticamente ao distribuidor parceiro, que despacha o produto do seu centro de distribuição em Cajamar (SP) para o cliente em Recife."
+  rel: [Fulfillment, Last mile, Lead time, Operador logístico, Logística reversa]
+- t: Armazém geral
+  ed: armazenagem
+  d:
+    - "Armazém geral é a empresa que guarda mercadorias de terceiros mediante remuneração, com regras próprias definidas no Decreto nº 1.102, de 1903. Ele recebe, conserva e devolve os bens ao depositante, respondendo por sua guarda."
+    - "Uma característica importante é a possibilidade de emitir títulos representativos da mercadoria depositada, o conhecimento de depósito e o warrant, que podem ser negociados ou dados em garantia de financiamento."
+    - "Na área fiscal, as remessas para armazém geral e os retornos ao depositante têm tratamento específico na legislação do ICMS de cada estado, com códigos de operação próprios na nota fiscal."
+  ex: "Uma cooperativa de grãos deposita 5 mil toneladas de soja em um armazém geral e usa o warrant emitido sobre o produto como garantia para obter crédito antes de vender a safra."
+  rel: [Centro de distribuição, Condomínio logístico, Operador logístico, Inventário cíclico]
+- t: DANFE
+  n: Documento Auxiliar da Nota Fiscal Eletrônica
+  ed: transporte
+  d:
+    - "DANFE é o Documento Auxiliar da Nota Fiscal Eletrônica. É uma representação impressa e simplificada da NF-e, que acompanha a mercadoria durante o transporte e permite consultar a nota pela chave de acesso de 44 dígitos."
+    - "O DANFE não é a nota fiscal: o documento com validade jurídica é o arquivo eletrônico autorizado pela Sefaz. O papel serve para facilitar a conferência no recebimento e a fiscalização no trânsito, que confirma a nota na base da Sefaz."
+    - "O leiaute do DANFE é definido no Manual de Orientação do Contribuinte da NF-e. Há também a versão simplificada, prevista para situações específicas, como operações com etiqueta."
+  ex: "Na portaria do centro de distribuição, o conferente lê o código de barras do DANFE com um coletor e confirma no sistema que a nota foi autorizada antes de liberar a descarga."
+  rel: [CT-e, MDF-e, Código de barras, Rastreabilidade]
+- t: KPI
+  n: Key Performance Indicator
+  aliases: [indicador de desempenho]
+  ed: supply-chain
+  d:
+    - "KPI é a sigla em inglês para indicador-chave de desempenho. Na logística, é uma medida numérica que mostra se uma operação está cumprindo as metas de prazo, custo, qualidade e produtividade."
+    - "Um bom KPI tem fórmula clara, fonte de dados confiável, periodicidade definida e meta. Exemplos comuns são OTIF, acuracidade de estoque, custo de frete sobre faturamento, giro de estoque e tempo de doca."
+    - "Os indicadores servem para comparar períodos, avaliar fornecedores e transportadoras e sustentar contratos de nível de serviço, que costumam prever metas e penalidades ligadas a KPIs."
+  ex: "Um operador logístico acompanha diariamente três KPIs do cliente: OTIF de 97%, acuracidade de inventário de 99,5% e expedição de pedidos no mesmo dia para compras feitas até as 14h."
+  rel: [OTIF, SLA, Nível de serviço, Acuracidade de estoque, Giro de estoque]
+- t: Modal
+  aliases: [modais de transporte, modal de transporte]
+  ed: transporte
+  d:
+    - "Modal é cada forma de transporte usada para deslocar cargas: rodoviário, ferroviário, aquaviário, aéreo e dutoviário. A escolha do modal define custo, prazo, capacidade e nível de segurança da operação."
+    - "Cada modal tem vantagens próprias. O rodoviário é flexível e chega porta a porta. O ferroviário e o aquaviário são mais econômicos para grandes volumes em longas distâncias. O aéreo é o mais rápido e o mais caro. O dutoviário movimenta líquidos e gases de forma contínua."
+    - "Quando uma carga usa mais de um modal no mesmo trajeto, a operação é chamada de intermodal ou multimodal, conforme a forma de contratação e de responsabilidade sobre a carga."
+  ex: "Uma exportadora de soja de Mato Grosso leva os grãos de caminhão até um terminal ferroviário, segue de trem até o Porto de Santos e embarca a carga em navio para a China, usando três modais."
+  rel: [Modal rodoviário, Modal ferroviário, Modal aquaviário, Modal aéreo, Modal dutoviário, Multimodal, Intermodal]

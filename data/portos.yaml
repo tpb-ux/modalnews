@@ -1,0 +1,149 @@
+# Portos públicos (portos organizados). SÓ números publicados por fontes oficiais, com a fonte de cada um.
+fontes:
+  boletim3t25: {nome: "ANTAQ — Boletim Estatístico Aquaviário, 3º trimestre de 2025", url: "https://www.gov.br/antaq/pt-br/central-de-conteudos/estudos-e-pesquisas-da-antaq-1/BoletimEstatstico3T2025v1.0.pdf"}
+  boletim2t25: {nome: "ANTAQ — Boletim Estatístico Aquaviário, 2º trimestre de 2025", url: "https://www.gov.br/antaq/pt-br/central-de-conteudos/estudos-e-pesquisas-da-antaq-1/Boletim2Trimestre2025v1.2.pdf"}
+  boletim1t25: {nome: "ANTAQ — Boletim Estatístico Aquaviário, 1º trimestre de 2025", url: "https://www.gov.br/antaq/pt-br/central-de-conteudos/estudos-e-pesquisas-da-antaq-1/boletim-1o-trimestre-2025.pdf"}
+  anuario25: {nome: "ANTAQ — Desempenho Aquaviário 2025", url: "https://www.gov.br/antaq/pt-br/central-de-conteudos/publicacoes-da-antaq/Anuario2025.pdf"}
+  mpor1s26: {nome: "Ministério de Portos e Aeroportos — desempenho dos portos no 1º semestre de 2026 (03/08/2026)", url: "https://www.gov.br/portos-e-aeroportos/pt-br/assuntos/noticias/2026/08/do-grao-ao-conteiner-portos-brasileiros-movimentam-cargas-estrategicas-no-primeiro-semestre"}
+brasil:
+  - {f: anuario25, txt: "O sistema aquaviário brasileiro movimentou 1,403 bilhão de toneladas em 2025, alta de 6,1% sobre 2024."}
+  - {f: anuario25, txt: "Por perfil de carga, em 2025: granel sólido 839,7 milhões t (59,8%), granel líquido 333,0 milhões t (23,7%), contêineres 164,6 milhões t (11,7%) e carga geral solta 65,8 milhões t (4,7%)."}
+  - {f: boletim3t25, txt: "No 3º trimestre de 2025, os portos organizados movimentaram 135,3 milhões de toneladas, alta de 3,2% sobre o 3º trimestre de 2024."}
+portos:
+  - slug: santos
+    nome: Porto de Santos
+    uf: SP
+    cidade: Santos
+    autoridade: Autoridade Portuária de Santos (APS)
+    site: https://www.portodesantos.com.br/
+    t3: [38.4, "+2,7%", 1]
+    teu3: [1076, "+5,9%"]
+    graos25: 42.1
+    perfil3t:
+      - [Contêineres, 11.80, 11.35]
+      - [Milho, 6.13, 7.66]
+      - [Açúcar, 5.40, 5.46]
+      - [Soja, 4.36, 2.94]
+      - [Resíduos da extração do óleo de soja, 2.70, 2.33]
+    s1_26:
+      - "Movimentou 92,8 milhões de toneladas no 1º semestre de 2026, 5,05% acima do mesmo período de 2025 (88,3 milhões t)."
+      - "Exportação: 68,71 milhões t; importação: 24,08 milhões t."
+      - "Soja em grãos exportada: 25,61 milhões t. Carga conteinerizada: 16,71 milhões t na exportação e 14,10 milhões t na importação."
+      - "Adubos foram a principal carga de granel sólido importada, com 3,72 milhões t."
+  - slug: paranagua
+    nome: Porto de Paranaguá
+    uf: PR
+    cidade: Paranaguá
+    autoridade: Portos do Paraná
+    site: https://www.portosdoparana.pr.gov.br/
+    t3: [19.1, "+15,8%", 2]
+    teu3: [391, "+6,8%"]
+    graos25: 19.7
+    outros:
+      - {f: boletim1t25, txt: "Em 2024, o porto movimentou 59,28 milhões de toneladas, 1,65% a mais que em 2023."}
+      - {f: boletim1t25, txt: "No 1º trimestre de 2025, foram 15,96 milhões de toneladas, alta de 9,31% sobre o mesmo trimestre de 2024."}
+    s1_26:
+      - "Paranaguá e Antonina movimentaram juntos 34,44 milhões de toneladas no 1º semestre de 2026, 0,6% acima de 2025."
+      - "Exportações: 22,30 milhões t; importações: 12,1 milhões t."
+      - "Soja embarcada: 9,47 milhões t, 21% acima do 1º semestre de 2025 (7,86 milhões t)."
+      - "Cargas conteinerizadas: 8,7 milhões t, alta de 8,9%."
+  - slug: itaguai
+    nome: Porto de Itaguaí
+    uf: RJ
+    cidade: Itaguaí
+    autoridade: PortosRio
+    site: https://www.portosrio.gov.br/
+    t3: [17.3, "-1,4%", 3]
+  - slug: itaqui
+    nome: Porto do Itaqui
+    uf: MA
+    cidade: São Luís
+    autoridade: Empresa Maranhense de Administração Portuária (EMAP)
+    site: https://www.portodoitaqui.com/
+    t3: [11.1, "+6,1%", 4]
+    graos25: 18.8
+    outros:
+      - {f: boletim2t25, txt: "No 2º trimestre de 2025, movimentou 10,40 milhões de toneladas; no 1º semestre de 2025, 17,20 milhões t, alta de 10,46%."}
+    s1_26:
+      - "Movimentou 16,58 milhões de toneladas no 1º semestre de 2026."
+      - "Granéis sólidos: 11,97 milhões t, com 8,5 milhões t de soja."
+      - "Granéis líquidos: 3,86 milhões t, dos quais 2,38 milhões t de derivados de petróleo em operações internas."
+      - "Carga geral: 755,7 mil t, puxada pela celulose (702,9 mil t)."
+  - slug: rio-grande
+    nome: Porto do Rio Grande
+    uf: RS
+    cidade: Rio Grande
+    autoridade: Portos RS
+    site: https://www.portosrs.com.br/
+    t3: [9.1, "+9,3%", 5]
+    teu3: [278, "+30,2%"]
+    graos25: 5.6
+  - slug: suape
+    nome: Porto de Suape
+    uf: PE
+    cidade: Ipojuca
+    autoridade: Complexo Industrial Portuário de Suape
+    site: https://www.suape.pe.gov.br/
+    t3: [6.6, "-5,0%", 6]
+    teu3: [180, "+6,7%"]
+    s1_26:
+      - "Movimentou 13,7 milhões de toneladas no 1º semestre de 2026, alta de 25,6%."
+      - "Granéis líquidos (petróleo e derivados): 9,14 milhões t, alta de 40,1%."
+      - "Contêineres: 333.786 TEUs. Veículos: 33.779 unidades."
+      - "Granéis sólidos (trigo, clínquer, coque): 799,5 mil t, alta de 39%."
+  - slug: vila-do-conde
+    nome: Porto de Vila do Conde
+    uf: PA
+    cidade: Barcarena
+    autoridade: Companhia Docas do Pará (CDP)
+    t3: [5.5, "+3,0%", 7]
+  - slug: sao-francisco-do-sul
+    nome: Porto de São Francisco do Sul
+    uf: SC
+    cidade: São Francisco do Sul
+    autoridade: Porto de São Francisco do Sul
+    site: https://www.portosaofrancisco.com.br/
+    t3: [4.8, "+13,8%", 8]
+    graos25: 9.1
+  - slug: santarem
+    nome: Porto de Santarém
+    uf: PA
+    cidade: Santarém
+    autoridade: Companhia Docas do Pará (CDP)
+    t3: [4.7, "-9,5%", 9]
+    graos25: 7.1
+  - slug: rio-de-janeiro
+    nome: Porto do Rio de Janeiro
+    uf: RJ
+    cidade: Rio de Janeiro
+    autoridade: PortosRio
+    site: https://www.portosrio.gov.br/
+    t3: [4.2, "+9,2%", 10]
+    teu3: [236, "-8,1%"]
+  - slug: salvador
+    nome: Porto de Salvador
+    uf: BA
+    cidade: Salvador
+    autoridade: Companhia das Docas do Estado da Bahia (Codeba)
+    s1_26:
+      - "Movimentou 3,79 milhões de toneladas no 1º semestre de 2026, alta de 20,94% sobre 2025, a maior entre os portos da Codeba."
+      - "Importações cresceram 31,84% e exportações, 2,47%."
+      - "Em junho de 2026, movimentou 703,9 mil t, alta de 44,52% sobre junho de 2025."
+      - "Os portos públicos da Codeba cresceram 22,49% no semestre."
+  - slug: aratu-candeias
+    nome: Porto de Aratu-Candeias
+    uf: BA
+    cidade: Candeias
+    autoridade: Companhia das Docas do Estado da Bahia (Codeba)
+    s1_26:
+      - "Movimentou 3,70 milhões de toneladas no 1º semestre de 2026, alta de 26,09% sobre 2025."
+      - "Exportações cresceram 95,77% e importações, 12,99%."
+      - "Em junho de 2026, movimentou 692,2 mil t, alta de 30,17% sobre junho de 2025."
+  - slug: itajai
+    nome: Porto de Itajaí
+    uf: SC
+    cidade: Itajaí
+    s1_26:
+      - "Movimentou 2,6 milhões de toneladas no 1º semestre de 2026, 40% acima das 1,86 milhão t do mesmo período de 2025 (acréscimo de 740,9 mil t)."
+      - "Contêineres: 238.873 TEUs, contra 136.385 TEUs no 1º semestre de 2025 (alta de 75%)."
+      - "Em junho de 2026, movimentou 488,3 mil t, 28% acima de junho de 2025."

@@ -1,0 +1,177 @@
+# Pontos-chave (3 a 5 fatos essenciais) por slug. Escritos à mão; só fatos verificáveis.
+cross-docking:
+  - "A mercadoria passa pelo armazém sem ser estocada: entra por uma doca e sai por outra."
+  - "O tempo de permanência costuma ser de horas, não de dias."
+  - "Exige agendamento de recebimento e integração de dados com fornecedores e transportadoras."
+  - "Reduz custo de armazenagem e manuseio, mas depende de fluxo previsível."
+wms:
+  - "WMS significa Warehouse Management System, sistema de gestão de armazém."
+  - "Controla recebimento, endereçamento, armazenagem, separação, conferência e expedição."
+  - "Registra a posição de cada item e aumenta a acuracidade do estoque."
+  - "Costuma ser integrado ao ERP e ao TMS."
+tms:
+  - "TMS significa Transportation Management System, sistema de gestão de transportes."
+  - "Planeja rotas, escolhe transportadoras, calcula e audita fretes."
+  - "Acompanha entregas e mede indicadores como prazo e custo por quilo."
+  - "Atende tanto embarcadores quanto transportadoras."
+fob:
+  - "FOB (Free On Board) é uma regra dos Incoterms 2020 da Câmara de Comércio Internacional (ICC)."
+  - "Vale apenas para transporte marítimo e hidroviário interior."
+  - "O risco passa ao comprador quando a mercadoria está a bordo do navio no porto de embarque."
+  - "O vendedor faz o desembaraço de exportação; o comprador contrata o frete principal."
+  - "No mercado interno brasileiro, 'frete FOB' é usado informalmente para indicar frete por conta do comprador."
+cif:
+  - "CIF (Cost, Insurance and Freight) é uma regra dos Incoterms 2020 para transporte marítimo e hidroviário."
+  - "O vendedor contrata e paga o frete e o seguro até o porto de destino."
+  - "O risco passa ao comprador quando a mercadoria está a bordo no porto de embarque, antes de o vendedor terminar de pagar os custos."
+  - "O seguro exigido do vendedor no CIF é de cobertura mínima (Cláusulas C do Institute Cargo Clauses)."
+incoterms:
+  - "São regras publicadas pela Câmara de Comércio Internacional (ICC); a versão atual é a Incoterms 2020."
+  - "Há 11 regras: 7 para qualquer modal e 4 apenas para transporte marítimo e hidroviário."
+  - "Definem quem paga cada custo e onde o risco passa do vendedor ao comprador."
+  - "Não tratam de transferência de propriedade nem de forma de pagamento."
+last-mile:
+  - "Last mile é a etapa final da entrega, do último ponto de distribuição até o cliente."
+  - "Costuma ser a etapa de maior custo por unidade entregue."
+  - "Usa veículos menores, como VUCs, vans, motos e bicicletas em áreas urbanas."
+  - "Prazo e experiência de entrega pesam diretamente na satisfação do consumidor."
+picking:
+  - "Picking é a separação dos itens de um pedido nas posições do armazém."
+  - "Pode ser feito por pedido, por lote, por zona ou por onda."
+  - "Costuma ser a atividade que mais consome mão de obra no armazém."
+  - "Coletores, picking por voz e sistemas pick-to-light reduzem erros de separação."
+ct-e:
+  - "CT-e é o Conhecimento de Transporte Eletrônico, modelo 57, instituído pelo Ajuste SINIEF 09/2007."
+  - "Documenta a prestação de serviço de transporte de cargas para fins fiscais."
+  - "Deve ser autorizado pela Sefaz antes do início da prestação."
+  - "O DACTE é a representação impressa que acompanha a carga."
+mdf-e:
+  - "MDF-e é o Manifesto Eletrônico de Documentos Fiscais, modelo 58, instituído pelo Ajuste SINIEF 21/2010."
+  - "Reúne em um único documento as notas e conhecimentos transportados no veículo."
+  - "O DAMDFE é sua representação impressa durante a viagem."
+  - "Deve ser encerrado ao fim do percurso, antes de um novo manifesto para o mesmo veículo."
+frete:
+  - "Frete é o valor cobrado pelo transporte de uma carga de um ponto a outro."
+  - "Pode ser calculado por peso, por peso cubado, por valor da mercadoria ou por viagem fechada."
+  - "Costuma incluir componentes como frete-peso, Ad Valorem, GRIS e pedágio."
+  - "No transporte rodoviário de carga lotação, a ANTT publica pisos mínimos obrigatórios (Lei 13.703/2018)."
+lead-time:
+  - "Lead time é o tempo total entre o início e a conclusão de um processo."
+  - "Pode medir do pedido à entrega, da compra ao recebimento ou do início ao fim da produção."
+  - "Lead time maior exige mais estoque de segurança."
+  - "Inclui tempos de espera, não apenas o tempo de transporte."
+estoque-de-seguranca:
+  - "É a quantidade extra mantida para cobrir variações de demanda e de prazo de reposição."
+  - "Depende do nível de serviço desejado e da variabilidade da demanda e do lead time."
+  - "Estoque de segurança alto demais imobiliza capital; baixo demais causa ruptura."
+  - "É um dos componentes do cálculo do ponto de pedido."
+curva-abc:
+  - "Classifica itens por importância, geralmente pelo valor consumido ou faturado."
+  - "Baseia-se no princípio de Pareto: poucos itens concentram a maior parte do valor."
+  - "Itens A recebem controle mais rigoroso e contagens mais frequentes."
+  - "Também orienta o endereçamento no armazém, aproximando da expedição os itens de maior giro."
+just-in-time:
+  - "Just in time é a filosofia de produzir e entregar só o necessário, na hora e na quantidade certas."
+  - "Surgiu no Sistema Toyota de Produção, no Japão."
+  - "Reduz estoques, mas exige fornecedores confiáveis e transporte pontual."
+  - "Usa ferramentas como kanban e milk run para sincronizar o abastecimento."
+logistica-reversa:
+  - "É o fluxo de produtos, embalagens e resíduos do consumidor de volta à empresa ou à reciclagem."
+  - "No Brasil, é obrigatória para vários setores pela Política Nacional de Resíduos Sólidos (Lei 12.305/2010)."
+  - "Inclui devoluções do e-commerce, recalls, recolhimento de embalagens e reaproveitamento."
+  - "Exige processos de triagem, crédito ao cliente e destinação correta."
+milk-run:
+  - "Milk run é a coleta programada em vários fornecedores por um mesmo veículo, em rota fixa."
+  - "É comum na indústria automotiva para abastecer linhas de montagem."
+  - "Consolida cargas pequenas e reduz o número de viagens."
+  - "Depende de janelas de coleta rígidas e volumes previsíveis."
+fulfillment:
+  - "Fulfillment é a terceirização de todo o processo de atendimento de pedidos."
+  - "Inclui recebimento, armazenagem, separação, embalagem, expedição e, muitas vezes, devoluções."
+  - "É muito usado por lojas virtuais e marketplaces."
+  - "O lojista paga por serviço, sem manter armazém próprio."
+centro-de-distribuicao:
+  - "Centro de distribuição é a instalação que recebe, armazena e expede mercadorias para clientes ou lojas."
+  - "Prioriza giro e velocidade de saída, não a guarda prolongada."
+  - "Costuma operar com WMS, docas e áreas de separação e consolidação."
+  - "Sua localização é definida para reduzir custo de frete e prazo de entrega."
+multimodal:
+  - "No transporte multimodal, a carga usa dois ou mais modais sob um único contrato."
+  - "Um Operador de Transporte Multimodal (OTM) assume a responsabilidade por todo o trajeto."
+  - "No Brasil, o tema é regulado pela Lei 9.611/1998."
+  - "O documento único da operação é o Conhecimento de Transporte Multimodal."
+intermodal:
+  - "No transporte intermodal, a carga usa dois ou mais modais com contratos separados para cada trecho."
+  - "Cada transportador responde apenas pela sua etapa."
+  - "Contêineres facilitam a troca entre caminhão, trem e navio."
+  - "Difere do multimodal pela forma de contratação e de responsabilidade."
+rntrc:
+  - "RNTRC é o Registro Nacional de Transportadores Rodoviários de Cargas, mantido pela ANTT."
+  - "É obrigatório para quem faz transporte rodoviário remunerado de cargas (Lei 11.442/2007)."
+  - "Tem três categorias: TAC (autônomo), ETC (empresa) e CTC (cooperativa)."
+  - "O número do RNTRC deve constar nos documentos de transporte, como o CT-e."
+otif:
+  - "OTIF significa On Time In Full: entregas no prazo e completas."
+  - "É calculado como entregas no prazo e completas divididas pelo total de entregas."
+  - "Uma entrega pontual, mas incompleta, conta como falha."
+  - "É um dos KPIs mais usados em contratos entre indústria, varejo e transportadoras."
+sla:
+  - "SLA (Service Level Agreement) é o acordo que define o nível de serviço contratado."
+  - "Estabelece metas mensuráveis, como prazo de entrega, OTIF e acuracidade."
+  - "Costuma prever penalidades ou bônus ligados ao cumprimento das metas."
+  - "Precisa de indicadores com fórmula e fonte de dados acordadas entre as partes."
+supply-chain:
+  - "Supply chain, ou cadeia de suprimentos, é o conjunto de empresas e fluxos do fornecedor de matéria-prima ao consumidor final."
+  - "Envolve fluxos de materiais, informações e dinheiro."
+  - "A gestão integrada busca equilibrar custo, nível de serviço e capital em estoque."
+  - "Inclui planejamento, compras, produção, armazenagem, transporte e devoluções."
+peso-cubado:
+  - "Peso cubado é o peso calculado a partir do volume da carga."
+  - "Fórmula: volume em m³ multiplicado pelo fator de cubagem."
+  - "No rodoviário, o fator mais usado é 300 kg/m³; no aéreo, a referência é 1:6.000 (cerca de 167 kg/m³)."
+  - "O frete é cobrado pelo maior valor entre peso real e peso cubado."
+carga-fracionada:
+  - "Carga fracionada é a que não ocupa um veículo inteiro e divide espaço com cargas de outros clientes."
+  - "Passa por terminais de consolidação e distribuição da transportadora."
+  - "O frete é cobrado por peso ou peso cubado, com taxas adicionais."
+  - "Difere da carga lotação, em que o veículo é dedicado a um único embarque."
+roteirizacao:
+  - "Roteirização é o planejamento da sequência de paradas de cada veículo."
+  - "Considera distância, janelas de entrega, capacidade dos veículos e restrições de circulação."
+  - "É feita por softwares roteirizadores, muitas vezes integrados ao TMS."
+  - "Reduz quilometragem, horas extras e número de veículos necessários."
+exw:
+  - "EXW (Ex Works) é a regra dos Incoterms 2020 de menor obrigação para o vendedor."
+  - "O vendedor apenas disponibiliza a mercadoria em seu estabelecimento ou outro local combinado."
+  - "O comprador assume carregamento, transporte, riscos e o desembaraço de exportação."
+  - "Pode ser usado em qualquer modal."
+kanban:
+  - "Kanban é um sistema visual de sinalização para puxar a reposição de materiais."
+  - "Surgiu no Sistema Toyota de Produção como ferramenta do just in time."
+  - "Cada cartão ou sinal autoriza produzir ou repor uma quantidade definida."
+  - "Limita o estoque em processo e torna visíveis os gargalos."
+drop-shipping:
+  - "A loja vende o produto, mas o fornecedor é quem armazena e envia ao consumidor."
+  - "Reduz capital em estoque e custo de armazenagem do lojista."
+  - "O prazo e a qualidade do envio dependem do fornecedor."
+  - "A loja continua responsável perante o consumidor pelo Código de Defesa do Consumidor."
+armazem-geral:
+  - "Armazém geral guarda mercadorias de terceiros mediante remuneração."
+  - "É regulado pelo Decreto nº 1.102, de 1903."
+  - "Pode emitir conhecimento de depósito e warrant, títulos negociáveis sobre a mercadoria."
+  - "Remessas e retornos de armazém geral têm tratamento específico no ICMS."
+danfe:
+  - "DANFE é o Documento Auxiliar da Nota Fiscal Eletrônica."
+  - "Não substitui a NF-e: o documento válido é o arquivo autorizado pela Sefaz."
+  - "Traz a chave de acesso de 44 dígitos, usada para consultar a nota."
+  - "Acompanha a mercadoria no transporte e facilita a conferência no recebimento."
+kpi:
+  - "KPI significa Key Performance Indicator, indicador-chave de desempenho."
+  - "Precisa de fórmula, fonte de dados, periodicidade e meta definidas."
+  - "Exemplos na logística: OTIF, acuracidade de estoque, giro de estoque e custo de frete."
+  - "Serve de base para contratos de nível de serviço (SLA)."
+modal:
+  - "Os cinco modais de transporte de cargas são rodoviário, ferroviário, aquaviário, aéreo e dutoviário."
+  - "A escolha do modal define custo, prazo, capacidade e segurança."
+  - "Modais ferroviário e aquaviário são mais econômicos para grandes volumes em longas distâncias."
+  - "Operações com mais de um modal são intermodais ou multimodais."

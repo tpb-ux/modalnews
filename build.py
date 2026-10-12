@@ -55,9 +55,9 @@ def page(title, desc, path, body, og_img=None, og_type="website", jsonld=None, r
 <meta property="og:description" content="{E(desc)}"><meta property="og:url" content="{canon}">
 <meta property="og:image" content="{E(img)}"><meta name="twitter:card" content="summary_large_image">{ld}
 </head><body><header class="top"><div class="wrap hrow"><a class="logo" href="/"><img src="/static/logo.svg" alt="{E(CFG['site_name'])}" width="220" height="44"></a>
-<div class="tag">{E(CFG['tagline'])}</div></div></header><nav class="ed"><div class="wrap"><a class="pill" href="/">Início</a>{nav}<a href="/glossario/">Glossário</a><a href="/diesel/">Diesel</a></div></nav>
+<div class="tag">{E(CFG['tagline'])}</div></div></header><nav class="ed"><div class="wrap"><a class="pill" href="/">Início</a>{nav}<a href="/glossario/">Glossário</a><a href="/diesel/">Diesel</a><a href="/frete-minimo/">Frete mínimo</a><a href="/portos/">Portos</a><a href="/guias/">Guias</a></div></nav>
 <main class="wrap">{body}</main><footer><div class="wrap fgrid"><div><img src="/static/logo.svg" alt="" width="180" height="36" class="flogo"><p>{E(CFG['tagline'])}</p></div>
-<div><h4>Editorias</h4>{nav}</div><div><h4>Referência</h4><a href="/glossario/">Glossário de Logística</a><a href="/siglas/">Siglas</a><a href="/diesel/">Preço do diesel</a><a href="/calculadoras/cubagem/">Calculadora de cubagem</a><a href="/calculadoras/custo-diesel-viagem/">Custo de diesel</a><a href="/links-uteis/">Links úteis</a></div>
+<div><h4>Editorias</h4>{nav}</div><div><h4>Referência</h4><a href="/glossario/">Glossário de Logística</a><a href="/siglas/">Siglas</a><a href="/diesel/">Preço do diesel</a><a href="/frete-minimo/">Frete mínimo ANTT</a><a href="/portos/">Portos</a><a href="/rodovias/">Rodovias</a><a href="/guias/">Guias práticos</a><a href="/calculadoras/cubagem/">Calculadora de cubagem</a><a href="/calculadoras/custo-diesel-viagem/">Custo de diesel</a><a href="/links-uteis/">Links úteis</a></div>
 <div><h4>Institucional</h4><a href="/sobre/">Sobre</a><a href="/politica-editorial/">Política editorial</a><a href="/metodologia/">Metodologia</a><a href="/correcoes/">Correções</a><a href="/privacidade/">Privacidade</a><a href="/rss.xml">Feed RSS</a></div></div>
 <div class="wrap fbot">© {dt.date.today().year} {E(CFG['site_name'])} · Todos os direitos reservados</div></footer></body></html>"""
 
@@ -115,7 +115,7 @@ def main():
         ps = [p for p in posts if p["editoria"] == s][:4]
         if ps: body += f'<section class="blk">{sec("As últimas em", n, f"/{s}/")}<div class="grid">{"".join(card(p) for p in ps)}</div></section>'
     org = {"@type": "NewsMediaOrganization", "@id": BASE + "/#org", "name": CFG["site_name"], "url": BASE}
-    body += '<section class="blk refbox"><h2 class="st"><span>Referência</span><strong>Ferramentas e dados</strong></h2><div class="chips"><a class="chip" href="/glossario/">Glossário de Logística</a><a class="chip" href="/siglas/">Siglas</a><a class="chip" href="/diesel/">Preço do diesel por cidade</a><a class="chip" href="/calculadoras/cubagem/">Calculadora de cubagem</a><a class="chip" href="/calculadoras/custo-diesel-viagem/">Custo de diesel por viagem</a></div></section>'
+    body += '<section class="blk refbox"><h2 class="st"><span>Referência</span><strong>Ferramentas e dados</strong></h2><div class="chips"><a class="chip" href="/glossario/">Glossário de Logística</a><a class="chip" href="/siglas/">Siglas</a><a class="chip" href="/diesel/">Preço do diesel por cidade</a><a class="chip" href="/frete-minimo/">Frete mínimo ANTT</a><a class="chip" href="/portos/">Portos</a><a class="chip" href="/rodovias/">Rodovias</a><a class="chip" href="/guias/">Guias</a><a class="chip" href="/calculadoras/cubagem/">Calculadora de cubagem</a><a class="chip" href="/calculadoras/custo-diesel-viagem/">Custo de diesel por viagem</a></div></section>'
     write("/", page(f"{CFG['site_name']}: notícias de logística, transporte e supply chain", CFG["tagline"] + ". Glossário, preço do diesel por cidade (ANP) e calculadoras.", "/", body,
                     jsonld=itemlist(posts)))
     for s, n in EDS.items():
@@ -141,7 +141,10 @@ def main():
 <figure class="cover">{img(p, "cover", "(max-width: 800px) 100vw, 760px", True)}{f'<figcaption>Imagem: {E(p["imagem_credito"])}</figcaption>' if p.get("imagem_credito") else ''}</figure>{p['html']}</article>"""
         write(p["url"], page(f"{p['titulo']} — {CFG['site_name']}", p.get("resumo", ""), p["url"], b,
                              BASE + p["imagem"], "article", ld, robots="noindex,follow" if p.get("gerado_por") else None))
-    import paginas
+    import paginas, paginas2
+    me = sys.modules[__name__]; me._posts = posts; me._interlink = interlink
+    fm_urls, fm_lm = paginas2.frete_minimo(me); pt_urls, pt_lm = paginas2.portos(me)
+    rd_urls, rd_lm = paginas2.rodovias(me); gu_urls, gu_lm = paginas2.guias(me)
     ds_urls, ds_lastmod = paginas.diesel(sys.modules[__name__])
     calc_urls = paginas.calculadoras(sys.modules[__name__])
     conf_urls = paginas.confianca(sys.modules[__name__], len(terms))
@@ -155,7 +158,8 @@ def main():
         return name
     latest = max([p["data"] for p in posts], default=dt.datetime.now(dt.timezone.utc)).date().isoformat()
     files = [smfile("sitemap-paginas.xml", ["/"] + [f"/{s}/" for s in EDS] + conf_urls + calc_urls + sig_urls, {"/": latest, **{f"/{s}/": latest for s in EDS}}),
-             smfile("sitemap-glossario.xml", gl_urls, gl_lastmod), smfile("sitemap-diesel.xml", ds_urls, ds_lastmod)]
+             smfile("sitemap-glossario.xml", gl_urls, gl_lastmod), smfile("sitemap-diesel.xml", ds_urls, ds_lastmod),
+             smfile("sitemap-frete-minimo.xml", fm_urls, fm_lm), smfile("sitemap-entidades.xml", pt_urls + rd_urls, {**pt_lm, **rd_lm}), smfile("sitemap-guias.xml", gu_urls, gu_lm)]
     if own: files.append(smfile("sitemap-artigos.xml", [p["url"] for p in own], {p["url"]: p["data"].date().isoformat() for p in own}, {p["url"]: p["imagem"] for p in own}))
     (OUT / "sitemap.xml").write_text('<?xml version="1.0" encoding="UTF-8"?>\n<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
         + "".join(f"<sitemap><loc>{BASE}/{f}</loc></sitemap>" for f in files) + "</sitemapindex>", encoding="utf-8")
@@ -164,7 +168,7 @@ def main():
     (OUT / "robots.txt").write_text(f"User-agent: *\nAllow: /\nDisallow: /saude.json\nDisallow: /*?utm_\n\nSitemap: {BASE}/sitemap.xml\n")
     col = json.loads((ROOT / "data" / "saude_coleta.json").read_text()) if (ROOT / "data" / "saude_coleta.json").exists() else {}
     paginas.extras(sys.modules[__name__], {"build": dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds"), "ultima_coleta": col.get("hora"), "feeds_com_erro": col.get("erros", []),
-        "materias": len(posts), "termos": len(terms), "paginas_indexaveis": sum(len(x) for x in (gl_urls, ds_urls, calc_urls, conf_urls, sig_urls)) + 1 + len(EDS),
+        "materias": len(posts), "termos": len(terms), "paginas_indexaveis": sum(len(x) for x in (gl_urls, ds_urls, calc_urls, conf_urls, sig_urls, fm_urls, pt_urls, rd_urls, gu_urls)) + 1 + len(EDS),
         "diesel_semana": max(ds_lastmod.values(), default=None)})
     print(f"OK: {len(posts)} matérias -> {OUT}")
 

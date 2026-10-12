@@ -35,6 +35,11 @@ armador:
   url: https://pt.wikipedia.org/wiki/Armador
 - titulo: Receita Federal — Aduana e Comércio Exterior
   url: https://www.gov.br/receitafederal/pt-br/assuntos/aduana-e-comercio-exterior
+armazem-geral:
+- titulo: Armazém geral — Wikipédia
+  url: https://pt.wikipedia.org/wiki/Armaz%C3%A9m_geral
+- titulo: ABOL — Associação Brasileira de Operadores Logísticos
+  url: https://abolbrasil.org.br/
 automacao-de-armazem:
 - titulo: GS1 Brasil — Associação Brasileira de Automação
   url: https://www.gs1br.org/
@@ -103,6 +108,11 @@ curva-abc:
 custo-logistico:
 - titulo: ABOL — Associação Brasileira de Operadores Logísticos
   url: https://abolbrasil.org.br/
+danfe:
+- titulo: Danfe — Wikipédia
+  url: https://pt.wikipedia.org/wiki/Danfe
+- titulo: ANTT — Agência Nacional de Transportes Terrestres
+  url: https://www.gov.br/antt/pt-br
 dark-store:
 - titulo: ABOL — Associação Brasileira de Operadores Logísticos
   url: https://abolbrasil.org.br/
@@ -129,6 +139,9 @@ drawback:
   url: https://pt.wikipedia.org/wiki/Drawback
 - titulo: MDIC
   url: https://www.gov.br/mdic/pt-br/assuntos/comercio-exterior/drawback
+drop-shipping:
+- titulo: ABOL — Associação Brasileira de Operadores Logísticos
+  url: https://abolbrasil.org.br/
 du-e:
 - titulo: Portal Siscomex
   url: https://www.gov.br/siscomex/pt-br
@@ -260,6 +273,11 @@ kanban:
   url: https://pt.wikipedia.org/wiki/Kanban
 - titulo: ABOL — Associação Brasileira de Operadores Logísticos
   url: https://abolbrasil.org.br/
+kpi:
+- titulo: KPI — Wikipédia
+  url: https://pt.wikipedia.org/wiki/KPI
+- titulo: ABOL — Associação Brasileira de Operadores Logísticos
+  url: https://abolbrasil.org.br/
 last-mile:
 - titulo: Última milha — Wikipédia
   url: https://pt.wikipedia.org/wiki/%C3%9Altima_milha
@@ -291,6 +309,11 @@ milk-run:
   url: https://pt.wikipedia.org/wiki/Milk_Run
 - titulo: ABOL — Associação Brasileira de Operadores Logísticos
   url: https://abolbrasil.org.br/
+modal:
+- titulo: Modal — Wikipédia
+  url: https://pt.wikipedia.org/wiki/Modal
+- titulo: ANTT — Agência Nacional de Transportes Terrestres
+  url: https://www.gov.br/antt/pt-br
 modal-aereo:
 - titulo: Transporte aéreo — Wikipédia
   url: https://pt.wikipedia.org/wiki/Transporte_a%C3%A9reo

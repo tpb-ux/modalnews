@@ -1,0 +1,14 @@
+# Base legal por slug (links oficiais verificados com HTTP 200)
+frete-minimo:
+  - {titulo: "Lei nº 13.703/2018 — Política Nacional de Pisos Mínimos do Transporte Rodoviário de Cargas", url: "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13703.htm"}
+  - {titulo: "Portaria SUROC/ANTT nº 22/2026 — coeficientes vigentes", url: "https://anttlegis.antt.gov.br/action/ActionDatalegis.php?acao=abrirTextoAto&cod_menu=9230&cod_modulo=623&numeroAto=00000022&orgao=SUROC%2FANTT%2FMT&seqAto=000&tipo=POR&valorAno=2026"}
+frete:
+  - {titulo: "Lei nº 13.703/2018 — pisos mínimos de frete", url: "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13703.htm"}
+multimodal:
+  - {titulo: "Lei nº 9.611/1998 — Transporte Multimodal de Cargas", url: "https://www.planalto.gov.br/ccivil_03/leis/l9611.htm"}
+rntrc:
+  - {titulo: "Lei nº 11.442/2007 — transporte rodoviário de cargas por conta de terceiros", url: "https://www.planalto.gov.br/ccivil_03/_ato2007-2010/2007/lei/l11442.htm"}
+logistica-reversa:
+  - {titulo: "Lei nº 12.305/2010 — Política Nacional de Resíduos Sólidos", url: "https://www.planalto.gov.br/ccivil_03/_ato2007-2010/2010/lei/l12305.htm"}
+armazem-geral:
+  - {titulo: "Decreto nº 1.102/1903 — armazéns gerais", url: "https://www.planalto.gov.br/ccivil_03/decreto/antigos/d1102.htm"}
