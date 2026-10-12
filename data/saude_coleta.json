@@ -1,11 +1,75 @@
 {
- "hora": "2026-10-12T07:33:07+00:00",
+ "hora": "2026-10-12T07:56:44+00:00",
+ "evento": "workflow_dispatch",
+ "run_id": "38220562447",
  "novas": 0,
- "erros": [
+ "erros": [],
+ "feeds": [
   {
-   "feed": "Portal NTC&Logística",
-   "url": "https://www.portalntc.org.br/feed/",
-   "erro": "sem itens"
+   "nome": "Logweb",
+   "url": "https://www.logweb.com.br/feed/",
+   "status": "ok",
+   "itens": 10,
+   "itens_com_imagem_no_feed": 10,
+   "novas": 0,
+   "descartadas_sem_foto": 0
+  },
+  {
+   "nome": "Comex do Brasil",
+   "url": "https://www.comexdobrasil.com/feed/",
+   "status": "ok",
+   "itens": 10,
+   "itens_com_imagem_no_feed": 1,
+   "novas": 0,
+   "descartadas_sem_foto": 0
+  },
+  {
+   "nome": "Blog do Caminhoneiro",
+   "url": "https://blogdocaminhoneiro.com/feed/",
+   "status": "ok",
+   "itens": 10,
+   "itens_com_imagem_no_feed": 0,
+   "novas": 0,
+   "descartadas_sem_foto": 0
+  },
+  {
+   "nome": "Transporte Moderno",
+   "url": "https://www.transportemoderno.com.br/feed/",
+   "status": "ok",
+   "itens": 10,
+   "itens_com_imagem_no_feed": 10,
+   "novas": 0,
+   "descartadas_sem_foto": 0
+  },
+  {
+   "nome": "Frota&Cia",
+   "url": "https://www.frotacia.com.br/feed/",
+   "status": "ok",
+   "itens": 10,
+   "itens_com_imagem_no_feed": 7,
+   "novas": 0,
+   "descartadas_sem_foto": 0
+  },
+  {
+   "nome": "O Carreteiro",
+   "url": "https://www.ocarreteiro.com.br/feed/",
+   "status": "ok",
+   "itens": 10,
+   "itens_com_imagem_no_feed": 1,
+   "novas": 0,
+   "descartadas_sem_foto": 0
+  },
+  {
+   "nome": "Diário do Transporte",
+   "url": "https://www.diariodotransporte.com.br/feed/",
+   "status": "ok",
+   "itens": 12,
+   "itens_com_imagem_no_feed": 12,
+   "novas": 0,
+   "descartadas_sem_foto": 0
   }
- ]
+ ],
+ "ultimas_execucoes": {
+  "workflow_dispatch": "2026-10-12T07:56:44+00:00"
+ }
 }

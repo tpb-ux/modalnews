@@ -1,0 +1,107 @@
+{
+ "formato": "saude-portal/1",
+ "portal": "Modal News",
+ "url": "https://modalnews.com.br",
+ "gerado_em": "2026-10-12T07:56:54+00:00",
+ "materias": {
+  "total": 29,
+  "ultimas_24h": 0,
+  "ultimos_7d": 29,
+  "com_imagem_propria_pct": 100.0,
+  "mais_recente": {
+   "titulo": "Superar o protecionismo para voltar a crescer",
+   "url": "https://modalnews.com.br/comercio-exterior/2026-10-09-superar-o-protecionismo-para-voltar-a-crescer/",
+   "fonte": "Comex do Brasil",
+   "publicada_em": "2026-10-09T17:42:57-03:00",
+   "idade_horas": 59.2
+  }
+ },
+ "feeds": {
+  "total": 7,
+  "ok": 7,
+  "erro": 0,
+  "vazio": 0,
+  "itens_com_imagem_no_feed_pct": 56.9,
+  "lista": [
+   {
+    "nome": "Logweb",
+    "url": "https://www.logweb.com.br/feed/",
+    "status": "ok",
+    "itens": 10,
+    "itens_com_imagem_no_feed": 10,
+    "novas": 0,
+    "descartadas_sem_foto": 0
+   },
+   {
+    "nome": "Comex do Brasil",
+    "url": "https://www.comexdobrasil.com/feed/",
+    "status": "ok",
+    "itens": 10,
+    "itens_com_imagem_no_feed": 1,
+    "novas": 0,
+    "descartadas_sem_foto": 0
+   },
+   {
+    "nome": "Blog do Caminhoneiro",
+    "url": "https://blogdocaminhoneiro.com/feed/",
+    "status": "ok",
+    "itens": 10,
+    "itens_com_imagem_no_feed": 0,
+    "novas": 0,
+    "descartadas_sem_foto": 0
+   },
+   {
+    "nome": "Transporte Moderno",
+    "url": "https://www.transportemoderno.com.br/feed/",
+    "status": "ok",
+    "itens": 10,
+    "itens_com_imagem_no_feed": 10,
+    "novas": 0,
+    "descartadas_sem_foto": 0
+   },
+   {
+    "nome": "Frota&Cia",
+    "url": "https://www.frotacia.com.br/feed/",
+    "status": "ok",
+    "itens": 10,
+    "itens_com_imagem_no_feed": 7,
+    "novas": 0,
+    "descartadas_sem_foto": 0
+   },
+   {
+    "nome": "O Carreteiro",
+    "url": "https://www.ocarreteiro.com.br/feed/",
+    "status": "ok",
+    "itens": 10,
+    "itens_com_imagem_no_feed": 1,
+    "novas": 0,
+    "descartadas_sem_foto": 0
+   },
+   {
+    "nome": "Diário do Transporte",
+    "url": "https://www.diariodotransporte.com.br/feed/",
+    "status": "ok",
+    "itens": 12,
+    "itens_com_imagem_no_feed": 12,
+    "novas": 0,
+    "descartadas_sem_foto": 0
+   }
+  ]
+ },
+ "coleta": {
+  "ultima_execucao": "2026-10-12T07:56:44+00:00",
+  "evento": "workflow_dispatch",
+  "run_id": "38220562447",
+  "novas_na_ultima": 0,
+  "ultima_execucao_automatica_ok": "2026-10-12T07:56:44+00:00",
+  "ultima_execucao_agendada_ok": null,
+  "por_evento": {
+   "workflow_dispatch": "2026-10-12T07:56:44+00:00"
+  }
+ },
+ "site": {
+  "paginas_indexaveis": 1375,
+  "links_internos_quebrados": 0,
+  "build": "38220562447"
+ }
+}
