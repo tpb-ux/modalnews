@@ -18,4 +18,7 @@ feeds:
 # Filtros de qualidade (aplicados antes de publicar e por `python fetch.py --revisar`)
 nota_minima: 3          # palavra-chave no título vale 3, no resumo vale 1
 bloqueio_fontes: [vietnam.vn, gitlab, lrcadefenseconsulting.com, a crítica, indexbox, правда, brasil 247, oficina da net, jornal de angola, notícias de aveiro, almada online, aliados brasil, brasil do trecho, ilos]
+# Palavra bloqueada liberada quando o texto tem um destes termos (contexto logístico).
+excecoes_contexto:
+  concessionária: [rodovia, rodovias, pedágio, abcr, estradas, veículos pesados]
 bloqueio_palavras: [fretamento, turismo, turístic, rodoviária, linha intermunicipal, linhas intermunicipais, transporte de passageiros, transporte público, passagem, passagens, BRT, VLT, trem de passageiros, concessionária, automobilístic, test drive, revisões gratuitas, exército, militar, semicondutor, futebol, novela, horóscopo, celebridade, software supply chain, pacotes arriscados, eleições, eleitoral, campanha de lula, candidato, maconha, apreendido, preso em flagrante, bateria de, cupom, desconto, promoção, oferta do dia, polícia, atentado, ônibus, trincas, celebra, lula, bolsonaro, cocaína, metrô, metrôrio, viação, passageiros, transporte coletivo, leito-cama, feriado, vagas para, casino, cassino, spiel, gold]

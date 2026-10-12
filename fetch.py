@@ -42,8 +42,14 @@ def blocked(cfg, src, link, title, summ, trusted=False):
     hay_src = f"{src} {link}".lower(); txt = f"{title} {summ}".lower()
     for b in cfg.get("bloqueio_fontes", []):
         if b.lower() in hay_src: return f"fonte bloqueada ({b})"
+    # Feeds confiáveis (portais do setor): palavras bloqueadas valem só no título; o resumo de
+    # matérias de carga costuma citar ônibus/passageiros de passagem (ex.: carga aérea, feira Fenatran).
+    alvo = title.lower() if trusted else txt
     for b in cfg.get("bloqueio_palavras", []):  # início de palavra: "lula" não casa com "celular"
-        if re.search(r"(?<!\w)" + re.escape(b.lower()), txt): return f"palavra bloqueada ({b})"
+        if re.search(r"(?<!\w)" + re.escape(b.lower()), alvo):
+            ctx = cfg.get("excecoes_contexto", {}).get(b)
+            if ctx and any(c.lower() in txt for c in ctx): continue  # ex.: concessionária de rodovia/pedágio
+            return f"palavra bloqueada ({b})"
     if trusted: return None
     sc = score(title, summ)
     if sc < cfg.get("nota_minima", 3): return f"nota {sc} < {cfg.get('nota_minima', 3)}"
