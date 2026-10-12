@@ -4,9 +4,10 @@ data: 2026-10-09T00:10:00-03:00
 editoria: comercio-exterior
 resumo: "O crescimento contínuo da movimentação de contêineres nos portos do Brasil está impulsionando uma nova onda de investimentos fora dos limites dos terminais portuários. Atenta à alta demanda por estruturas para receber, armazenar e movimentar cargas de…"
 imagem: "/static/img/2026-10-09-flg-corp-investe-r-1-bilhao-em-projetos-de-operacoes-alfandegadas-e-re.webp"
-imagem_w: 1200
-imagem_h: 630
-imagem_card: true
+imagem_w: 764
+imagem_h: 401
+imagem_credito: "Logweb"
+imagem_origem: "https://logweb.com.br/wp-content/uploads/2026/10/image-4.png"
 fonte: "Logweb"
 link: "https://logweb.com.br/flg-corp-investe-r-1-bilhao-em-projetos-de-operacoes-alfandegadas-e-retroportuarias/"
 gerado_por: fetch.py

@@ -5,8 +5,9 @@ editoria: transporte
 resumo: "As vendas de caminhões elétricos na China cresceram quase 80% no primeiro semestre, impulsionadas pela alta do diesel. A previsão é que esses veículos respondam por quase um terço dos caminhões vendidos no país neste ano, ante cerca de 8% de alguns anos…"
 imagem: "/static/img/2026-10-09-caminhoes-eletricos-na-china-sao-impulsionados-por-alta-do-diesel.webp"
 imagem_w: 1200
-imagem_h: 630
-imagem_card: true
+imagem_h: 675
+imagem_credito: "Frota&Cia"
+imagem_origem: "https://frotacia.com.br/wp-content/uploads/2026/10/Copia-de-IMAGEM-PARA-DISCOVERY-2026-10-09T113851.345-1400x788.jpg"
 fonte: "Frota&Cia"
 link: "https://frotacia.com.br/caminhoes-eletricos-china-politica/"
 gerado_por: fetch.py

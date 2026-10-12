@@ -146,6 +146,7 @@ def licenca(cfg, src_name):
     return (cfg.get("licencas_imagem") or {}).get(src_name)
 
 def migrar_cards(cfg=None):
+    return 0  # desligado: decisão de manter as fotos originais das fontes (12/10/2026)
     """Idempotente: troca fotos de terceiros sem licença confirmada por card próprio no MESMO caminho
     (as URLs de página e de imagem continuam válidas). Roda em todo build."""
     cfg = cfg or yaml.safe_load((ROOT / "feeds.yaml").read_text(encoding="utf-8")); n = 0
@@ -245,11 +246,9 @@ def main():
             fn = CONTENT / f"{when:%Y-%m-%d}-{slugify(title)}.md"
             if fn.exists(): continue
             src_img = None if a.dry_run else (feed_image(e) or og_image(link))
-            if src_img and licenca(cfg, src_name):
-                info = save_image(src_img, fn.stem)
-                if info: info["credito"] = licenca(cfg, src_name)
-            else:  # sem licença confirmada: card próprio (a exigência de foto na fonte continua como filtro de qualidade)
-                info = card_image(title, ed, src_name, when, fn.stem) if src_img else None
+            # decisão editorial (12/10/2026): foto original da fonte em WebP, nome = slug, com alt, crédito e link para a fonte
+            info = save_image(src_img, fn.stem) if src_img else None
+            if info and licenca(cfg, src_name): info["credito"] = licenca(cfg, src_name)
             if not info and not a.dry_run:  # só notícias com foto própria da fonte
                 print(f"  - sem foto: {title[:60]}"); st_["descartadas_sem_foto"] += 1; continue
             body = (f"---\ntitulo: {q(title)}\ndata: {when.isoformat()}\neditoria: {ed}\nresumo: {q(resumo)}\n"

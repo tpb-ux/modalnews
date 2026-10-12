@@ -5,8 +5,9 @@ editoria: transporte
 resumo: "Famílias que construíram seu sustento transportando o Brasil ao longo de gerações"
 imagem: "/static/img/2026-10-09-quando-a-paixao-pelo-caminhao-passa-de-pai-para-filho.webp"
 imagem_w: 1200
-imagem_h: 630
-imagem_card: true
+imagem_h: 800
+imagem_credito: "Blog do Caminhoneiro"
+imagem_origem: "https://blogdocaminhoneiro.com/wp-content/uploads/2026/09/Caminhoes-Mercedes-Benz-5.jpg"
 fonte: "Blog do Caminhoneiro"
 link: "https://blogdocaminhoneiro.com/2026/10/quando-a-paixao-pelo-caminhao-passa-de-pai-para-filho/"
 gerado_por: fetch.py

@@ -2,7 +2,7 @@
  "formato": "saude-portal/1",
  "portal": "Modal News",
  "url": "https://modalnews.com.br",
- "gerado_em": "2026-10-12T09:16:58+00:00",
+ "gerado_em": "2026-10-12T12:00:03+00:00",
  "materias": {
   "total": 29,
   "ultimas_24h": 0,
@@ -13,7 +13,7 @@
    "url": "https://modalnews.com.br/comercio-exterior/2026-10-09-superar-o-protecionismo-para-voltar-a-crescer/",
    "fonte": "Comex do Brasil",
    "publicada_em": "2026-10-09T17:42:57-03:00",
-   "idade_horas": 60.6
+   "idade_horas": 63.3
   }
  },
  "feeds": {
@@ -99,8 +99,155 @@
    "workflow_dispatch": "2026-10-12T07:56:44+00:00"
   }
  },
+ "qualidade": {
+  "unicidade": {
+   "estados": {
+    "paginas": 27,
+    "avaliadas": 16,
+    "corte": 0.15,
+    "texto_proprio_p10": 0.37,
+    "texto_proprio_mediana": 0.423,
+    "texto_proprio_p90": 0.474,
+    "abaixo_do_corte": 0
+   },
+   "logistica": {
+    "paginas": 391,
+    "avaliadas": 370,
+    "corte": 0.15,
+    "texto_proprio_p10": 0.231,
+    "texto_proprio_mediana": 0.312,
+    "texto_proprio_p90": 0.36,
+    "abaixo_do_corte": 0
+   },
+   "rotas": {
+    "paginas": 237,
+    "avaliadas": 154,
+    "corte": 0.15,
+    "texto_proprio_p10": 0.119,
+    "texto_proprio_mediana": 0.166,
+    "texto_proprio_p90": 0.274,
+    "abaixo_do_corte": 61
+   },
+   "glossario": {
+    "paginas": 147,
+    "avaliadas": 134,
+    "corte": 0.15,
+    "texto_proprio_p10": 0.739,
+    "texto_proprio_mediana": 0.782,
+    "texto_proprio_p90": 0.941,
+    "abaixo_do_corte": 0
+   },
+   "tipos-de-carga": {
+    "paginas": 12,
+    "avaliadas": 12,
+    "corte": 0.15,
+    "texto_proprio_p10": 0.31,
+    "texto_proprio_mediana": 0.349,
+    "texto_proprio_p90": 0.416,
+    "abaixo_do_corte": 0
+   },
+   "frete-minimo": {
+    "paginas": 12,
+    "avaliadas": 12,
+    "corte": 0.08,
+    "texto_proprio_p10": 0.104,
+    "texto_proprio_mediana": 0.117,
+    "texto_proprio_p90": 0.133,
+    "abaixo_do_corte": 0
+   },
+   "portos": {
+    "paginas": 35,
+    "avaliadas": 28,
+    "corte": 0.15,
+    "texto_proprio_p10": 0.31,
+    "texto_proprio_mediana": 0.35,
+    "texto_proprio_p90": 0.433,
+    "abaixo_do_corte": 0
+   },
+   "aeroportos": {
+    "paginas": 43,
+    "avaliadas": 43,
+    "corte": 0.15,
+    "texto_proprio_p10": 0.184,
+    "texto_proprio_mediana": 0.213,
+    "texto_proprio_p90": 0.242,
+    "abaixo_do_corte": 0
+   },
+   "pedagios": {
+    "paginas": 30,
+    "avaliadas": 6,
+    "corte": 0.15,
+    "texto_proprio_p10": 0.28,
+    "texto_proprio_mediana": 0.323,
+    "texto_proprio_p90": 0.386,
+    "abaixo_do_corte": 0
+   },
+   "comparativos": {
+    "paginas": 12,
+    "avaliadas": 12,
+    "corte": 0.15,
+    "texto_proprio_p10": 1.0,
+    "texto_proprio_mediana": 1.0,
+    "texto_proprio_p90": 1.0,
+    "abaixo_do_corte": 0
+   },
+   "diesel": {
+    "paginas": 420,
+    "avaliadas": 419,
+    "corte": 0.15,
+    "texto_proprio_p10": 0.163,
+    "texto_proprio_mediana": 0.287,
+    "texto_proprio_p90": 0.374,
+    "abaixo_do_corte": 0
+   },
+   "rodovias": {
+    "paginas": 20,
+    "avaliadas": 15,
+    "corte": 0.15,
+    "texto_proprio_p10": 0.134,
+    "texto_proprio_mediana": 0.294,
+    "texto_proprio_p90": 0.462,
+    "abaixo_do_corte": 2
+   },
+   "veiculos": {
+    "paginas": 10,
+    "avaliadas": 10,
+    "corte": 0.15,
+    "texto_proprio_p10": 0.433,
+    "texto_proprio_mediana": 0.466,
+    "texto_proprio_p90": 0.519,
+    "abaixo_do_corte": 0
+   }
+  },
+  "noindex_por_unicidade": 63,
+  "similaridade_jaccard5": {
+   "estados": 0.32,
+   "logistica": 0.401,
+   "rotas": 0.482,
+   "glossario": 0.061,
+   "tipos-de-carga": 0.392,
+   "frete-minimo": 0.757,
+   "portos": 0.201,
+   "aeroportos": 0.565,
+   "pedagios": 0.432,
+   "comparativos": 0.0,
+   "diesel": 0.284,
+   "rodovias": 0.464,
+   "veiculos": 0.285
+  },
+  "faq_pseo": {
+   "pseo_paginas": 1149,
+   "pseo_faqs": 3447,
+   "pseo_removidas": 4209
+  },
+  "rede_links_pct": {
+   "estrato.com.br": 0.0,
+   "tpb-ux.github.io/estrato": 0.0
+  },
+  "sitemap_noticias": 0
+ },
  "site": {
-  "paginas_indexaveis": 1375,
+  "paginas_indexaveis": 1217,
   "links_internos_quebrados": 0,
   "build": "local"
  }

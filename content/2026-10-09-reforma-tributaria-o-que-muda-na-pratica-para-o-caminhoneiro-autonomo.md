@@ -5,8 +5,9 @@ editoria: transporte
 resumo: "A Reforma Tributária vai exigir mudanças na rotina administrativa dos caminhoneiros autônomos a partir de 2027. Embora a nova legislação não obrigue todos os Transportadores Autônomos de Cargas (TACs) a se tornarem empresas ou a recolher IBS e CBS pelo regime…"
 imagem: "/static/img/2026-10-09-reforma-tributaria-o-que-muda-na-pratica-para-o-caminhoneiro-autonomo.webp"
 imagem_w: 1200
-imagem_h: 630
-imagem_card: true
+imagem_h: 801
+imagem_credito: "O Carreteiro"
+imagem_origem: "https://ocarreteiro.com.br/wp-content/uploads/2026/10/Reforma-Tributaria.jpg"
 fonte: "O Carreteiro"
 link: "https://ocarreteiro.com.br/uncategorized/reforma-tributaria-2/"
 gerado_por: fetch.py

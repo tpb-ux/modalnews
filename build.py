@@ -187,7 +187,6 @@ def write(path, txt):
 def main():
     import fetch, extras_seo, qualidade as Q
     nmig = fetch.migrar_cards()
-    if nmig: print(f"Imagens: {nmig} foto(s) de terceiros sem licença confirmada trocadas por card próprio (mesmo caminho)")
     AUT = extras_seo.autores(sys.modules[__name__])
     posts = [p for p in load() if extras_seo.publicavel(p, AUT)]
     for p in posts:
