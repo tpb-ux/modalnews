@@ -157,15 +157,17 @@ def main():
     if a.revisar: return revisar(cfg, a.remover)
     limit = a.max or cfg.get("max_por_execucao", 12); per = cfg.get("max_por_feed", 3)
     cutoff = dt.datetime.now(dt.timezone.utc) - dt.timedelta(days=cfg.get("max_idade_dias", 3))
-    CONTENT.mkdir(exist_ok=True); links, titles = existing(); new = 0; erros = []
+    CONTENT.mkdir(exist_ok=True); links, titles = existing(); new = 0; erros = []; feeds_st = []
     for fd in cfg["feeds"]:
-        if new >= limit: break
+        st_ = {"nome": fd["nome"], "url": fd["url"], "status": "ok", "itens": 0, "itens_com_imagem_no_feed": 0, "novas": 0, "descartadas_sem_foto": 0}; feeds_st.append(st_)
         try:
             raw = urllib.request.urlopen(urllib.request.Request(fd["url"], headers={"User-Agent": UA}), timeout=20).read()
             d = feedparser.parse(raw)
         except Exception as ex:
-            print(f"! {fd['nome']}: erro {ex}"); erros.append({"feed": fd["nome"], "url": fd["url"], "erro": str(ex)[:120]}); continue
-        if not d.entries: print(f"! {fd['nome']}: sem itens"); erros.append({"feed": fd["nome"], "url": fd["url"], "erro": "sem itens"}); continue
+            print(f"! {fd['nome']}: erro {ex}"); erros.append({"feed": fd["nome"], "url": fd["url"], "erro": str(ex)[:120]}); st_.update(status="erro", erro=str(ex)[:120]); continue
+        st_["itens"] = len(d.entries); st_["itens_com_imagem_no_feed"] = sum(1 for e in d.entries if feed_image(e))
+        if not d.entries: print(f"! {fd['nome']}: sem itens"); erros.append({"feed": fd["nome"], "url": fd["url"], "erro": "sem itens"}); st_["status"] = "vazio"; continue
+        if new >= limit: continue  # limite da execução: só registra a saúde do feed
         got = 0
         for e in d.entries:
             if got >= fd.get("max", per) or new >= limit: break
@@ -193,17 +195,21 @@ def main():
             if fn.exists(): continue
             info = None if a.dry_run else save_image(feed_image(e) or og_image(link), fn.stem)
             if not info and not a.dry_run:  # só notícias com foto própria da fonte
-                print(f"  - sem foto: {title[:60]}"); continue
+                print(f"  - sem foto: {title[:60]}"); st_["descartadas_sem_foto"] += 1; continue
             body = (f"---\ntitulo: {q(title)}\ndata: {when.isoformat()}\neditoria: {ed}\nresumo: {q(resumo)}\n"
                     f"{img_fm(info, src_name)}\nfonte: {q(src_name)}\nlink: {q(link)}\ngerado_por: fetch.py\n---\n"
                     f"{resumo}\n\n**[Leia na íntegra em {src_name} →]({link})**\n\n"
                     f"<small>Resumo automático a partir do feed público de {src_name}. Os direitos do conteúdo original pertencem à fonte.</small>\n")
             print(f"+ [{ed}] {title[:80]} ({src_name})")
             if not a.dry_run: fn.write_text(body, encoding="utf-8")
-            links.add(link); titles.add(norm(title)); got += 1; new += 1
+            links.add(link); titles.add(norm(title)); got += 1; new += 1; st_["novas"] += 1
     print(f"{new} matéria(s) nova(s).")
     if not a.dry_run:
-        import json
-        (ROOT / "data" / "saude_coleta.json").write_text(json.dumps({"hora": dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds"), "novas": new, "erros": erros}, ensure_ascii=False, indent=1), encoding="utf-8")
+        import json, os
+        sf = ROOT / "data" / "saude_coleta.json"; old = json.loads(sf.read_text()) if sf.exists() else {}
+        agora = dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds"); ev = os.environ.get("GITHUB_EVENT_NAME", "local")
+        ult = old.get("ultimas_execucoes", {}); ult[ev] = agora
+        sf.write_text(json.dumps({"hora": agora, "evento": ev, "run_id": os.environ.get("GITHUB_RUN_ID"), "novas": new, "erros": erros, "feeds": feeds_st,
+                                  "ultimas_execucoes": ult}, ensure_ascii=False, indent=1), encoding="utf-8")
 
 if __name__ == "__main__": main()

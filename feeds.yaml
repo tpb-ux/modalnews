@@ -1,3 +1,5 @@
+# Regra de qualidade: só feeds que entregam itens com imagem própria (no feed ou og:image) a partir do GitHub Actions.
+# Removidos em 12/10/2026: Portal NTC&Logística (vazio a partir dos runners do GitHub).
 # Feeds RSS usados pelo fetch.py. "editoria" (opcional) força a editoria; senão classifica por palavras-chave.
 max_por_execucao: 20
 max_por_feed: 3
@@ -6,7 +8,6 @@ feeds:
   - {nome: Logweb, url: "https://www.logweb.com.br/feed/", confiavel: true, max: 8}
   - {nome: Comex do Brasil, url: "https://www.comexdobrasil.com/feed/", confiavel: true, editoria: comercio-exterior}
   - {nome: Blog do Caminhoneiro, url: "https://blogdocaminhoneiro.com/feed/", confiavel: true, editoria: transporte}
-  - {nome: Portal NTC&Logística, url: "https://www.portalntc.org.br/feed/", confiavel: true}
   - {nome: Transporte Moderno, url: "https://www.transportemoderno.com.br/feed/", confiavel: true, editoria: transporte}
   - {nome: Frota&Cia, url: "https://www.frotacia.com.br/feed/", confiavel: true, editoria: transporte}
   - {nome: O Carreteiro, url: "https://www.ocarreteiro.com.br/feed/", confiavel: true, editoria: transporte}

@@ -269,6 +269,7 @@ def main():
     if broken:
         for u, (n, src) in sorted(broken.items(), key=lambda x: -x[1][0])[:30]: print(f"LINK QUEBRADO {u} ({n}x, ex.: {src})")
         sys.exit(f"ERRO: {len(broken)} destinos internos quebrados")
+    import saude; saude.build(sys.modules[__name__], posts)  # só roda com 0 links quebrados
     print(f"OK: {len(posts)} matérias -> {OUT}")
 
 def _meta(u):

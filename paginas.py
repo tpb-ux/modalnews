@@ -424,4 +424,3 @@ def extras(B, info):
 - [Sobre]({BASE}/sobre/) · [Política editorial]({BASE}/politica-editorial/) · [Correções]({BASE}/correcoes/)
 """
     (B.OUT / "llms.txt").write_text(llms, encoding="utf-8")
-    (B.OUT / "saude.json").write_text(json.dumps(info, ensure_ascii=False, indent=1), encoding="utf-8")
