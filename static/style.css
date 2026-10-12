@@ -62,4 +62,16 @@ article.post h2{scroll-margin-top:70px;margin-top:28px}.faq{border-bottom:1px so
 .keypts{background:#f4f6f8;border-left:4px solid var(--a);padding:6px 18px 10px;margin:16px 0;border-radius:4px}.keypts h2{font-size:1.05rem;margin:10px 0 6px}.keypts ul{margin:0;padding-left:20px}.keypts li{margin:4px 0}
 .steps{counter-reset:s;list-style:none;padding:0}.steps>li{counter-increment:s;position:relative;padding:0 0 14px 44px}.steps>li:before{content:counter(s);position:absolute;left:0;top:0;width:30px;height:30px;border-radius:50%;background:var(--a);color:#fff;font-weight:700;display:flex;align-items:center;justify-content:center}
 .warn{background:#fff6e5;border:1px solid #f0c36d;padding:10px 14px;border-radius:4px;font-size:.9rem}
-nav.ed .wrap{flex-wrap:wrap;row-gap:4px}
+nav.ed .wrap{flex-wrap:nowrap;overflow:visible}nav.ed a.on{color:var(--a);box-shadow:inset 0 -3px 0 var(--a)}
+nav.ed a{padding:8px 10px;font-size:.8rem}
+.dd{position:relative}.dd summary{list-style:none;cursor:pointer;padding:8px 10px;font-size:.8rem;font-weight:700;text-transform:uppercase;color:var(--d);white-space:nowrap}.dd summary::-webkit-details-marker{display:none}
+.dd summary:after{content:" ▾"}.dd[open] summary{color:var(--a)}.ddm{position:absolute;right:0;top:100%;background:#fff;border:1px solid var(--b);border-radius:6px;box-shadow:0 8px 24px rgba(0,0,0,.12);padding:6px;min-width:230px;z-index:20;display:flex;flex-direction:column}
+.ddm a{text-transform:none;font-size:.9rem;font-weight:600;padding:8px 12px}.ddm a:hover{background:var(--g)}
+.burger{display:none;background:none;border:0;padding:10px;cursor:pointer}.burger span{display:block;width:24px;height:3px;background:var(--d);margin:4px 0;border-radius:2px}
+.drawer{position:fixed;inset:0;background:rgba(20,24,32,.55);z-index:50}.drawer[hidden]{display:none}
+.dpanel{position:absolute;top:0;right:0;bottom:0;width:min(86vw,340px);background:#fff;overflow-y:auto;padding:18px 20px 30px;box-shadow:-8px 0 24px rgba(0,0,0,.2)}
+.dpanel h4{margin:18px 0 6px;font-size:.75rem;text-transform:uppercase;color:var(--m);letter-spacing:.6px}.dpanel a{display:block;padding:10px 4px;border-bottom:1px solid var(--b);font-weight:600;color:var(--d)}
+.dclose{position:absolute;top:8px;right:10px;font-size:2rem;line-height:1;background:none;border:0;cursor:pointer;color:var(--d)}
+@media(max-width:860px){.hrow{padding:10px 14px;flex-wrap:nowrap}.logo img{height:34px}.burger{display:block}
+nav.ed .wrap{overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding:6px 12px;gap:2px}nav.ed .wrap::-webkit-scrollbar{display:none}
+nav.ed a{scroll-snap-align:start;flex:0 0 auto}nav.ed .dd,nav.ed a[href="/glossario/"]{display:none}}

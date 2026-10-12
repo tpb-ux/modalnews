@@ -42,6 +42,9 @@ def page(title, desc, path, body, og_img=None, og_type="website", jsonld=None, r
     canon = BASE + path
     img = og_img or BASE + "/static/og-default.png"
     nav = "".join(f'<a href="/{s}/">{E(n)}</a>' for s, n in EDS.items())
+    nav_ed = "".join(f'<a class="{"on" if path.startswith(f"/{s}/") else ""}" href="/{s}/">{E(n)}</a>' for s, n in EDS.items())
+    ref_links = "".join(f'<a href="{u}">{n}</a>' for u, n in [("/diesel/", "Preço do diesel"), ("/frete-minimo/", "Frete mínimo"), ("/portos/", "Portos"), ("/rodovias/", "Rodovias"),
+                        ("/guias/", "Guias"), ("/calculadoras/cubagem/", "Calculadora de cubagem"), ("/calculadoras/custo-diesel-viagem/", "Custo de diesel"), ("/siglas/", "Siglas")])
     ld = f'<script type="application/ld+json">{json.dumps(jsonld, ensure_ascii=False)}</script>' if jsonld else ""
     ld += f'<script type="application/ld+json">{json.dumps(SITE_LD, ensure_ascii=False)}</script>'
     rb = f'<meta name="robots" content="{robots}">' if robots else ""
@@ -55,7 +58,17 @@ def page(title, desc, path, body, og_img=None, og_type="website", jsonld=None, r
 <meta property="og:description" content="{E(desc)}"><meta property="og:url" content="{canon}">
 <meta property="og:image" content="{E(img)}"><meta name="twitter:card" content="summary_large_image">{ld}
 </head><body><header class="top"><div class="wrap hrow"><a class="logo" href="/"><img src="/static/logo.svg" alt="{E(CFG['site_name'])}" width="220" height="44"></a>
-<div class="tag">{E(CFG['tagline'])}</div></div></header><nav class="ed"><div class="wrap"><a class="pill" href="/">Início</a>{nav}<a href="/glossario/">Glossário</a><a href="/diesel/">Diesel</a><a href="/frete-minimo/">Frete mínimo</a><a href="/portos/">Portos</a><a href="/guias/">Guias</a></div></nav>
+<div class="tag">{E(CFG['tagline'])}</div><button class="burger" id="mn-btn" aria-label="Abrir menu" aria-expanded="false" aria-controls="mn-drawer"><span></span><span></span><span></span></button></div></header>
+<nav class="ed" aria-label="Editorias"><div class="wrap"><a class="{'pill' if path == '/' else ''}" href="/">Início</a>{nav_ed}<a class="{'on' if path.startswith('/glossario/') else ''}" href="/glossario/">Glossário</a>
+<details class="dd"><summary>Referência</summary><div class="ddm">{ref_links}</div></details></div></nav>
+<div class="drawer" id="mn-drawer" hidden><div class="dpanel" role="dialog" aria-modal="true" aria-label="Menu"><button class="dclose" id="mn-close" aria-label="Fechar menu">×</button>
+<h4>Editorias</h4><a href="/">Início</a>{nav}<h4>Referência</h4><a href="/glossario/">Glossário</a>{ref_links}</div></div>
+<script>(function(){{var b=document.getElementById('mn-btn'),d=document.getElementById('mn-drawer'),c=document.getElementById('mn-close');
+function o(x){{d.hidden=!x;b.setAttribute('aria-expanded',x);document.body.style.overflow=x?'hidden':'';if(x)c.focus();else b.focus()}}
+b.onclick=function(){{o(d.hidden)}};c.onclick=function(){{o(false)}};d.onclick=function(e){{if(e.target===d)o(false)}};
+document.addEventListener('keydown',function(e){{if(e.key==='Escape'&&!d.hidden)o(false)}});
+var a=document.querySelector('nav.ed a.on,nav.ed a.pill');if(a&&a.scrollIntoView&&innerWidth<860)a.scrollIntoView({{inline:'center',block:'nearest'}});
+document.addEventListener('click',function(e){{var x=document.querySelector('details.dd[open]');if(x&&!x.contains(e.target))x.open=false}})}})();</script>
 <main class="wrap">{body}</main><footer><div class="wrap fgrid"><div><img src="/static/logo.svg" alt="" width="180" height="36" class="flogo"><p>{E(CFG['tagline'])}</p></div>
 <div><h4>Editorias</h4>{nav}</div><div><h4>Referência</h4><a href="/glossario/">Glossário de Logística</a><a href="/siglas/">Siglas</a><a href="/diesel/">Preço do diesel</a><a href="/frete-minimo/">Frete mínimo ANTT</a><a href="/portos/">Portos</a><a href="/rodovias/">Rodovias</a><a href="/guias/">Guias práticos</a><a href="/calculadoras/cubagem/">Calculadora de cubagem</a><a href="/calculadoras/custo-diesel-viagem/">Custo de diesel</a><a href="/links-uteis/">Links úteis</a></div>
 <div><h4>Institucional</h4><a href="/sobre/">Sobre</a><a href="/politica-editorial/">Política editorial</a><a href="/metodologia/">Metodologia</a><a href="/correcoes/">Correções</a><a href="/privacidade/">Privacidade</a><a href="/rss.xml">Feed RSS</a></div></div>

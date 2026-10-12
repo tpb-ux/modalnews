@@ -80,11 +80,11 @@ def portos(B):
     urls = []; lm = {}
     news_all = getattr(B, "_posts", [])
     for p in D["portos"]:
-        u = f"/portos/{p['slug']}/"; nome = p["nome"]; short = re.sub(r"^Porto (de|do|da) ", "", nome)
+        u = f"/portos/{p['slug']}/"; nome = p["nome"]; short = re.sub(r"^Porto (de|do|da) ", "", nome); art = "no" if nome.startswith("Porto do ") else "em"; artp = "do" if nome.startswith("Porto do ") else "de"
         data_pts = 0; blocks = []; fq = []; used = set()
         if p.get("t3"):
             t, var, rk = p["t3"]; data_pts += 3; used.add("boletim3t25")
-            blocks.append(f"<h2>Movimentação de cargas no {E(short)}</h2><p>No 3º trimestre de 2025, o {E(nome)} movimentou <strong>{num(t, 1)} milhões de toneladas</strong>, variação de {var} sobre o 3º trimestre de 2024, e ficou em <strong>{rk}º lugar</strong> entre os portos organizados do país, segundo a ANTAQ.</p>")
+            blocks.append(f"<h2>Movimentação de cargas {art} {E(short)}</h2><p>No 3º trimestre de 2025, o {E(nome)} movimentou <strong>{num(t, 1)} milhões de toneladas</strong>, variação de {var} sobre o 3º trimestre de 2024, e ficou em <strong>{rk}º lugar</strong> entre os portos organizados do país, segundo a ANTAQ.</p>")
             fq.append((f"Quanto o {nome} movimenta?", f"No 3º trimestre de 2025, o {nome} movimentou {num(t, 1)} milhões de toneladas, {var} em relação ao mesmo trimestre de 2024, segundo o Boletim Estatístico Aquaviário da ANTAQ. Foi o {rk}º maior porto organizado do Brasil no período."))
         if p.get("teu3"):
             teu, var = p["teu3"]; data_pts += 2
@@ -93,34 +93,34 @@ def portos(B):
         if p.get("perfil3t"):
             data_pts += len(p["perfil3t"])
             rows = [[E(m), num(a, 2), num(b, 2), f"{(a / b - 1) * 100:+.1f}%".replace(".", ",")] for m, a, b in p["perfil3t"]]
-            blocks.append(f"<h2>Principais cargas do {E(short)}</h2>{table(rows, ['Mercadoria', '3º tri 2025 (mi t)', '3º tri 2024 (mi t)', 'Variação'])}<p class='meta'>Fonte: {fl('boletim3t25')}, figura 7.</p>")
+            blocks.append(f"<h2>Principais cargas {art} {E(short)}</h2>{table(rows, ['Mercadoria', '3º tri 2025 (mi t)', '3º tri 2024 (mi t)', 'Variação'])}<p class='meta'>Fonte: {fl('boletim3t25')}, figura 7.</p>")
         if p.get("graos25"):
             data_pts += 1; used.add("anuario25")
-            blocks.append(f"<p>Na exportação de milho e soja, o {E(short)} aparece com <strong>{num(p['graos25'], 1)} milhões de toneladas</strong> em 2025 no mapa das principais instalações do Desempenho Aquaviário 2025 da ANTAQ.</p>")
+            blocks.append(f"<p>Na exportação de milho e soja, o {E(nome)} aparece com <strong>{num(p['graos25'], 1)} milhões de toneladas</strong> em 2025 no mapa das principais instalações do Desempenho Aquaviário 2025 da ANTAQ.</p>")
         for o in p.get("outros", []):
             data_pts += 1; used.add(o["f"]); blocks.append(f"<p>{E(o['txt'])} <span class='meta'>(Fonte: {fl(o['f'])})</span></p>")
         if p.get("s1_26"):
             data_pts += len(p["s1_26"]); used.add("mpor1s26")
-            blocks.append(f"<h2>{E(short)} no 1º semestre de 2026</h2><ul>" + "".join(f"<li>{E(x)}</li>" for x in p["s1_26"]) + f"</ul><p class='meta'>Fonte: {fl('mpor1s26')}, com dados enviados pelas autoridades portuárias.</p>")
+            blocks.append(f"<h2>{E(nome)} no 1º semestre de 2026</h2><ul>" + "".join(f"<li>{E(x)}</li>" for x in p["s1_26"]) + f"</ul><p class='meta'>Fonte: {fl('mpor1s26')}, com dados enviados pelas autoridades portuárias.</p>")
             fq.append((f"Quanto o {nome} movimentou em 2026?", p["s1_26"][0] + " Dados do Ministério de Portos e Aeroportos, com base em informações da autoridade portuária."))
         info = [["Localização", f"{E(p['cidade'])} ({p['uf']})"]] + ([["Administração", E(p["autoridade"])]] if p.get("autoridade") else []) + ([["Site oficial", link(p["site"], E(p["site"].split('/')[2]))]] if p.get("site") else [])
-        if p.get("autoridade"): fq.append((f"Quem administra o {nome}?", f"O {nome}, em {p['cidade']} ({p['uf']}), é um porto organizado administrado por {p['autoridade']}. Como porto público, está sob regulação da ANTAQ e da política do Ministério de Portos e Aeroportos."))
+        if p.get("autoridade"): fq.append((f"Quem administra o {nome}?", f"O {nome}, em {p['cidade']} ({p['uf']}), é um porto organizado sob administração {'do' if p['autoridade'].startswith(('Complexo','Porto')) else 'da'} {p['autoridade']}. Como porto público, está sob regulação da ANTAQ e da política do Ministério de Portos e Aeroportos."))
         keys = [short.lower(), nome.lower()]
         rel = [x for x in news_all if any(k in (x["titulo"] + " " + x.get("resumo", "")).lower() for k in keys)][:5]
-        rel_html = ("<h2>Notícias sobre o " + E(short) + "</h2><ul class='rel-news'>" + "".join(f'<li><a href="{x["url"]}">{E(x["titulo"])}</a></li>' for x in rel) + "</ul>") if rel else ""
+        rel_html = ("<h2>Notícias sobre o " + E(nome) + "</h2><ul class='rel-news'>" + "".join(f'<li><a href="{x["url"]}">{E(x["titulo"])}</a></li>' for x in rel) + "</ul>") if rel else ""
         srcs = "".join(f"<li>{fl(k)}</li>" for k in F if k in used)
-        lead = (f"O {nome} é um porto público localizado em {p['cidade']} ({p['uf']})" + (f", administrado por {p['autoridade']}" if p.get("autoridade") else "") + ". " +
-                (f"No 3º trimestre de 2025, movimentou {num(p['t3'][0], 1)} milhões de toneladas ({p['t3'][1]}), o {p['t3'][2]}º maior volume entre os portos organizados, segundo a ANTAQ." if p.get("t3") else (p["s1_26"][0] if p.get("s1_26") else "")))
+        lead = (f"O {nome} é um porto público localizado em {p['cidade']} ({p['uf']})" + (f", sob administração {'do' if p['autoridade'].startswith(('Complexo','Porto')) else 'da'} {p['autoridade']}" if p.get("autoridade") else "") + ". " +
+                (f"No 3º trimestre de 2025, movimentou {num(p['t3'][0], 1)} milhões de toneladas ({p['t3'][1]}), o {'' if p['t3'][2] == 1 else str(p['t3'][2]) + 'º '}maior volume entre os portos organizados, segundo a ANTAQ." if p.get("t3") else (p["s1_26"][0] if p.get("s1_26") else "")))
         body = f"""<article class="post data">{crumbs_html(E, [("Início", "/"), ("Portos", "/portos/"), (nome, u)])}
 <h1>{E(nome)}: movimentação e perfil de cargas</h1><p class="snippet">{E(lead)}</p>
 {table(info, ["", ""])}{"".join(blocks)}
 <p>Veja também o ranking na página de <a href="/portos/">portos brasileiros</a> e os verbetes <a href="/glossario/teu/">TEU</a>, <a href="/glossario/cabotagem/">cabotagem</a>, <a href="/glossario/demurrage/">demurrage</a> e <a href="/glossario/despacho-aduaneiro/">despacho aduaneiro</a>.</p>
-{f'<h2>Perguntas frequentes sobre o {E(short)}</h2>' + faq_block(E, fq) if fq else ''}{rel_html}
+{f'<h2>Perguntas frequentes sobre o {E(nome)}</h2>' + faq_block(E, fq) if fq else ''}{rel_html}
 <h2>Fontes</h2><ul class="refs">{srcs}</ul></article>"""
         idx = data_pts >= 5
         ld = {"@context": "https://schema.org", "@graph": [{"@type": "Place", "name": nome, "url": BASE + u, "address": {"@type": "PostalAddress", "addressLocality": p["cidade"], "addressRegion": p["uf"], "addressCountry": "BR"}, **({"sameAs": [p["site"]]} if p.get("site") else {})}]
               + ([faq_ld(fq)] if fq else []) + [crumbs_ld(BASE, [("Início", "/"), ("Portos", "/portos/"), (nome, u)])]}
-        B.write(u, B.page(f"{nome}: movimentação de cargas e dados oficiais"[:60], E(lead)[:155], u, body, jsonld=ld, robots=None if idx else "noindex,follow"))
+        B.write(u, B.page(f"{nome}: movimentação de cargas e dados oficiais"[:60], (lead if len(lead) <= 155 else lead[:152].rsplit(" ", 1)[0] + "…"), u, body, jsonld=ld, robots=None if idx else "noindex,follow"))
         if idx: urls.append(u); lm[u] = "2026-10-12"
         p["_idx"] = idx
     # índice
