@@ -27,7 +27,7 @@ empresa:
   redes: []        # placeholder: URLs das redes sociais (ficam ocultas enquanto vazias)
 # Verificação de buscadores: cole só o valor do content da meta tag
 verificacao:
-  google: ""
+  google: "RLkcKv-aE13L5QCiAEUAzHbESXDHFCPorv963qM_Bew"
   bing: ""
 # IndexNow: chave pública (arquivo /<chave>.txt é gerado no build)
 indexnow_key: "8979e07f71111ac261c735706569d229"
