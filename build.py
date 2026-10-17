@@ -114,7 +114,7 @@ def page(title, desc, path, body, og_img=None, og_type="website", jsonld=None, r
     import qualidade
     rb = f'<meta name="robots" content="{robots or qualidade.INDEX_ROBOTS}">'
     vf = CFG.get("verificacao") or {}
-    if path == "/":
+    if True:
         rb += (f'<meta name="google-site-verification" content="{E(vf["google"])}">' if vf.get("google") else "") + (f'<meta name="msvalidate.01" content="{E(vf["bing"])}">' if vf.get("bing") else "")
     return f"""<!doctype html><html lang="pt-BR"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
